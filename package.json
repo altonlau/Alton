@@ -1,0 +1,17 @@
+{
+  "name": "alton",
+  "version": "1.0.0",
+  "description": "Alton Lau's personal website.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alton Lau",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "method-override": "^2.3.7",
+    "mongoose": "^4.8.1"
+  }
+}
