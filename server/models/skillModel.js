@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Author: Alton Lau
  * Date: February 3, 2017

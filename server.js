@@ -1,11 +1,9 @@
-'use strict';
-
 /*
-* Author: Alton Lau
-* Date: February 3, 2017
-* File: server.js
-* Description: Link between front end and back end
-*/
+ * Author: Alton Lau
+ * Date: February 3, 2017
+ * File: server.js
+ * Description: Link between front end and back end
+ */
 
 var express = require('express');
 var app = express();

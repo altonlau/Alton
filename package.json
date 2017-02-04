@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Alton Lau's personal website.",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/altonlau/Alton.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,5 +17,20 @@
     "express": "^4.14.1",
     "method-override": "^2.3.7",
     "mongoose": "^4.8.1"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-inject": "^4.2.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-open": "^2.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-typescript": "^3.1.4",
+    "gulp-wait": "0.0.2",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1",
+    "run-sequence": "^1.2.2"
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 /*
  * Author: Alton Lau
  * Date: February 3, 2017
@@ -64,5 +62,5 @@ module.exports = function (express) {
     run: function () {
       startListening();
     }
-  }
+  };
 };
