@@ -1,3 +1,3 @@
 module.exports = {
-  url : 'mongodb://localhost/alton-dev'
+  url : process.env.DB || 'mongodb://localhost/alton-dev'
 };
