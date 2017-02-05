@@ -12,7 +12,7 @@ var router = express.Router();
 var errorHandler = require('./error_handler');
 var User = require('../models/user_model');
 
-// User API ===================================================================
+// User API ====================================================================
 // GET /api/user
 // POST /api/user
 // PUT /api/user

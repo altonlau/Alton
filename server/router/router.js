@@ -16,6 +16,7 @@ function init(auth) {
 
   router.use('/user', require('./user_router'));
   router.use('/skill', require('./skill_router'));
+  router.use('/about', require('./about_router'));
 }
 
 function setupAuthenticationRoutes(auth) {

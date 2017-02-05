@@ -31,13 +31,13 @@ router.get('/', function (req, res) {
       errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
     } else if (docs || docs.length) {
       var results = [];
-      docs.forEach(function(doc) {
+      docs.forEach(function (doc) {
         results.push({
           id: doc._id,
           name: doc.name,
           level: doc.level
         });
-      })
+      });
       res.status(200).json(results);
     } else {
       errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
@@ -51,20 +51,7 @@ router.post('/', passport.authenticate('jwt', {
   var name = req.body.name;
   var level = req.body.level;
 
-  if (!name || !level) {
-    var missingFields = [];
-
-    if (!name) {
-      missingFields.push('name');
-    }
-    if (!level) {
-      missingFields.push('level');
-    }
-
-    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
-      fields: missingFields
-    });
-  } else {
+  if (name && level) {
     if (level >= 0 && level <= 1) {
       var newSkill = new Skill({
         name: name,
@@ -89,6 +76,19 @@ router.post('/', passport.authenticate('jwt', {
         invalid: 'Skill level must be between 0 and 1'
       });
     }
+  } else {
+    var missingFields = [];
+
+    if (!name) {
+      missingFields.push('name');
+    }
+    if (!level) {
+      missingFields.push('level');
+    }
+
+    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+      fields: missingFields
+    });
   }
 });
 
