@@ -5,15 +5,19 @@
  * Description: Backend main application
  */
 
-var app, bodyParser, db, methodOverride, mongoose, port;
+var app, bodyParser, methodOverride, mongoose, passport;
+var auth, db, port, router;
 
 function init(express) {
   app = express;
   bodyParser = require('body-parser');
   methodOverride = require('method-override');
   mongoose = require('mongoose');
+  passport = require('passport');
 
+  auth = require('./authenticate');
   db = require('./config/db');
+  router = require('./router/router');
   port = process.env.PORT || 3000;
 
   setupConfiguration();
@@ -38,6 +42,9 @@ function setupConfiguration() {
 
   // Override with the X-HTTP-Method-Override header in the request. Simulate DELETE/PUT
   app.use(methodOverride('X-HTTP-Method-Override'));
+
+  // Passport authentication
+  auth.init(passport);
 }
 
 function setupDatabase() {
@@ -45,7 +52,7 @@ function setupDatabase() {
 }
 
 function setupRouter() {
-  require('./router')(app);
+  router(app, auth);
 }
 
 function startListening() {

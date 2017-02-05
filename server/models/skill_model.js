@@ -1,7 +1,7 @@
 /*
  * Author: Alton Lau
  * Date: February 3, 2017
- * File: models.js
+ * File: skill_model.js
  * Description: Skill model
  */
 
