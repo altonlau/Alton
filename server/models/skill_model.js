@@ -9,8 +9,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var skillSchema = new Schema({
-  name: String,
-  level: Number
+  name: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  level: {
+    type: Number,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Skill', skillSchema);

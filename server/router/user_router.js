@@ -66,36 +66,18 @@ router.post('/', function (req, res) {
   var name = req.body.name;
   var password = req.body.password;
 
-  // Validation
-  if (!name || !password) {
-    var message;
-
-    if (!name && !password) {
-      message = 'Please enter a name and password.';
-    } else if (!name) {
-      message = 'Please enter a name.';
-    } else if (!password) {
-      message = 'Please enter a password.';
-    }
-
-    if (message) {
-      res.status(400).json({
-        message: message
-      });
-    } else {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-    }
-  } else {
+  if (name && password) {
     var newUser = new User({
       name: name,
       password: password
     });
 
-    // Save user
     newUser.save(function (error) {
       if (error) {
-        res.status(409).json({
-          message: 'Username \'' + name + '\' already exists.'
+        errorHandler.sendStatus(res, errorHandler.status.ALREADY_EXISTS, {
+          fields: {
+            name: name
+          }
         });
       } else {
         res.status(201).json({
@@ -103,73 +85,104 @@ router.post('/', function (req, res) {
         });
       }
     });
+  } else {
+    var missingFields = [];
+
+    if (!name) {
+      missingFields.push('name');
+    }
+    if (!password) {
+      missingFields.push('password');
+    }
+
+    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+      fields: missingFields
+    });
   }
 });
 
-router.put('/', function (req, res) {
+router.put('/', passport.authenticate('jwt', {
+  session: false
+}), function (req, res) {
   var id = req.body.id;
   var name = req.body.name;
   var password = req.body.password;
   var firstName = req.body.firstName;
   var lastName = req.body.lastName;
 
-  User.findById(id, function (error, doc) {
-    if (error) {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-    } else if (doc) {
-      if (name) {
-        doc.name = name;
-      }
-      if (password) {
-        doc.password = password;
-      }
-      if (firstName) {
-        doc.firstName = firstName;
-      }
-      if (lastName) {
-        doc.lastName = lastName;
-      }
-      doc.save();
+  if (id) {
+    User.findById(id, function (error, doc) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else if (doc) {
+        if (name) {
+          doc.name = name;
+        }
+        if (password) {
+          doc.password = password;
+        }
+        if (firstName) {
+          doc.firstName = firstName;
+        }
+        if (lastName) {
+          doc.lastName = lastName;
+        }
+        doc.save();
 
-      res.status(200).json({
-        message: 'Successfully updated ' + doc.name + '.'
-      });
-    } else {
-      errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
-    }
-  });
+        res.status(200).json({
+          message: 'Successfully updated ' + doc.name + '.'
+        });
+      } else {
+        errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+      }
+    });
+  } else {
+    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+      fields: 'id'
+    });
+  }
 });
 
-router.delete('/', function (req, res) {
+router.delete('/', passport.authenticate('jwt', {
+  session: false
+}), function (req, res) {
   var id = req.body.id;
   var password = req.body.password;
 
-  User.findById(id, function (error, doc) {
-    if (error) {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-    } else if (doc) {
-      // Check if the password is correct.
-      doc.comparePassword(password, function (error, match) {
-        if (match && !error) {
-          User.remove({ _id: id }, function(error) {
-            if (error) {
-              errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-            } else {
-              res.json({
-                message: 'Successfully deleted ' + doc.name
-              });
-            }
-          });
-        } else {
-          res.status(400).json({
-            message: 'Incorrect password.'
-          });
-        }
-      });
-    } else {
-      errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
-    }
-  });
+  if (id) {
+    User.findById(id, function (error, doc) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else if (doc) {
+        // Check if the password is correct.
+        doc.comparePassword(password, function (error, match) {
+          if (match && !error) {
+            User.remove({
+              _id: id
+            }, function (error) {
+              if (error) {
+                errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+              } else {
+                res.json({
+                  message: 'Successfully deleted ' + doc.name
+                });
+              }
+            });
+          } else {
+            res.status(400).json({
+              message: 'Incorrect password.'
+            });
+          }
+        });
+      } else {
+        errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+      }
+    });
+  } else {
+    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+      fields: 'id'
+    });
+  }
 });
 
 module.exports = router;

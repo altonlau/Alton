@@ -24,25 +24,7 @@ function setupAuthenticationRoutes(auth) {
     var password = req.body.password;
 
     // Validation
-    if (!name || !password) {
-      var message;
-
-      if (!name && !password) {
-        message = 'Please enter a name and password.';
-      } else if (!name) {
-        message = 'Please enter a name.';
-      } else if (!password) {
-        message = 'Please enter a password.';
-      }
-
-      if (message) {
-        res.status(400).json({
-          message: message
-        });
-      } else {
-        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      }
-    } else {
+    if (name && password) {
       User.findOne({
         name: name
       }, function (error, user) {
@@ -65,6 +47,19 @@ function setupAuthenticationRoutes(auth) {
         } else {
           errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
         }
+      });
+    } else {
+      var missingFields = [];
+
+      if (!name) {
+        missingFields.push('name');
+      }
+      if (!password) {
+        missingFields.push('password');
+      }
+
+      errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+        fields: missingFields
       });
     }
   });
