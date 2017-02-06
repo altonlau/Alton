@@ -26,8 +26,11 @@ gulp.task('jshint', function () {
 
 // Sass compiler task ==========================================================
 gulp.task('build-css', function () {
-  return gulp.src('public/scss/**/*.scss')
-    .pipe(sass())
+  return gulp.src([
+    'public/scss/**/*.scss',
+    '!public/scss/modules/**/*.scss'
+  ])
+    .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('public/css'));
 });
 

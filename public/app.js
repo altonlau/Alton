@@ -18,6 +18,10 @@ angular.module('altonApp', [
     url: '/',
     controller: 'HomeController',
     templateUrl: 'views/home.html'
+  }).state('admin', {
+    url: '/admin',
+    controller: 'AdminController',
+    templateUrl: 'views/admin.html'
   });
 }).run(function ($rootScope) {
   $rootScope.mobile = function () {

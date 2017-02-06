@@ -1,0 +1,12 @@
+body {
+  background: #ECEEF1;
+  color: #2B313B;
+  font-family: "Roboto", sans-serif; }
+
+.maintenance {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  font-size: 48px;
+  justify-content: center;
+  margin: 0 auto; }

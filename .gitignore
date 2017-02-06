@@ -7,4 +7,3 @@ downloads/*
 !downloads/.gitkeep
 uploads/*
 !uploads/.gitkeep
-public/css

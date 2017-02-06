@@ -1,7 +1,18 @@
-$font: Helvetica, sans-serif;
-$primary-color: #333;
+@import 'modules/breakpoints';
+@import 'modules/colors';
+@import 'modules/fonts';
 
 body {
-  font: $font;
-  color: $primary-color;
+  background: $background-color;
+  color: $dark-text-color;
+  font-family: $font;
+}
+
+.maintenance {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  font-size: $font-xlarge;
+  justify-content: center;
+  margin: 0 auto;
 }
