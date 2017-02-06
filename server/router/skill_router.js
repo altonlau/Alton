@@ -18,6 +18,8 @@ var Skill = require('../models/skill_model');
 // PUT /api/skill
 // DELETE /api/skill
 
+function setupRoutes(fileManager) {
+
 router.get('/', function (req, res) {
   var name = req.query.name;
   var query = {};
@@ -152,4 +154,9 @@ router.delete('/', passport.authenticate('jwt', {
   }
 });
 
-module.exports = router;
+}
+
+module.exports = function(fileManager) {
+  setupRoutes(fileManager);
+  return router;
+};

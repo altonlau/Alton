@@ -11,5 +11,6 @@ var app = express();
 var backend = require('./server/app')(app);
 
 app.use(express.static(__dirname + '/public'));
+app.use('/downloads', express.static(__dirname + '/downloads'));
 
 backend.run();

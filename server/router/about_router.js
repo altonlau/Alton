@@ -18,97 +18,104 @@ var About = require('../models/about_model');
 // PUT /api/about
 // DELETE /api/about
 
-router.get('/', function (req, res) {
-  About.findOne({}, function (error, doc) {
-    if (error) {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-    } else if (doc) {
-      var result = {
-        details: doc.details
-      };
+function setupRoutes(fileManager) {
 
-      res.status(200).json(result);
-    } else {
-      errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
-    }
-  });
-});
-
-router.post('/', passport.authenticate('jwt', {
-  session: false
-}), function (req, res) {
-  var details = req.body.details;
-
-  About.findOne({}, function (error, doc) {
-    if (error) {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-    } else if (doc) {
-      errorHandler.sendStatus(res, errorHandler.status.ALREADY_EXISTS, {
-        fields: 'about'
-      });
-    } else {
-      if (details) {
-        var newAbout = new About({
-          details: details
-        });
-
-        newAbout.save(function (error) {
-          if (error) {
-            errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-          } else {
-            res.status(201).json({
-              message: 'Cool! I learned more about you! :D'
-            });
-          }
-        });
-      } else {
-        errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
-          fields: 'details'
-        });
-      }
-    }
-  });
-});
-
-router.put('/', passport.authenticate('jwt', {
-  session: false
-}), function (req, res) {
-  var details = req.body.details;
-  var update = {};
-
-  if (details) {
-    update.details = details;
-
-    About.findOneAndUpdate({}, update, function (error, doc) {
+  router.get('/', function (req, res) {
+    About.findOne({}, function (error, doc) {
       if (error) {
         errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
       } else if (doc) {
-        res.status(200).json({
-          message: 'Okay. People change. I hope it\'s a good change...'
-        });
+        var result = {
+          details: doc.details
+        };
+
+        res.status(200).json(result);
       } else {
         errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
       }
     });
-  } else {
-    errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
-      fields: 'details'
-    });
-  }
-});
+  });
 
-router.delete('/', passport.authenticate('jwt', {
-  session: false
-}), function (req, res) {
-  About.findOneAndRemove({}, function (error) {
-    if (error) {
-      errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+  router.post('/', passport.authenticate('jwt', {
+    session: false
+  }), function (req, res) {
+    var details = req.body.details;
+
+    About.findOne({}, function (error, doc) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else if (doc) {
+        errorHandler.sendStatus(res, errorHandler.status.ALREADY_EXISTS, {
+          fields: 'about'
+        });
+      } else {
+        if (details) {
+          var newAbout = new About({
+            details: details
+          });
+
+          newAbout.save(function (error) {
+            if (error) {
+              errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+            } else {
+              res.status(201).json({
+                message: 'Cool! I learned more about you! :D'
+              });
+            }
+          });
+        } else {
+          errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+            fields: 'details'
+          });
+        }
+      }
+    });
+  });
+
+  router.put('/', passport.authenticate('jwt', {
+    session: false
+  }), function (req, res) {
+    var details = req.body.details;
+    var update = {};
+
+    if (details) {
+      update.details = details;
+
+      About.findOneAndUpdate({}, update, function (error, doc) {
+        if (error) {
+          errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+        } else if (doc) {
+          res.status(200).json({
+            message: 'Okay. People change. I hope it\'s a good change...'
+          });
+        } else {
+          errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+        }
+      });
     } else {
-      res.status(200).json({
-        message: 'Do you not want me to know you!? T^T'
+      errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+        fields: 'details'
       });
     }
   });
-});
 
-module.exports = router;
+  router.delete('/', passport.authenticate('jwt', {
+    session: false
+  }), function (req, res) {
+    About.findOneAndRemove({}, function (error) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else {
+        res.status(200).json({
+          message: 'Do you not want me to know you!? T^T'
+        });
+      }
+    });
+  });
+
+}
+
+module.exports = function (fileManager) {
+  setupRoutes(fileManager);
+  return router;
+};

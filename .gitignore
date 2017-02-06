@@ -3,4 +3,8 @@ bower_components/
 node_modules/
 npm_debug.log
 
+downloads/*
+!downloads/.gitkeep
+uploads/*
+!uploads/.gitkeep
 public/css

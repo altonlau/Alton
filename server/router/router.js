@@ -11,12 +11,13 @@ var router = express.Router();
 var errorHandler = require('./error_handler');
 var User = require('../models/user_model');
 
-function init(auth) {
+function init(auth, fileManager) {
   setupAuthenticationRoutes(auth);
 
-  router.use('/user', require('./user_router'));
-  router.use('/skill', require('./skill_router'));
-  router.use('/about', require('./about_router'));
+  router.use('/user', require('./user_router')(fileManager));
+  router.use('/skill', require('./skill_router')(fileManager));
+  router.use('/about', require('./about_router')(fileManager));
+  router.use('/project', require('./project_router')(fileManager));
 }
 
 function setupAuthenticationRoutes(auth) {
@@ -66,7 +67,7 @@ function setupAuthenticationRoutes(auth) {
   });
 }
 
-module.exports = function (app, auth) {
-  init(auth);
+module.exports = function (app, auth, fileManager) {
+  init(auth, fileManager);
   app.use('/api', router);
 };

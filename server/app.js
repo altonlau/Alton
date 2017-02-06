@@ -6,7 +6,7 @@
  */
 
 var app, bodyParser, methodOverride, mongoose, passport;
-var auth, db, port, router;
+var auth, db, fileManager, fileHandler, port, router;
 
 function init(express) {
   app = express;
@@ -17,11 +17,13 @@ function init(express) {
 
   auth = require('./authenticate');
   db = require('./config/db');
+  fileManager = require('./file_manager');
   router = require('./router/router');
   port = process.env.PORT || 3000;
 
   setupConfiguration();
   setupDatabase();
+  setupFileManager();
   setupRouter();
 }
 
@@ -51,8 +53,12 @@ function setupDatabase() {
   mongoose.connect(db.url);
 }
 
+function setupFileManager() {
+  fileHandler = fileManager(mongoose);
+}
+
 function setupRouter() {
-  router(app, auth);
+  router(app, auth, fileHandler);
 }
 
 function startListening() {

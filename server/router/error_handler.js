@@ -25,6 +25,14 @@ var ERROR_STATUS = {
   INVALID_PARAMETERS: {
     code: 400,
     message: 'You entered something wrong!'
+  },
+  UPLOAD_FAILED: {
+    code: 400,
+    message: 'Not sure why, but I can\'t upload right now.'
+  },
+  DOWNLOAD_FAILED: {
+    code: 400,
+    message: 'Hmmm I can\'t seem to transfer files from my local database to a folder.'
   }
 };
 
