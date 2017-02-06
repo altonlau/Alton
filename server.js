@@ -10,7 +10,7 @@ var app = express();
 
 var backend = require('./server/app')(app);
 
-app.use(express.static(__dirname + (process.env.NODE_ENV === 'production' ? '/dist' : '/public')));
+app.use(express.static(__dirname + (process.env.ENVIRONMENT === 'production' ? '/dist' : '/public')));
 app.use('/downloads', express.static(__dirname + '/downloads'));
 
 backend.run();
