@@ -2,19 +2,26 @@
 <html lang="en">
 
 <head>
+
   <title>Alton Lau</title>
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
+  <!-- build:css css/vendor.min.css -->
   <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- endbuild -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
-  <link href="css/main.css" rel="stylesheet">
+  <!-- build:css css/style.min.css -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- endinject -->
+  <!-- endbuild -->
+
 </head>
 
 <body ng-app="altonApp">
@@ -23,6 +30,7 @@
   <div ui-view></div>
 
   <!-- Javascript -->
+  <!-- build:js scripts/vendor.min.js -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/tether/dist/js/tether.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -31,10 +39,17 @@
   <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
   <script src="bower_components/angular-touch/angular-touch.min.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <!-- endbuild -->
+
   <script src="//localhost:35729/livereload.js?snipver=1"></script>
 
-  <script src="app.js"></script>
+  <!-- build:js scripts/scripts.min.js -->
+  <script src="scripts/app.js"></script>
   <script src="scripts/controllers/home_controller.js"></script>
+  <!-- inject:js -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
 </body>
 
 </html>
