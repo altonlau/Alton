@@ -2,6 +2,9 @@
 @import 'modules/colors';
 @import 'modules/fonts';
 
+@import 'partials/button';
+@import 'partials/form';
+
 body {
   background: $background-color;
   color: $dark-text-color;

@@ -7,6 +7,7 @@
 
 angular.module('altonApp', [
   'ngAnimate',
+  'ngCookies',
   'ngSanitize',
   'ngTouch',
   'ui.router'
@@ -22,6 +23,10 @@ angular.module('altonApp', [
     url: '/admin',
     controller: 'AdminController',
     templateUrl: 'views/admin.html'
+  }).state('admin.dashboard', {
+    url: '/dashboard',
+    controller: 'AdminDashboardController',
+    templateUrl: 'views/admin.dashboard.html'
   });
 }).run(function ($rootScope) {
   $rootScope.mobile = function () {

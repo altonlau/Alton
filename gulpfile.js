@@ -39,15 +39,12 @@ gulp.task('jshint', function () {
 
 // Sass compiler task ==========================================================
 gulp.task('build-sass:public', function () {
-  return gulp.src([
-    'public/scss/**/*.scss',
-    '!public/scss/modules/**/*.scss'
-  ])
+  return gulp.src('public/scss/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('public/css'));
 });
 
-// Inject css task =============================================================
+// Inject task =================================================================
 gulp.task('inject:public', function () {
   return gulp.src('public/index.html')
     .pipe(inject(gulp.src('public/css/**/*.css', {
@@ -71,7 +68,7 @@ gulp.task('nodemon', function () {
 
 // Reload task =================================================================
 gulp.task('reload-css', function (done) {
-  runSequence('build-sass:public', 'inject-css:public', 'refresh', done);
+  runSequence('clean:public', 'build-sass:public', 'inject:public', 'refresh', done);
 });
 
 gulp.task('reload-js', function (done) {
@@ -81,7 +78,7 @@ gulp.task('reload-js', function (done) {
 // Refresh page task ===========================================================
 gulp.task('refresh', function () {
   gulp.src('./')
-    .pipe(wait(1000))
+    .pipe(wait(2000))
     .pipe(livereload());
 });
 

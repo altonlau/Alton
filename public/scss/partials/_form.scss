@@ -1,0 +1,11 @@
+@import 'modules/colors';
+
+.form-control {
+  &.form-theme {
+    border: 1px solid transparent;
+
+    &:focus {
+      border: 1px solid $default-color;
+    }
+  }
+}

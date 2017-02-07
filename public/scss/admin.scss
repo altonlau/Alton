@@ -1,0 +1,42 @@
+@import 'modules/breakpoints';
+@import 'modules/colors';
+@import 'modules/fonts';
+
+.admin-view {
+  .login {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+
+    form {
+      width: 100%;
+
+      @include respond-to ('medium') {
+        width: $medium;
+      }
+
+      .error {
+        color: $fail-color;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  .menu {
+    display: flex;
+    justify-content: center;
+
+    li {
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .dashboard-view {
+    @import 'admin.dashboard';
+  }
+}

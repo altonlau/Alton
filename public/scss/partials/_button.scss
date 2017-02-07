@@ -1,0 +1,31 @@
+@import 'modules/colors';
+
+.btn {
+  cursor: pointer;
+
+  &.circular {
+    align-items: center;
+    border-radius: 24px;
+    display: flex;
+    height: 48px;
+    justify-content: center;
+    width: 48px;
+
+    &.large {
+      border-radius: 32px;
+      height: 64px;
+      width: 64px;
+    }
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.btn-theme {
+    &.default {
+      background: $default-color;
+      color: $light-text-color;
+    }
+  }
+}
