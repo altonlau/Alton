@@ -128,6 +128,12 @@ gulp.task('build-images:dist', function () {
     .pipe(gulp.dest('dist/images'));
 });
 
+// Copy font task =============================================================
+gulp.task('build-fonts:dist', function() {
+  return gulp.src('public/bower_components/font-awesome/fonts/*')
+  .pipe(gulp.dest('dist/fonts'))
+});
+
 // Javascript minify task ======================================================
 gulp.task('build:dist', function () {
   return gulp.src('public/*.html')
@@ -147,5 +153,5 @@ gulp.task('default', function (done) {
 });
 
 gulp.task('build', function (done) {
-  runSequence('clean:dist', 'build-sass:public', 'inject:public', ['build:dist', 'build-views:dist', 'build-images:dist'], done);
+  runSequence('clean:dist', 'build-sass:public', 'inject:public', ['build:dist', 'build-views:dist', 'build-images:dist', 'build-fonts:dist'], done);
 })

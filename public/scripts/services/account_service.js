@@ -9,7 +9,7 @@ angular.module('altonApp').service('accountService', function ($cookies, $http, 
 
   var cookiesTokenKey = 'authToken';
   var defaultContentType = 'application/json';
-  var host = routeConstant.DEV.HOST.includes($location.host()) ? routeConstant.DEV.HOST : routeConstant.PROD.HOST;
+  var host = $location.protocol() + '://' + $location.host() + ':' + $location.port();
 
   this.login = function (name, password) {
     var defer = $q.defer();

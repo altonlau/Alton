@@ -57,6 +57,10 @@ angular.module('altonApp').controller('AdminController', function ($scope, $stat
     }
   }
 
+  $scope.$on('$stateChangeSuccess', function() {
+    setup();
+  });
+
   setup();
 
 });
