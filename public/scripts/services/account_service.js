@@ -36,6 +36,10 @@ angular.module('altonApp').service('accountService', function ($cookies, $http, 
     return defer.promise;
   };
 
+  this.logout = function () {
+    $cookies.remove(cookiesTokenKey);
+  };
+
   this.isLoggedIn = function () {
     var token = $cookies.get(cookiesTokenKey);
     return !!token;

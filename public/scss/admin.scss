@@ -1,13 +1,12 @@
 @import 'modules/breakpoints';
 @import 'modules/colors';
 @import 'modules/fonts';
+@import 'modules/sizes';
+@import 'modules/shadows';
 
 .admin-view {
   .login {
-    align-items: center;
-    display: flex;
     height: 100vh;
-    justify-content: center;
 
     form {
       width: 100%;
@@ -17,7 +16,7 @@
       }
 
       .error {
-        color: $fail-color;
+        color: $error-color;
         display: inline-block;
         width: 100%;
         text-align: center;
@@ -25,18 +24,31 @@
     }
   }
 
+  .logout {
+    position: absolute;
+    right: $margin-small;
+    top: $margin-small;
+    @include shadow-hoverable(0);
+  }
+
   .menu {
     display: flex;
     justify-content: center;
+    list-style-type: none;
+    margin-top: $margin-xlarge;
+    padding: 0;
 
     li {
+      @include shadow-hoverable(1);
       &:not(:last-child) {
-        margin-right: 8px;
+        margin-right: $margin-medium;
       }
     }
   }
 
   .dashboard-view {
     @import 'admin.dashboard';
+    padding-left: $margin-small;
+    padding-right: $margin-small;
   }
 }

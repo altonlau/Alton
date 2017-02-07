@@ -8,6 +8,7 @@
 angular.module('altonApp').controller('AdminController', function ($scope, $state, accountService) {
 
   $scope.isLoggedIn = accountService.isLoggedIn();
+  $scope.currentState = $state.current.name;
 
   $scope.loginForm = {
     name: null,
@@ -21,10 +22,9 @@ angular.module('altonApp').controller('AdminController', function ($scope, $stat
 
     if (name && password) {
       accountService.login(name, password).then(function () {
+        $scope.isLoggedIn = accountService.isLoggedIn();
         if ($state.current.name === 'admin') {
-          $state.go('dashboard')
-        } else {
-          $scope.isLoggedIn = accountService.isLoggedIn();
+          $state.go('admin.dashboard');
         }
       }, function (error) {
         $scope.loginForm.error = error;
@@ -38,6 +38,17 @@ angular.module('altonApp').controller('AdminController', function ($scope, $stat
         $scope.loginForm.error = 'You\'re missing a Password!';
       }
     }
+  };
+
+  $scope.logout = function () {
+    accountService.logout();
+    $scope.loginForm = {
+      name: null,
+      password: null,
+      error: ''
+    };
+    $scope.isLoggedIn = accountService.isLoggedIn();
+    $state.go('admin');
   };
 
   function setup() {

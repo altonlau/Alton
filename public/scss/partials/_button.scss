@@ -1,6 +1,7 @@
 @import 'modules/colors';
 
 .btn {
+  border-radius: 2px;
   cursor: pointer;
 
   &.circular {
@@ -23,9 +24,25 @@
   }
 
   &.btn-theme {
-    &.default {
-      background: $default-color;
-      color: $light-text-color;
+    &.red {
+      background: $red-color;
+      color: $light-text-primary-color;
+    }
+    &.yellow {
+      background: $yellow-color;
+      color: $light-text-primary-color;
+    }
+    &.green {
+      background: $green-color;
+      color: $light-text-primary-color;
+    }
+    &.blue {
+      background: $blue-color;
+      color: $light-text-primary-color;
+    }
+    &.purple {
+      background: $purple-color;
+      color: $light-text-primary-color;
     }
   }
 }

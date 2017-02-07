@@ -1,8 +1,28 @@
 // Base colors
-$background-color: #ECEEF1;
-$foreground-color: #73A8AF;
-$default-color: #A0CAB5;
-$pass-color: #CCDFCC;
-$fail-color: #FE8A8A;
-$dark-text-color: #2B313B;
-$light-text-color: white;
+$red-color: #EB7565;
+$yellow-color: #FCCF26;
+$green-color: #7BCAA5;
+$blue-color: #5696D4;
+$purple-color: #A260AA;
+
+// Grayscale
+$black: #000000;
+$dark-grey-2-color: #212121;
+$dark-grey-1-color: #424242;
+$grey-color: #BDBDBD;
+$light-grey-1-color: #F5F5F5;
+$light-grey-2-color: #FAFAFA;
+$white: #FFFFFF;
+
+// Text colors
+$dark-text-primary-color: rgba(0, 0, 0, 0.87);
+$dark-text-secondary-color: rgba(0, 0, 0, 0.54);
+$dark-text-disabled-color: rgba(0, 0, 0, 0.38);
+$light-text-primary-color: rgba(255, 255, 255, 1.00);
+$light-text-secondary-color: rgba(255, 255, 255, 0.70);
+$light-text-disabled-color: rgba(255, 255, 255, 0.50);
+
+// Property colors
+$background-color: $light-grey-2-color;
+$check-color: $green-color;
+$error-color: $red-color;

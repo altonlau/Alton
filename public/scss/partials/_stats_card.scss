@@ -1,0 +1,37 @@
+.stats-card {
+  font-weight: $light;
+
+  &.red {
+    background: $red-color;
+  }
+
+  &.yellow {
+    background: $yellow-color;
+  }
+
+  &.green {
+    background: $green-color;
+  }
+
+  &.blue {
+    background: $blue-color;
+  }
+
+  &.purple {
+    background: $purple-color;
+  }
+
+  .stats-body {
+    background: $white;
+    border-radius: 2px;
+    font-size: $font-small;
+    font-weight: $regular;
+    margin-bottom: $margin-small;
+    min-height: 144px;
+    overflow: hidden;
+    padding: $padding-xsmall $padding-small;
+    @include shadow(1);
+  }
+
+  @include respond-to ('small') {}
+}
