@@ -1,13 +1,59 @@
 @import 'partials/stats_card';
 
-.month {
-  color: $red-color;
-  font-size: $font-regular;
-  font-weight: $regular;
-  text-transform: uppercase;
+.calendar {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+
+  .month {
+    color: $red-color;
+    font-size: $font-regular;
+    font-weight: $regular;
+    text-transform: uppercase;
+  }
+
+  .day {
+    font-size: $font-xlarge;
+    font-weight: $bold;
+  }
 }
 
-.day {
-  font-size: $font-xlarge;
-  font-weight: $bold;
+.no-projects {
+  font-size: $font-regular;
+  height: 100%;
+}
+
+.top-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: $padding-small 0;
+
+  li {
+    overflow-x: hidden;
+    white-space: nowrap;
+
+    .num-bullet {
+      border-radius: 16px;
+      color: $light-text-primary-color;
+      display: inline-block;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 $margin-small;
+      text-align: center;
+      width: 32px;
+
+      &.blue {
+        background: $blue-color;
+      }
+
+      &.yellow {
+        background: $yellow-color;
+      }
+    }
+  }
 }

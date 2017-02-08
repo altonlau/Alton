@@ -5,23 +5,18 @@
  * Description: Account service
  */
 
-angular.module('altonApp').service('accountService', function ($cookies, $http, $location, $q, routeConstant) {
+angular.module('altonApp').service('accountService', function ($cookies, $q, apiService) {
 
   var cookiesTokenKey = 'authToken';
-  var defaultContentType = 'application/json';
-  var host = $location.protocol() + '://' + $location.host() + ':' + $location.port();
 
   this.login = function (name, password) {
     var defer = $q.defer();
+    var data = {
+      name: name,
+      password: password
+    };
 
-    $http({
-      method: 'POST',
-      url: host + routeConstant.ENDPOINT.AUTHENTICATE,
-      data: {
-        name: name,
-        password: password
-      }
-    }).then(function (response) {
+    apiService.post(data, apiService.endpoints.POST.AUTHENTICATE).then(function (response) {
       var token = response.data.token;
       var date = new Date();
       date.setDate(date.getDate() + 1);

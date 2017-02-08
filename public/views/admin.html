@@ -17,10 +17,10 @@
 
   <div ng-if="isLoggedIn">
     <ul class="menu">
-      <li class="btn btn-theme blue circular large" ng-class="{ active: currentState === 'admin.dashboard' }"><i class="fa fa-tachometer fa-2x"></i></li>
-      <li class="btn btn-theme yellow circular large" ng-class="{ active: currentState === 'admin.projects' }"><i class="fa fa-book fa-2x"></i></li>
-      <li class="btn btn-theme green circular large" ng-class="{ active: currentState === 'admin.skills' }"><i class="fa fa-wrench fa-2x"></i></li>
-      <li class="btn btn-theme red circular large" ng-class="{ active: currentState === 'admin.user' }"><i class="fa fa-user fa-2x"></i></li>
+      <li class="btn btn-theme blue circular large" ng-class="{ active: currentState === 'admin.dashboard' }" ui-sref="admin.dashboard"><i class="fa fa-tachometer fa-2x"></i></li>
+      <li class="btn btn-theme yellow circular large" ng-class="{ active: currentState === 'admin.projects' }" ui-sref="admin.projects"><i class="fa fa-book fa-2x"></i></li>
+      <li class="btn btn-theme green circular large" ng-class="{ active: currentState === 'admin.skills' }" ui-sref="admin.skills"><i class="fa fa-wrench fa-2x"></i></li>
+      <li class="btn btn-theme red circular large" ng-class="{ active: currentState === 'admin.user' }" ui-sref="admin.user"><i class="fa fa-user fa-2x"></i></li>
     </ul>
     <div ui-view></div>
     <button class="mx-auto mb-2 btn btn-theme red circular logout" ng-click="logout()"><i class="fa fa-power-off"></i></button>

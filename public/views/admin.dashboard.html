@@ -2,43 +2,75 @@
 
   <div class="container-fluid">
     <div class="row">
+
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="stats-card">
           Today
-          <div class="d-flex flex-column align-items-center justify-content-center stats-body">
-            <div class="month">
-              {{ calendar.month }}
+          <div class="card">
+            <div class="stats-body">
+
+              <div class="calendar">
+                <div class="month">
+                  {{ calendar.month }}
+                </div>
+                <div class="day">
+                  {{ calendar.day }}
+                </div>
+              </div>
+
             </div>
-            <div class="day">
-              {{ calendar.day }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3">
+        <div class="stats-card">
+          Most Viewed Projects
+          <div class="card">
+            <div class="stats-body">
+
+              <div class="d-flex align-items-center justify-content-center no-projects">
+                No Projects
+              </div>
+              <ul class="top-list">
+                <li>
+                  <span class="num-bullet yellow">1</span> Project 1
+                </li>
+                <li>
+                  <span class="num-bullet yellow">2</span> Project 2
+                </li>
+                <li>
+                  <span class="num-bullet yellow">3</span> Project 3
+                </li>
+              </ul>
+
             </div>
           </div>
         </div>
       </div>
+
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="stats-card">
-          Projects
-          <div class="stats-body">
-            <!-- TODO -->
+          Most Viewed Skills
+          <div class="card">
+            <div class="stats-body">
+              <!-- TODO -->
+            </div>
           </div>
         </div>
       </div>
+
       <div class="col-xs-12 col-sm-6 col-md-3">
         <div class="stats-card">
-          Skills
-          <div class="stats-body">
-            <!-- TODO -->
+          Website Views
+          <div class="card">
+            <div class="stats-body">
+              <!-- TODO -->
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-3">
-        <div class="stats-card">
-          Views
-          <div class="stats-body">
-            <!-- TODO -->
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
 

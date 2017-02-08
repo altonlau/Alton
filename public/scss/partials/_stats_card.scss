@@ -1,5 +1,6 @@
 .stats-card {
   font-weight: $light;
+  margin-bottom: $margin-small;
 
   &.red {
     background: $red-color;
@@ -21,16 +22,21 @@
     background: $purple-color;
   }
 
-  .stats-body {
+  .card {
     background: $white;
     border-radius: 2px;
-    font-size: $font-small;
-    font-weight: $regular;
-    margin-bottom: $margin-small;
     min-height: 144px;
-    overflow: hidden;
-    padding: $padding-xsmall $padding-small;
+    position: relative;
     @include shadow(1);
+
+    .stats-body {
+      font-size: $font-small;
+      font-weight: $regular;
+      height: 100%;
+      padding: $padding-xsmall $padding-small;
+      position: absolute;
+      width: 100%;
+    }
   }
 
   @include respond-to ('small') {}
