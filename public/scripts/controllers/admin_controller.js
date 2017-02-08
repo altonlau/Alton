@@ -5,7 +5,7 @@
  * Description: Admin controller
  */
 
-angular.module('altonApp').controller('AdminController', function ($scope, $state, accountService) {
+angular.module('altonApp').controller('AdminController', function ($scope, $state, accountService, systemMessageService) {
 
   $scope.isLoggedIn = accountService.isLoggedIn();
   $scope.currentState = $state.current.name;
@@ -43,6 +43,7 @@ angular.module('altonApp').controller('AdminController', function ($scope, $stat
 
   $scope.logout = function () {
     accountService.logout();
+    systemMessageService.showMessage('Logged out!');
     $scope.loginForm = {
       name: null,
       password: null,

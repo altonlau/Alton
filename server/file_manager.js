@@ -109,7 +109,6 @@ function getFile(fileName) {
 
 function getFiles(fileNames) {
   var promises = [];
-  console.log(fileNames);
   fileNames.forEach(function (fileName) {
     promises.push(getFile(fileName));
   });

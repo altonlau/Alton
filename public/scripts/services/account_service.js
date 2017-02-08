@@ -7,6 +7,8 @@
 
 angular.module('altonApp').service('accountService', function ($cookies, $q, apiService) {
 
+  var cookieToken = 'token';
+
   this.login = function (name, password) {
     var defer = $q.defer();
     var data = {
@@ -18,7 +20,7 @@ angular.module('altonApp').service('accountService', function ($cookies, $q, api
       var token = response.data.token;
       var date = new Date();
       date.setDate(date.getDate() + 1);
-      $cookies.put('token', token, {
+      $cookies.put(cookieToken, token, {
         expires: date
       });
       defer.resolve();
@@ -30,12 +32,16 @@ angular.module('altonApp').service('accountService', function ($cookies, $q, api
   };
 
   this.logout = function () {
-    $cookies.remove('token');
+    $cookies.remove(cookieToken);
   };
 
   this.isLoggedIn = function () {
-    var token = $cookies.get('token');
+    var token = $cookies.get(cookieToken);
     return !!token;
+  };
+
+  this.getToken = function () {
+    return $cookies.get(cookieToken);
   };
 
 });

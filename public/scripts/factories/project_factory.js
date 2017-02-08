@@ -5,7 +5,7 @@
  * Description: Project model
  */
 
-angular.module('altonApp').factory('projectFactory', function ($cookies, $q, apiService) {
+angular.module('altonApp').factory('projectFactory', function ($q, apiService) {
 
   var projects = [];
 
@@ -19,6 +19,7 @@ angular.module('altonApp').factory('projectFactory', function ($cookies, $q, api
   function loadProjects() {
     var defer = $q.defer();
 
+    projects = [];
     apiService.get(null, apiService.endpoints.GET.PROJECT).then(function (response) {
       response.data.forEach(function (data) {
         projects.push(new Project(data.name, data.description, data.images, data.skills));

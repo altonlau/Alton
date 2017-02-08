@@ -39,7 +39,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
 
   this.get = function (data, endpoint, token) {
     if (hasEndpoint(this.endpoints.GET, endpoint)) {
-      return performRequest(data, endpoint, 'GET', 'application/json', token)
+      return performRequest(data, endpoint, 'GET', 'application/json', token);
     }
 
     return null;
