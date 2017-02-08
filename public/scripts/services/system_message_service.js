@@ -8,6 +8,13 @@
 angular.module('altonApp').service('systemMessageService', function () {
 
   var systemMessage = $('<div class="system-message"></div>');
+  var messageQueue = [];
+  var messageType = {
+    DEFAULT: 0,
+    SUCCESS: 1,
+    ERROR: 2
+  };
+  var messageShowing = false;
   systemMessage.css({
     'background': '#424242',
     'border-radius': '128px',
@@ -28,23 +35,50 @@ angular.module('altonApp').service('systemMessageService', function () {
   });
 
   this.showMessage = function (message) {
-    systemMessage.css('background', '#424242');
-    showMessage(message);
+    messageQueue.push({
+      message: message,
+      type: messageType.DEFAULT
+    });
+    showMessage();
   };
 
   this.showErrorMessage = function (message) {
-    systemMessage.css('background', '#EB7565');
-    showMessage(message);
+    messageQueue.push({
+      message: message,
+      type: messageType.ERROR
+    });
+    showMessage();
   };
 
   this.showSuccessMessage = function (message) {
-    systemMessage.css('background', '#7BCAA5');
-    showMessage(message);
+    messageQueue.push({
+      message: message,
+      type: messageType.SUCCESS
+    });
+    showMessage();
   };
 
-  function showMessage(message) {
-    systemMessage.html(message);
-    systemMessage.fadeTo(200, 0.87).delay(2000).fadeOut(200);
+  function showMessage() {
+    if (!messageShowing) {
+      var message = messageQueue.shift();
+
+      messageShowing = true;
+      systemMessage.html(message.message);
+      if (message.type === messageType.ERROR) {
+        systemMessage.css('background', '#EB7565');
+      } else if (message.type === messageType.SUCCESS) {
+        systemMessage.css('background', '#7BCAA5');
+      } else {
+        systemMessage.css('background', '#424242');
+      }
+
+      systemMessage.fadeTo(200, 0.87).delay(2000).fadeOut(200, function () {
+        messageShowing = false;
+        if (messageQueue.length) {
+          showMessage();
+        }
+      });
+    }
   }
 
   function resize() {
