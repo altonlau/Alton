@@ -93,16 +93,6 @@ gulp.task('watch', function () {
   ], ['reload-js']);
 });
 
-// Open task ===================================================================
-gulp.task('open', function () {
-  return gulp.src('public/index.html')
-    .pipe(wait(1000))
-    .pipe(open({
-      app: 'google chrome',
-      uri: 'http://localhost:3000'
-    }));
-});
-
 //==============================================================================
 // Build Tasks
 //==============================================================================
@@ -129,9 +119,9 @@ gulp.task('build-images:dist', function () {
 });
 
 // Copy font task =============================================================
-gulp.task('build-fonts:dist', function() {
+gulp.task('build-fonts:dist', function () {
   return gulp.src('public/bower_components/font-awesome/fonts/*')
-  .pipe(gulp.dest('dist/fonts'))
+    .pipe(gulp.dest('dist/fonts'))
 });
 
 // Javascript minify task ======================================================
@@ -149,7 +139,16 @@ gulp.task('build:dist', function () {
 //==============================================================================
 
 gulp.task('default', function (done) {
-  runSequence('clean:public', ['jshint', 'build-sass:public'], 'inject:public', ['nodemon', 'watch'], 'open', done);
+  runSequence('clean:public', ['jshint', 'build-sass:public'], 'inject:public', ['nodemon', 'watch'], done);
+});
+
+gulp.task('browser', ['default'], function (done) {
+  return gulp.src('public/index.html')
+    .pipe(wait(1000))
+    .pipe(open({
+      app: 'google chrome',
+      uri: 'http://localhost:3000'
+    }));
 });
 
 gulp.task('build', function (done) {

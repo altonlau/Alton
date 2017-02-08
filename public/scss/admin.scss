@@ -27,10 +27,13 @@
   }
 
   .logout {
-    position: absolute;
-    right: $margin-small;
-    top: $margin-small;
     @include shadow-hoverable(0);
+
+    @include respond-to ('small') {
+      position: absolute;
+      right: $margin-small;
+      top: $margin-small;
+    }
   }
 
   .menu {
@@ -42,6 +45,7 @@
 
     li {
       @include shadow-hoverable(1);
+
       &:not(:last-child) {
         margin-right: $margin-medium;
       }

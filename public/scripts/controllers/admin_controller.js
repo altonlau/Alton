@@ -20,6 +20,7 @@ angular.module('altonApp').controller('AdminController', function ($scope, $stat
     var name = $scope.loginForm.name;
     var password = $scope.loginForm.password;
 
+    $('input').blur();
     if (name && password) {
       accountService.login(name, password).then(function () {
         $scope.isLoggedIn = accountService.isLoggedIn();
