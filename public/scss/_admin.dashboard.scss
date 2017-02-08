@@ -20,9 +20,8 @@
   }
 }
 
-.no-projects {
+.no-items {
   font-size: $font-regular;
-  height: 100%;
 }
 
 .top-list {
@@ -47,8 +46,8 @@
       text-align: center;
       width: 32px;
 
-      &.blue {
-        background: $blue-color;
+      &.green {
+        background: $green-color;
       }
 
       &.yellow {

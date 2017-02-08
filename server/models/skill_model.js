@@ -17,6 +17,10 @@ var skillSchema = new Schema({
   level: {
     type: Number,
     required: true
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 });
 

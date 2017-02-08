@@ -23,7 +23,11 @@ var projectSchema = new Schema({
   skills: [{
     type: Schema.Types.ObjectId,
     ref: 'Skill'
-  }]
+  }],
+  views: {
+    type: Number,
+    default: 0
+  }
 });
 
 module.exports = mongoose.model('Project', projectSchema);

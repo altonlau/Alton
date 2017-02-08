@@ -29,11 +29,14 @@
           <div class="card">
             <div class="stats-body">
 
-              <div class="d-flex align-items-center justify-content-center no-projects" ng-if="projects && !projects.length">
+              <div class="center" ng-if="!projects">
+                <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+              </div>
+              <div class="center no-items" ng-if="projects && !projects.length">
                 No Projects
               </div>
               <ul class="top-list">
-                <li ng-repeat="project in projects | limitTo: 3">
+                <li ng-repeat="project in projects | limitTo: 3 | orderBy:'-views'">
                   <span class="num-bullet yellow">{{ $index + 1 }}</span>{{ project.name }}
                 </li>
               </ul>
@@ -48,7 +51,19 @@
           Most Viewed Skills
           <div class="card">
             <div class="stats-body">
-              <!-- TODO -->
+
+              <div class="center" ng-if="!skills">
+                <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
+              </div>
+              <div class="center no-items" ng-if="skills && !skills.length">
+                No Skills
+              </div>
+              <ul class="top-list">
+                <li ng-repeat="skill in skills | limitTo: 3 | orderBy:'-views'">
+                  <span class="num-bullet green">{{ $index + 1 }}</span>{{ skill.name }}
+                </li>
+              </ul>
+
             </div>
           </div>
         </div>
