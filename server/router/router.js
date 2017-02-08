@@ -18,6 +18,7 @@ function init(auth, fileManager) {
   router.use('/skill', require('./skill_router')(fileManager));
   router.use('/about', require('./about_router')(fileManager));
   router.use('/project', require('./project_router')(fileManager));
+  router.use('/website', require('./website_router')(fileManager));
 }
 
 function setupAuthenticationRoutes(auth) {

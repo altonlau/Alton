@@ -14,14 +14,20 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
       ABOUT: '/api/about',
       PROJECT: '/api/project',
       SKILL: '/api/skill',
-      USER: '/api/user'
+      USER: '/api/user',
+      WEBSITE_MAINTENANCE: '/api/website/maintenance',
+      WEBSITE_VIEWS: '/api/website/views'
     },
     POST: {
       ABOUT: '/api/about',
       AUTHENTICATE: '/api/authenticate',
       PROJECT: '/api/project',
       SKILL: '/api/skill',
-      USER: '/api/user'
+      USER: '/api/user',
+      PROJECT_VIEWED: '/api/project/viewed',
+      SKILL_VIEWED: '/api/skill/viewed',
+      WEBSITE_MAINTENANCE: '/api/website/maintenance',
+      WEBSITE_VIEWED: '/api/website/viewed'
     },
     PUT: {
       ABOUT: '/api/about',
@@ -59,7 +65,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
     return defer.promise;
   };
 
-  this.put = function (data, endpoint) {
+  this.put = function (data, endpoint, token) {
     var defer = $q.defer();
 
     if (hasEndpoint(this.endpoints.PUT, endpoint)) {
@@ -73,7 +79,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
     return defer.promise;
   };
 
-  this.delete = function (data, endpoint) {
+  this.delete = function (data, endpoint, token) {
     var defer = $q.defer();
 
     if (hasEndpoint(this.endpoints.DELETE, endpoint)) {
