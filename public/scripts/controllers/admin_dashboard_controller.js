@@ -5,14 +5,16 @@
  * Description: Admin dashboard controller
  */
 
-angular.module('altonApp').controller('AdminDashboardController', function ($scope, $timeout) {
+angular.module('altonApp').controller('AdminDashboardController', function ($scope, $timeout, projectFactory) {
 
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var projectLoaded = false;
 
   $scope.calendar = {
     month: months[0],
     day: 0
   };
+  $scope.projects = null;
 
   function setTime() {
     var date = new Date();
@@ -22,8 +24,20 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     $timeout(setTime, 1000);
   }
 
+  function loaded() {
+    if (projectLoaded) {
+      $scope.projects = projectFactory.getAll();
+    }
+  }
+
   function setup() {
     setTime();
+    projectFactory.load().then(function() {
+      projectLoaded = true;
+      loaded();
+    }, function(response) {
+      console.error(response);
+    });
   }
 
   setup();

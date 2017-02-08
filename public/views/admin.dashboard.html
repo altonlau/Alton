@@ -29,18 +29,12 @@
           <div class="card">
             <div class="stats-body">
 
-              <div class="d-flex align-items-center justify-content-center no-projects">
+              <div class="d-flex align-items-center justify-content-center no-projects" ng-if="projects && !projects.length">
                 No Projects
               </div>
               <ul class="top-list">
-                <li>
-                  <span class="num-bullet yellow">1</span> Project 1
-                </li>
-                <li>
-                  <span class="num-bullet yellow">2</span> Project 2
-                </li>
-                <li>
-                  <span class="num-bullet yellow">3</span> Project 3
+                <li ng-repeat="project in projects | limitTo: 3">
+                  <span class="num-bullet yellow">{{ $index + 1 }}</span>{{ project.name }}
                 </li>
               </ul>
 
