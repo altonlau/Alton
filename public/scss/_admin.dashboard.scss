@@ -1,4 +1,4 @@
-@import 'partials/stats_card';
+@import 'partials/card';
 
 .my-content {
   margin-bottom: $margin-large;
@@ -12,6 +12,14 @@
 }
 
 .main-dashboard {
+  .card-title {
+    font-weight: $light;
+  }
+
+  .card {
+    height: 144px;
+  }
+
   .calendar {
     align-items: center;
     display: flex;
