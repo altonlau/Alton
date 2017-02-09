@@ -30,16 +30,21 @@ function setupAuthenticationRoutes(auth) {
     if (name && password) {
       User.findOne({
         name: name
-      }, function (error, user) {
+      }, function (error, doc) {
         if (error) {
           errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-        } else if (user) {
+        } else if (doc) {
           // Check if the password is correct.
-          user.comparePassword(password, function (error, match) {
+          doc.comparePassword(password, function (error, match) {
             if (match && !error) {
               // Prepare token for authentication
               res.status(200).json({
-                token: auth.generateToken(user)
+                token: auth.generateToken(doc),
+                user: {
+                  id: doc._id,
+                  firstName: doc.firstName,
+                  lastName: doc.lastName
+                }
               });
             } else {
               res.status(400).json({

@@ -5,7 +5,7 @@
  * Description: Admin dashboard controller
  */
 
-angular.module('altonApp').controller('AdminDashboardController', function ($scope, $timeout, projectFactory, skillFactory, systemMessageService, websiteService) {
+angular.module('altonApp').controller('AdminDashboardController', function ($scope, $timeout, projectFactory, skillFactory, accountService, systemMessageService, websiteService) {
 
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   var projectLoaded = false;
@@ -21,6 +21,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     maintenance: null,
     views: null
   };
+  $scope.user = null;
 
   function setTime() {
     var date = new Date();
@@ -48,6 +49,10 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     });
   }
 
+  function loadUser() {
+    $scope.user = accountService.getProfile();
+  }
+
   function loadWebsiteStats() {
     websiteService.maintenance().then(function (response) {
       $scope.stats.maintenance = response;
@@ -66,6 +71,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     setTime();
     loadProjects();
     loadSkills();
+    loadUser();
     loadWebsiteStats();
   }
 
