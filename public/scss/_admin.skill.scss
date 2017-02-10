@@ -1,0 +1,41 @@
+@import 'partials/content_card';
+
+.loading {
+  color: $green-color;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.skill-name {
+  border-bottom: 2px solid $green-color;
+  font-size: $font-regular;
+  margin-bottom: $margin-small;
+}
+
+.skill-level {
+  text-align: center;
+}
+
+.level-control {
+  text-align: center;
+
+  button {
+    display: inline-block;
+  }
+
+  .selector {
+    display: inline-block;
+    height: 32px;
+    padding: 0;
+    text-align: center;
+    width: 48px;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

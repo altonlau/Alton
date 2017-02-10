@@ -1,0 +1,19 @@
+.animate-if {
+  &.ng-enter {
+    opacity: 0;
+    transition: opacity 1s;
+  }
+
+  &.ng-enter-active {
+    opacity: 1;
+  }
+
+  &.ng-leave {
+    opacity: 1;
+    transition: opacity 0.2;
+  }
+
+  &.ng-leave-active {
+    opacity: 0;
+  }
+}

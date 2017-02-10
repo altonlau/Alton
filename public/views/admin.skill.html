@@ -1,0 +1,27 @@
+<div class="skill-view">
+
+  <span class="loading animate=if" ng-if="!skills"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+
+  <div class="container-fluid">
+    <div class="row animate-if" ng-if="skills && skills.length">
+
+      <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="skill in skills">
+        <div class="content-card">
+          <div class="skill-name">
+            {{ skill.name }}
+          </div>
+          <div class="skill-level">
+            <skill-ball value="skill.level" max-value="1" count="10"></skill-ball>
+            <div class="level-control">
+              <button class="btn btn-theme white circular small" ng-click="adjustSkillLevel(skill, -0.1)"><i class="fa fa-minus"></i></button>
+              <input class="form-control form-theme selector" type="number" ng-model="skill.level">
+              <button class="btn btn-theme white circular small" ng-click="adjustSkillLevel(skill, 0.1)"><i class="fa fa-plus"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

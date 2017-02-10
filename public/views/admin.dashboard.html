@@ -15,74 +15,66 @@
 
       <div class="col-xs-12 col-sm-6 col-md-3">
         <span class="card-title">Today</span>
-        <div class="card">
-          <div class="content">
+        <div class="content-card">
 
-            <div class="calendar">
-              <div class="month">
-                {{ calendar.month }}
-              </div>
-              <div class="day">
-                {{ calendar.day }}
-              </div>
+          <div class="calendar">
+            <div class="month">
+              {{ calendar.month }}
             </div>
-
+            <div class="day">
+              {{ calendar.day }}
+            </div>
           </div>
+
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-3">
         <span class="card-title">Most Viewed Projects</span>
-        <div class="card">
-          <div class="content">
+        <div class="content-card">
 
-            <div class="center animate-if" ng-if="!projects">
-              <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
-            </div>
-            <div class="center animate-if no-items" ng-if="projects && !projects.length">
-              No Projects
-            </div>
-            <ul class="top-list animate-if" ng-if="projects && projects.length">
-              <li ng-repeat="project in projects | limitTo: 3 | orderBy:'-views'">
-                <span class="num-bullet yellow">{{ $index + 1 }}</span>{{ project.name }}
-              </li>
-            </ul>
-
+          <div class="center animate-if" ng-if="!projects">
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
           </div>
+          <div class="center animate-if no-items" ng-if="projects && !projects.length">
+            No Projects
+          </div>
+          <ul class="top-list animate-if" ng-if="projects && projects.length">
+            <li ng-repeat="project in projects | limitTo: 3 | orderBy:'-views'">
+              <span class="num-bullet yellow">{{ $index + 1 }}</span>{{ project.name }}
+            </li>
+          </ul>
+
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-3">
         <span class="card-title">Most Viewed Skills</span>
-        <div class="card">
-          <div class="content">
+        <div class="content-card">
 
-            <div class="center animate-if" ng-if="!skills">
-              <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
-            </div>
-            <div class="center no-items animate-if" ng-if="skills && !skills.length">
-              No Skills
-            </div>
-            <ul class="top-list animate-if" ng-if="skills && skills.length">
-              <li ng-repeat="skill in skills | limitTo: 3 | orderBy:'-views'">
-                <span class="num-bullet green">{{ $index + 1 }}</span>{{ skill.name }}
-              </li>
-            </ul>
-
+          <div class="center animate-if" ng-if="!skills">
+            <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i>
           </div>
+          <div class="center no-items animate-if" ng-if="skills && !skills.length">
+            No Skills
+          </div>
+          <ul class="top-list animate-if" ng-if="skills && skills.length">
+            <li ng-repeat="skill in skills | limitTo: 3 | orderBy:'-views'">
+              <span class="num-bullet green">{{ $index + 1 }}</span>{{ skill.name }}
+            </li>
+          </ul>
+
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-3">
         <span class="card-title">  Website Views</span>
-        <div class="card">
-          <div class="content">
+        <div class="content-card">
 
-            <div class="center website-views">
-              {{ stats.views }}
-            </div>
-
+          <div class="center website-views">
+            {{ stats.views }}
           </div>
+
         </div>
       </div>
 

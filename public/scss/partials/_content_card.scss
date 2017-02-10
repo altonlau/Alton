@@ -1,0 +1,19 @@
+.content-card {
+  background: $white-color;
+  border-radius: 2px;
+  font-size: $font-small;
+  font-weight: $regular;
+  margin-bottom: $margin-small;
+  padding: $padding-xsmall $padding-small;
+
+  .center {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+  }
+  @include shadow(1);
+
+  @include respond-to ('small') {}
+}
