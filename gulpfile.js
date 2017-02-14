@@ -78,7 +78,7 @@ gulp.task('reload-js', function (done) {
 // Refresh page task ===========================================================
 gulp.task('refresh', function () {
   gulp.src('./')
-    .pipe(wait(2000))
+    .pipe(wait(1000))
     .pipe(livereload());
 });
 

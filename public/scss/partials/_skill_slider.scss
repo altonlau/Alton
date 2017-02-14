@@ -1,0 +1,29 @@
+@import 'modules/colors';
+
+input[type=range].skill-slider {
+  -webkit-appearance: none;
+  background: none;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: $green-color;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 8px;
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #FFFFFF;
+    cursor: pointer;
+    border: 1px solid $grey-color;
+    border-radius: 8px;
+    height: 16px;
+    margin-top: -4px;
+    width: 16px;
+  }
+}
