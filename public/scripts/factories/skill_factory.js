@@ -5,7 +5,7 @@
  * Description: Skill model
  */
 
-angular.module('altonApp').factory('skillFactory', function ($q, apiService) {
+angular.module('altonApp').factory('skillFactory', function ($q, accountService, apiService) {
 
   var skills = [];
 
@@ -32,11 +32,47 @@ angular.module('altonApp').factory('skillFactory', function ($q, apiService) {
     return defer.promise;
   }
 
+  function saveSkill(skill) {
+    var defer = $q.defer();
+
+    if (skill.id) {
+      apiService.put({
+        id: skill.id,
+        name: skill.name,
+        level: skill.level
+      }, apiService.endpoints.PUT.SKILL, accountService.getToken()).then(function (response) {
+        defer.resolve(response.data.message);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    } else {
+      // TODO: Save skill
+    }
+
+    return defer.promise;
+  }
+
+  function deleteSkill(skill) {
+    var defer = $q.defer();
+
+    apiService.delete({
+      id: skill.id
+    }, apiService.endpoints.PUT.SKILL, accountService.getToken()).then(function (response) {
+      defer.resolve(response.data.message);
+    }, function (response) {
+      defer.reject(response.data.message);
+    });
+
+    return defer.promise;
+  }
+
   return {
-    getAll: function() {
+    getAll: function () {
       return skills;
     },
-    load: loadSkills
+    load: loadSkills,
+    save: saveSkill,
+    delete: deleteSkill
   };
 
 });

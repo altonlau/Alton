@@ -5,13 +5,20 @@
   <div class="container-fluid">
     <div class="row animate-if" ng-if="skills && skills.length">
 
-      <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="skill in skills | limitTo: 1">
+      <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="skill in skills">
         <div class="content-card">
+          <button class="btn btn-clear float-right btn-menu" ng-click="skill.edit ? saveSkill(skill) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': skill.edit, 'fa-ellipsis-v': !skill.edit }"></i></button>
+          <div class="card-menu">
+            <button class="btn btn-theme circular white small mr-1" ng-click="toggleEdit(skill)"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-theme circular red small ml-1" ng-click="deleteSkill(skill)"><i class="fa fa-trash"></i></button>
+          </div>
+
           <div class="skill-name">
-            {{ skill.name }}
+            <input class="form-control form-theme" ng-disabled="!skill.edit" ng-model="skill.name">
           </div>
           <div class="skill-level">
-            <skill-slider value="skill.level" max="1" step="0.1"></skill-slider>
+            <div class="ball" ng-if="!skill.edit">{{ skill.level }}</div>
+            <skill-slider value="skill.level" max="1" step="0.1" ng-if="skill.edit"></skill-slider>
           </div>
         </div>
       </div>

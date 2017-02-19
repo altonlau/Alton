@@ -18,10 +18,6 @@ angular.module('altonApp').directive('skillSlider', function () {
     link: function (scope, element) {
       var ready = false;
 
-      function adjustSlider() {
-
-      }
-
       function setup() {
         var valueContainer = $('<div></div>');
         var max = scope.max;
@@ -44,29 +40,29 @@ angular.module('altonApp').directive('skillSlider', function () {
           'color': 'white',
           'display': 'flex',
           'float': 'left',
+          'height': '40px',
           'justify-content': 'center',
           'margin-right': '-8px',
           'vertical-align': 'top',
-          'width': '15%'
+          'width': '40px'
         });
-        valueContainer.height(valueContainer.width());
         $(range).css({
           'height': valueContainer.height(),
           'padding-top': '0.5px',
-          'width': '85%'
+          'width': element.width() - valueContainer.width()
         });
 
         $(range).on('input', function (event) {
-          scope.$apply(scope.value = $(this).val());
+          scope.$apply(scope.value = parseFloat($(this).val()));
           valueContainer.html(scope.value);
         });
       }
 
-      scope.$watch('value', function (result) {
-        if (ready) {
-          value = Math.max(Math.min(result, max), 0);
-          adjustSlider();
-        }
+      $(window).resize(function () {
+        var range = element.children('input')[0];
+        var valueContainer = element.children('div')[0];
+
+        $(range).css('width', element.parent().width() - $(valueContainer).width());
       });
 
       setup();

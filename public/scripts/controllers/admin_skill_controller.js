@@ -11,8 +11,38 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
 
   $scope.skills = null;
 
-  $scope.adjustSkillLevel = function (skill, adjust) {
-    skill.level = Math.round((skill.level + adjust) * 100) / 100;
+  $scope.toggleMenu = function (event) {
+    event.stopPropagation();
+
+    var menu = $($(event.currentTarget).siblings('.card-menu')[0]);
+    $('.card-menu').removeClass('active');
+    menu.toggleClass('active');
+  };
+
+  $scope.toggleEdit = function (skill) {
+    skill.edit = true;
+    $('.card-menu').removeClass('active');
+  };
+
+  $scope.deleteSkill = function (skill) {
+    $('.card-menu').removeClass('active');
+
+    skillFactory.delete(skill).then(function (response) {
+      systemMessageService.showSuccessMessage(response);
+      loadSkills();
+    }, function (response) {
+      systemMessageService.showErrorMessage(response);
+    });
+  };
+
+  $scope.saveSkill = function (skill) {
+    skillFactory.save(skill).then(function (response) {
+      skill.edit = false;
+      systemMessageService.showSuccessMessage(response);
+    }, function (response) {
+      skill.edit = false;
+      systemMessageService.showErrorMessage(response);
+    });
   };
 
   function loadSkills() {
@@ -26,6 +56,12 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
   function setup() {
     loadSkills();
   }
+
+  $(document).on('click', function (event) {
+    if (!$(event.target).hasClass('card-menu') && !$(event.target).parents('.card-menu').length) {
+      $('.card-menu').removeClass('active');
+    }
+  });
 
   setup();
 

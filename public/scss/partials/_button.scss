@@ -4,6 +4,11 @@
 .btn {
   border-radius: 2px;
   cursor: pointer;
+  font-family: $font;
+
+  &:focus {
+    box-shadow: none;
+  }
 
   &.circular {
     align-items: center;
@@ -15,10 +20,10 @@
     width: 48px;
 
     &.small {
-      border-radius: 12px;
-      height: 24px;
+      border-radius: 16px;
+      height: 32px;
       padding-top: 1px;
-      width: 24px;
+      width: 32px;
     }
 
     &.large {
@@ -30,6 +35,14 @@
 
   &.full-width {
     width: 100%;
+  }
+
+  &.btn-clear {
+    background: none;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
   }
 
   &.btn-theme {

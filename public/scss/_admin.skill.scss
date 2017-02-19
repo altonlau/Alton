@@ -8,34 +8,86 @@
   transform: translate(-50%, -50%);
 }
 
-.skill-name {
-  border-bottom: 2px solid $green-color;
-  font-size: $font-regular;
-  margin-bottom: $margin-small;
-}
+.content-card {
+  position: relative;
 
-.skill-level {
-  text-align: center;
-}
-
-.level-control {
-  text-align: center;
-
-  button {
-    display: inline-block;
+  .btn-menu {
+    color: $grey-color;
   }
 
-  .selector {
-    display: inline-block;
-    height: 32px;
-    padding: 0;
-    text-align: center;
-    width: 48px;
+  .card-menu {
+    background: $white-color;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    padding: $padding-small;
+    position: absolute;
+    right: 24px;
+    top: 8px;
+    transition: opacity 0.2s, visibility 0.2s;
+    visibility: hidden;
 
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
+    &.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    @include shadow(2);
+  }
+
+  .skill-name {
+    border-bottom: 2px solid $green-color;
+    margin-bottom: $margin-small;
+
+    input {
+      font-size: $font-regular;
+      height: 28px;
+      margin: $margin-small 0;
+      padding: $padding-xsmall $padding-small;
+      width: 90%;
+
+      &:disabled {
+        background: none;
+        cursor: default;
+      }
+    }
+  }
+
+  .skill-level {
+    text-align: center;
+
+    .ball {
+      background: $green-color;
+      border-radius: 24px;
+      color: $white-color;
+      display: inline-block;
+      font-size: $font-regular;
+      height: 48px;
+      line-height: 48px;
+      margin-bottom: $margin-small;
+      text-align: center;
+      width: 48px;
+    }
+  }
+
+  .level-control {
+    text-align: center;
+
+    button {
+      display: inline-block;
+    }
+
+    .selector {
+      display: inline-block;
+      height: 32px;
+      padding: 0;
+      text-align: center;
+      width: 48px;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     }
   }
 }
