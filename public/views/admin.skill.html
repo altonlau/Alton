@@ -3,9 +3,13 @@
   <span class="loading animate=if" ng-if="!skills"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
   <div class="container-fluid">
-    <div class="row animate-if" ng-if="skills && skills.length">
+    <div class="row">
 
-      <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="skill in skills">
+      <div class="col-xs-12 col-sm-6 col-md-3 new-skill-box" ng-if="skills[0].id">
+        <button class="btn btn-theme" ng-click="newSkillClicked()">+</button>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-3 animate-if" ng-if="skills && skills.length" ng-repeat="skill in skills">
         <div class="content-card">
           <button class="btn btn-clear float-right btn-menu" ng-click="skill.edit ? saveSkill(skill) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': skill.edit, 'fa-ellipsis-v': !skill.edit }"></i></button>
           <div class="card-menu">
@@ -14,7 +18,7 @@
           </div>
 
           <div class="skill-name">
-            <input class="form-control form-theme" ng-disabled="!skill.edit" ng-model="skill.name">
+            <input class="form-control form-theme" placeholder="Skill Name" ng-disabled="!skill.edit" ng-model="skill.name">
           </div>
           <div class="skill-level">
             <div class="ball" ng-if="!skill.edit">{{ skill.level }}</div>

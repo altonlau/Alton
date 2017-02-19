@@ -8,6 +8,31 @@
   transform: translate(-50%, -50%);
 }
 
+.new-skill-box {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: $margin-small;
+
+  button {
+    background: none;
+    border: 2px dashed $grey-color;
+    color: $blue-color;
+    cursor: pointer;
+    font-size: $font-xlarge;
+    font-weight: $light;
+    height: 64px;
+    outline: none;
+    padding: 0;
+    transition: background 0.2s;
+    width: 64px;
+
+    &:hover {
+      background: $light-grey-1-color;
+    }
+  }
+}
+
 .content-card {
   position: relative;
 

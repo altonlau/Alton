@@ -46,7 +46,14 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
         defer.reject(response.data.message);
       });
     } else {
-      // TODO: Save skill
+      apiService.post({
+        name: skill.name,
+        level: skill.level
+      }, apiService.endpoints.POST.SKILL, accountService.getToken()).then(function (response) {
+        defer.resolve(response.data.message);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
     }
 
     return defer.promise;

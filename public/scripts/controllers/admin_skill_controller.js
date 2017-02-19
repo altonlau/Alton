@@ -24,6 +24,14 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
     $('.card-menu').removeClass('active');
   };
 
+  $scope.newSkillClicked = function () {
+    var skill = {
+      edit: true,
+      level: 0
+    };
+    $scope.skills.unshift(skill);
+  };
+
   $scope.deleteSkill = function (skill) {
     $('.card-menu').removeClass('active');
 
@@ -39,8 +47,8 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
     skillFactory.save(skill).then(function (response) {
       skill.edit = false;
       systemMessageService.showSuccessMessage(response);
+      loadSkills();
     }, function (response) {
-      skill.edit = false;
       systemMessageService.showErrorMessage(response);
     });
   };

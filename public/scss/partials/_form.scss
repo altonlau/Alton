@@ -5,6 +5,10 @@
     border: 1px solid transparent;
     border-radius: 2px;
 
+    &::-webkit-input-placeholder {
+      color: $dark-text-disabled-color;
+    }
+
     &:focus {
       border: 1px solid $green-color;
     }
