@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div class="col-xs-12 col-sm-6 col-md-3 new-skill-box" ng-if="skills[0].id">
+      <div class="col-xs-12 col-sm-6 col-md-3 new-skill-box" ng-if="!skills || !skills.length || skills[0].id">
         <button class="btn btn-theme" ng-click="newSkillClicked()">+</button>
       </div>
 
@@ -23,6 +23,9 @@
           <div class="skill-level">
             <div class="ball" ng-if="!skill.edit">{{ skill.level }}</div>
             <skill-slider value="skill.level" max="1" step="0.1" ng-if="skill.edit"></skill-slider>
+          </div>
+          <div class="skill-views" ng-if="skill && !skill.edit">
+            <i class="fa fa-eye"></i> {{ skill.views }}
           </div>
         </div>
       </div>
