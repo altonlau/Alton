@@ -1,6 +1,6 @@
 <div class="project-view">
 
-  <span class="loading animate=if" ng-if="!projects"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+  <span class="loading animate-if" ng-if="!projects"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
   <div class="container-fluid">
     <div class="row">
@@ -50,5 +50,7 @@
 
     </div>
   </div>
+
+  <div class="no-projects animate-if" ng-if="projects && !projects.length">Click + to add project</div>
 
 </div>

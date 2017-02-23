@@ -5,7 +5,7 @@
  * Description: Admin skill controller
  */
 
-angular.module('altonApp').controller('AdminSkillController', function ($scope, $timeout, skillFactory, systemMessageService) {
+angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, projectFactory, skillFactory, systemMessageService) {
 
   $scope.skills = null;
 
@@ -38,11 +38,25 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
   $scope.deleteSkill = function (skill) {
     $('.card-menu').removeClass('active');
 
-    skillFactory.delete(skill).then(function (response) {
-      systemMessageService.showSuccessMessage(response);
-      loadSkills();
-    }, function (response) {
-      systemMessageService.showErrorMessage(response);
+    var promises = [];
+    projectFactory.getAll().forEach(function (project) {
+      var index = project.skills.indexOf(skill.id);
+      if (index >= 0) {
+        project.skills.splice(index, 1);
+        promises.push(projectFactory.save(project));
+      }
+    });
+
+    // Delete skills from the projects first
+    $q.all(promises).then(function (responses) {
+      skillFactory.delete(skill).then(function (response) {
+        systemMessageService.showSuccessMessage(response);
+        loadSkills();
+      }, function (response) {
+        systemMessageService.showErrorMessage(response);
+      });
+    }, function (responses) {
+      systemMessageService.showErrorMessage(responses[0]);
     });
   };
 
@@ -56,6 +70,12 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
     });
   };
 
+  function loadProjects() {
+    projectFactory.load().then({}, function (response) {
+      systemMessageService.showErrorMessage(response);
+    });
+  }
+
   function loadSkills() {
     skillFactory.load().then(function () {
       $scope.skills = skillFactory.getAll();
@@ -65,6 +85,7 @@ angular.module('altonApp').controller('AdminSkillController', function ($scope, 
   }
 
   function setup() {
+    loadProjects();
     loadSkills();
   }
 

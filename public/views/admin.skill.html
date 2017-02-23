@@ -1,6 +1,6 @@
 <div class="skill-view">
 
-  <span class="loading animate=if" ng-if="!skills"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+  <span class="loading animate-if" ng-if="!skills"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
   <div class="container-fluid">
     <div class="row">
@@ -32,5 +32,7 @@
 
     </div>
   </div>
+
+  <div class="no-skills animate-if" ng-if="skills && !skills.length">Click + to add skill</div>
 
 </div>

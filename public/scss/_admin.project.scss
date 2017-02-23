@@ -8,6 +8,14 @@
   transform: translate(-50%, -50%);
 }
 
+.no-projects {
+  font-size: $font-xlarge;
+  font-weight: $light;
+  margin-bottom: $margin-medium;
+  text-align: center;
+  width: 100%;
+}
+
 .new-project-box {
   align-items: center;
   display: flex;

@@ -8,6 +8,14 @@
   transform: translate(-50%, -50%);
 }
 
+.no-skills {
+  font-size: $font-xlarge;
+  font-weight: $light;
+  margin-bottom: $margin-medium;
+  text-align: center;
+  width: 100%;
+}
+
 .new-skill-box {
   align-items: center;
   display: flex;
