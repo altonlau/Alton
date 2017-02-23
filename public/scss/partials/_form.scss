@@ -12,5 +12,9 @@
     &:focus {
       border: 1px solid $green-color;
     }
+
+    &.yellow:focus {
+      border: 1px solid $yellow-color;
+    }
   }
 }

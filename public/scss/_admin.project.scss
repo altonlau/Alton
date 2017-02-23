@@ -1,14 +1,14 @@
 @import 'partials/content_card';
 
 .loading {
-  color: $green-color;
+  color: $yellow-color;
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-.new-skill-box {
+.new-project-box {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -59,8 +59,8 @@
     @include shadow(2);
   }
 
-  .skill-name {
-    border-bottom: 2px solid $green-color;
+  .project-name {
+    border-bottom: 2px solid $yellow-color;
     margin-bottom: $margin-small;
 
     input {
@@ -77,20 +77,71 @@
     }
   }
 
-  .skill-level {
-    text-align: center;
+  .project-description {
+    textarea {
+      border: none;
+      outline: none;
+      padding: 0;
+      resize: none;
+      width: 100%;
+    }
+  }
 
-    .ball {
-      background: $green-color;
-      border-radius: 24px;
-      color: $white-color;
-      display: inline-block;
-      font-size: $font-regular;
-      height: 48px;
-      line-height: 48px;
+  .project-images {
+    margin-bottom: $margin-small;
+
+    input {
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      width: 0.1px;
+      z-index: -1;
+
+      & + label {
+        background: $blue-color;
+        border-radius: 16px;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        width: 32px;
+      }
+    }
+
+    .existing-images {
+      padding: $padding-small;
+      position: relative;
+
+      img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+      }
+
+      .btn-img-delete {
+        border-radius: 8px;
+        font-size: $font-xsmall;
+        height: 16px;
+        right: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        width: 16px;
+      }
+    }
+  }
+
+  .project-skills {
+    button {
       margin-bottom: $margin-small;
-      text-align: center;
-      width: 48px;
+
+      &:disabled {
+        cursor: default;
+        opacity: 1;
+      }
     }
   }
 }

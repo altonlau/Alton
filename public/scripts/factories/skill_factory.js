@@ -64,7 +64,7 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
 
     apiService.delete({
       id: skill.id
-    }, apiService.endpoints.PUT.SKILL, accountService.getToken()).then(function (response) {
+    }, apiService.endpoints.DELETE.SKILL, accountService.getToken()).then(function (response) {
       defer.resolve(response.data.message);
     }, function (response) {
       defer.reject(response.data.message);

@@ -7,16 +7,19 @@
 
 angular.module('altonApp').controller('AdminSkillController', function ($scope, $timeout, skillFactory, systemMessageService) {
 
-  var skillBallCount = 10;
-
   $scope.skills = null;
 
   $scope.toggleMenu = function (event) {
     event.stopPropagation();
 
     var menu = $($(event.currentTarget).siblings('.card-menu')[0]);
-    $('.card-menu').removeClass('active');
-    menu.toggleClass('active');
+
+    if (!menu.hasClass('active')) {
+      $('.card-menu').removeClass('active');
+      menu.addClass('active');
+    } else {
+      $('.card-menu').removeClass('active');
+    }
   };
 
   $scope.toggleEdit = function (skill) {

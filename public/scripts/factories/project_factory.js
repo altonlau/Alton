@@ -5,7 +5,7 @@
  * Description: Project model
  */
 
-angular.module('altonApp').factory('projectFactory', function ($q, apiService) {
+angular.module('altonApp').factory('projectFactory', function ($q, accountService, apiService) {
 
   var projects = [];
 
@@ -34,11 +34,69 @@ angular.module('altonApp').factory('projectFactory', function ($q, apiService) {
     return defer.promise;
   }
 
+  function saveProject(project) {
+    var defer = $q.defer();
+    var data = new FormData();
+
+    if (project.name) {
+      data.append('name', project.name);
+    }
+    if (project.description) {
+      data.append('description', project.description);
+    }
+    if (project.newImages) {
+      for (var i = 0; i < project.newImages.length; i++) {
+        data.append('images', project.newImages[i]);
+      }
+    }
+    if (project.skills && project.skills.length) {
+      data.append('skills', JSON.stringify(project.skills));
+    }
+
+    if (project.id) {
+      data.append('id', project.id);
+
+      if (project.images && project.images.length) {
+        data.append('existingImages', JSON.stringify(project.images));
+      }
+
+      apiService.put(data, apiService.endpoints.PUT.PROJECT, accountService.getToken()).then(function (response) {
+        defer.resolve(response.data.message);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    } else {
+      apiService.post(data, apiService.endpoints.POST.PROJECT, accountService.getToken()).then(function (response) {
+        defer.resolve(response.data.message);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    }
+
+    return defer.promise;
+  }
+
+  function deleteProject(project) {
+    var defer = $q.defer();
+
+    apiService.delete({
+      id: project.id
+    }, apiService.endpoints.DELETE.PROJECT, accountService.getToken()).then(function (response) {
+      defer.resolve(response.data.message);
+    }, function (response) {
+      defer.reject(response.data.message);
+    });
+
+    return defer.promise;
+  }
+
   return {
-    getAll: function() {
+    getAll: function () {
       return projects;
     },
-    load: loadProjects
+    load: loadProjects,
+    save: saveProject,
+    delete: deleteProject
   };
 
 });

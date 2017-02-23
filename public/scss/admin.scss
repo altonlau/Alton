@@ -61,6 +61,12 @@
     padding-right: $margin-small;
   }
 
+  .project-view {
+    @import 'admin.project';
+    padding-left: $margin-small;
+    padding-right: $margin-small;
+  }
+
   .skill-view {
     @import 'admin.skill';
     padding-left: $margin-small;

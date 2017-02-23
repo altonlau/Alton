@@ -1,0 +1,54 @@
+<div class="project-view">
+
+  <span class="loading animate=if" ng-if="!projects"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-6 new-project-box" ng-if="!projects || !projects.length || projects[0].id">
+        <button class="btn btn-theme" ng-click="newProjectClicked()">+</button>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 animate-if" ng-if="projects && projects.length" ng-repeat="project in projects">
+        <div class="content-card">
+          <button class="btn btn-clear float-right btn-menu" ng-click="project.edit ? saveProject($event, project) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': project.edit, 'fa-ellipsis-v': !project.edit }"></i></button>
+          <div class="card-menu">
+            <button class="btn btn-theme circular white small mr-1" ng-click="toggleEdit(project)"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-theme circular red small ml-1" ng-click="deleteProject(project)"><i class="fa fa-trash"></i></button>
+          </div>
+
+          <div class="project-name">
+            <input class="form-control form-theme yellow" placeholder="Project Name" ng-disabled="!project.edit" ng-model="project.name">
+          </div>
+          <div class="project-description">
+            <textarea ng-model="project.description" placeholder="Project description" ng-if="project.edit" ng-keydown="checkTextHeight(true, $event)" ng-keyup="checkTextHeight(false, $event)"></textarea>
+            <div ng-if="!project.edit" ng-bind-html="project.marked"></div>
+          </div>
+          <div class="project-images">
+            <div class="container">
+              <div class="row">
+                <div class="col-2 animate-if" ng-if="project.edit">
+                  <input id="file-{{ $index }}" type="file" onchange="angular.element(this).scope().filesSelected(this)" accept="image/*" multiple>
+                  <label for="file-{{ $index }}"><i class="fa fa-camera"></i></label>
+                </div>
+                <div class="col-2 existing-images" ng-repeat="image in project.images">
+                  <img ng-src="{{ image }}" alt="{{ $index }}">
+                  <button class="btn btn-theme red btn-img-delete" ng-if="project.edit" ng-click="deleteImage($index, project)"><i class="fa fa-close"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="project-skills">
+            <button class="btn btn-theme yellow animate-if ng-class: { 'ml-2': $index > 0, 'active': project.edit && project.skills.indexOf(skill.id) >= 0 }" data-toggle="button" aria-pressed="false" autocomplete="off" ng-disabled="!project.edit" ng-if="project.edit || (!project.edit && project.skills.indexOf(skill.id) >= 0)"
+                ng-repeat="skill in skills">{{ skill.name }}</button>
+          </div>
+          <div class="project-views" ng-if="project && !project.edit">
+            <i class="fa fa-eye"></i> {{ project.views }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -41,7 +41,9 @@ function setupRoutes(fileManager) {
             id: doc._id,
             name: doc.name,
             description: doc.description,
-            images: doc.images,
+            images: doc.images.map(function (image) {
+              return 'downloads/' + image;
+            }),
             skills: doc.skills,
             views: doc.views
           });
@@ -66,7 +68,7 @@ function setupRoutes(fileManager) {
     var description = req.body.description;
     var imageFiles = req.files;
     var images = [];
-    var skills = req.body.skills;
+    var skills = JSON.parse(req.body.skills || '[]');
 
     if (name && description) {
       Skill.find({}, function (error, docs) {
@@ -151,8 +153,10 @@ function setupRoutes(fileManager) {
     var name = req.body.name;
     var description = req.body.description;
     var imageFiles = req.files;
-    var images = req.body.existingImages || [];
-    var skills = req.body.skills;
+    var images = JSON.parse(req.body.existingImages || '[]').map(function (image) {
+      return image.replace('downloads/', '');
+    });
+    var skills = JSON.parse(req.body.skills || '[]');
     var update = {};
 
     if (id) {
