@@ -45,7 +45,29 @@ angular.module('altonApp').service('accountService', function ($cookies, $q, api
     return !!token;
   };
 
-  this.getProfile = function() {
+  this.updateProfile = function (firstName, lastName) {
+    var defer = $q.defer();
+    var data = {
+      id: this.getProfile().id,
+      firstName: firstName,
+      lastName: lastName
+    };
+
+    apiService.put(data, apiService.endpoints.PUT.USER, this.getToken()).then(function (response) {
+      var date = new Date();
+      date.setDate(date.getDate() + 1);
+      $cookies.put(cookieUser, JSON.stringify(data), {
+        expires: date
+      });
+      defer.resolve(response.data.message);
+    }, function (response) {
+      defer.reject(response.data.message);
+    });
+
+    return defer.promise;
+  };
+
+  this.getProfile = function () {
     return JSON.parse($cookies.get(cookieUser));
   };
 

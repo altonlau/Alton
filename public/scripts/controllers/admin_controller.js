@@ -8,7 +8,6 @@
 angular.module('altonApp').controller('AdminController', function ($scope, $state, accountService, systemMessageService) {
 
   $scope.isLoggedIn = accountService.isLoggedIn();
-  $scope.currentState = $state.current.name;
 
   $scope.loginForm = {
     name: null,

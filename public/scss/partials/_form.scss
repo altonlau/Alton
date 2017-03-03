@@ -16,5 +16,9 @@
     &.yellow:focus {
       border: 1px solid $yellow-color;
     }
+
+    &.red:focus {
+      border: 1px solid $red-color;
+    }
   }
 }

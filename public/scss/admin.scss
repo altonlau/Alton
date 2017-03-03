@@ -72,4 +72,10 @@
     padding-left: $margin-small;
     padding-right: $margin-small;
   }
+
+  .profile-view {
+    @import 'admin.profile';
+    padding-left: $margin-small;
+    padding-right: $margin-small;
+  }
 }

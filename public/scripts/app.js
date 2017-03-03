@@ -35,6 +35,10 @@ angular.module('altonApp', [
     url: '/skill',
     controller: 'AdminSkillController',
     templateUrl: 'views/admin.skill.html'
+  }).state('admin.profile', {
+    url: '/profile',
+    controller: 'AdminProfileController',
+    templateUrl: 'views/admin.profile.html'
   });
 }).run(function ($rootScope) {
   $rootScope.mobile = function () {
