@@ -41,6 +41,7 @@ angular.module('altonApp', [
     templateUrl: 'views/admin.profile.html'
   });
 }).run(function ($rootScope) {
+  $rootScope.local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
   $rootScope.mobile = function () {
     var check = false;
     (function (a) {

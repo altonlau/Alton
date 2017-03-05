@@ -5,7 +5,17 @@
  * Description: API URL and endpoints service
  */
 
-angular.module('altonApp').service('websiteService', function ($q, accountService, apiService) {
+angular.module('altonApp').service('websiteService', function ($cookies, $q, accountService, apiService) {
+
+  var cookieDev = 'dev';
+
+  this.devMode = function (value) {
+    if (value === undefined) {
+      return JSON.parse($cookies.get(cookieDev));
+    } else {
+      $cookies.put(cookieDev, JSON.parse(value));
+    }
+  };
 
   this.maintenance = function (value) {
     var defer = $q.defer();
@@ -17,9 +27,12 @@ angular.module('altonApp').service('websiteService', function ($q, accountServic
         defer.reject(response.data.message);
       });
     } else {
-      apiService.post(value, apiService.endpoints.POST.WEBSITE_MAINTENANCE, accountService.getToken()).then(function (response) {
+      var data = {
+        value: value
+      };
+      apiService.post(data, apiService.endpoints.POST.WEBSITE_MAINTENANCE, accountService.getToken()).then(function (response) {
         defer.resolve(response.data.message);
-      }, function(response) {
+      }, function (response) {
         defer.reject(response.data.message);
       });
     }

@@ -12,6 +12,8 @@
 }
 
 .main-dashboard {
+  margin-bottom: $margin-large;
+
   .card-title {
     font-weight: $light;
   }
@@ -80,5 +82,20 @@
       font-size: $font-xlarge;
       font-weight: $bold;
     }
+  }
+}
+
+.settings {
+  margin-bottom: $margin-large;
+
+  .setting-name {
+    align-items: center;
+    display: flex;
+  }
+
+  .setting-switch {
+    display: flex;
+    padding-top: $margin-small;
+    justify-content: flex-end;
   }
 }

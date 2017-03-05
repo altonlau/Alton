@@ -18,10 +18,23 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   $scope.projects = null;
   $scope.skills = null;
   $scope.stats = {
+    devMode: null,
     maintenance: null,
     views: null
   };
   $scope.user = null;
+
+  $scope.updateDevMode = function() {
+    websiteService.devMode($scope.stats.devMode);
+  };
+
+  $scope.updateMaintenance = function() {
+    websiteService.maintenance($scope.stats.maintenance).then(function (response) {
+      systemMessageService.showSuccessMessage(response);
+    }, function(response) {
+      systemMessageService.showErrorMessage(response);
+    });
+  };
 
   function setTime() {
     var date = new Date();
@@ -54,6 +67,8 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   }
 
   function loadWebsiteStats() {
+    $scope.stats.devMode = websiteService.devMode();
+
     websiteService.maintenance().then(function (response) {
       $scope.stats.maintenance = response;
     }, function (response) {
