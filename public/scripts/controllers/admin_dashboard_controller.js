@@ -67,8 +67,6 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   }
 
   function loadWebsiteStats() {
-    $scope.stats.devMode = websiteService.devMode();
-
     websiteService.maintenance().then(function (response) {
       $scope.stats.maintenance = response;
     }, function (response) {
