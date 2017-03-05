@@ -1,1 +1,5 @@
-<div class="d-flex align-items-center justify-content-center maintenance">Under Construction</div>
+<div class="d-flex align-items-center justify-content-center maintenance" ng-if="maintenance">Under Construction</div>
+
+<div class="home-view animate-if" ng-if="!maintenance">
+  <img class="profile-img" src="assets/profile.png" alt="Alton Lau">
+</div>

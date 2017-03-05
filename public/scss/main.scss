@@ -1,8 +1,11 @@
+@import 'modules/breakpoints';
 @import 'modules/colors';
 @import 'modules/fonts';
+@import 'modules/sizes';
+@import 'modules/shadows';
 
+@import 'partials/animate_if';
 @import 'partials/button';
-@import 'partials/form';
 
 body {
   background: $background-color;
@@ -14,4 +17,9 @@ body {
   height: 100vh;
   font-size: $font-xlarge;
   text-align: center;
+}
+
+.home-view {
+  @import 'main.home';
+  height: 100vh;
 }
