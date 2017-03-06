@@ -3,7 +3,6 @@
 @import 'modules/fonts';
 @import 'modules/sizes';
 @import 'modules/shadows';
-
 @import 'partials/animate_if';
 @import 'partials/button';
 
@@ -22,4 +21,6 @@ body {
 .home-view {
   @import 'main.home';
   height: 100vh;
+  overflow: hidden;
+  position: relative;
 }

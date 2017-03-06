@@ -1,11 +1,42 @@
 .profile-img {
-  @include shadow(1);
-
+  @include shadow-hoverable(1);
   border-radius: 128px;
+  cursor: pointer;
   height: 256px;
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 256px;
+}
+
+.buttons {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 800px;
+  padding: $padding-small;
+  text-align: center;
+
+  button {
+    margin: 0 auto;
+  }
+
+  .button-title {
+    font-weight: $light;
+    font-size: $font-regular;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  @include respond-to('small') {
+    flex-direction: row;
+
+    button, .button-title {
+      display: inline-block;
+    }
+  }
 }

@@ -2,4 +2,15 @@
 
 <div class="home-view animate-if" ng-if="!maintenance">
   <img class="profile-img" src="assets/profile.png" alt="Alton Lau">
+
+  <div class="buttons">
+    <div>
+      <button class="btn btn-theme green circular large" ng-click="moveToSkillPage($event)" ng-mouseenter="buttonHovered($event, true)" ng-mouseleave="buttonHovered($event, false)"><i class="fa fa-wrench fa-2x"></i></button>
+      <span class="button-title">Skills</span>
+    </div>
+    <div>
+      <span class="button-title">Projects</span>
+      <button class="btn btn-theme blue circular large" ng-click="moveToProjectPage($event)" ng-mouseenter="buttonHovered($event, true)" ng-mouseleave="buttonHovered($event, false)"><i class="fa fa-book fa-2x"></i></button>
+    </div>
+  </div>
 </div>
