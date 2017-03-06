@@ -115,7 +115,7 @@ gulp.task('build-views:dist', function () {
 gulp.task('build-images:dist', function () {
   return gulp.src('public/assets/**/*.+(png|jpg|jpeg|gif|svg)')
     .pipe(cache(imagemin()))
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('dist/assets'));
 });
 
 // Copy font task =============================================================
