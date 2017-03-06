@@ -1,13 +1,17 @@
-.profile-img {
+.profile-button {
   @include shadow-hoverable(1);
   border-radius: 128px;
-  cursor: pointer;
   height: 256px;
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 256px;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .buttons {

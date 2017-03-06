@@ -5,7 +5,7 @@
  * Description: Deals with state transitions with animation
  */
 
-angular.module('altonApp').service('stateTransitionService', function () {
+angular.module('altonApp').service('stateTransitionService', function ($state) {
 
   this.circularTransition = function (referenceElement, state) {
     var element = $(referenceElement);
@@ -40,7 +40,7 @@ angular.module('altonApp').service('stateTransitionService', function () {
     var element = $(referenceElement);
 
     element.fadeOut('fast', function () {
-      // TODO: Move to page with 'state' variable
+      $state.go(state);
     });
   };
 

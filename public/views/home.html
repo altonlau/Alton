@@ -1,7 +1,7 @@
 <div class="d-flex align-items-center justify-content-center maintenance" ng-if="maintenance">Under Construction</div>
 
 <div class="home-view animate-if" ng-if="maintenance !== null && !maintenance">
-  <img class="profile-img" src="assets/profile.png" alt="Alton Lau">
+  <button class="btn btn-clear profile-button" ng-click="moveToAboutPage($event)"><img src="assets/profile.png" alt="Alton Lau"></button>
 
   <div class="buttons">
     <div>
