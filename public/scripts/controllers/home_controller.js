@@ -5,7 +5,7 @@
  * Description: Home controller
  */
 
-angular.module('altonApp').controller('HomeController', function ($scope, websiteService) {
+angular.module('altonApp').controller('HomeController', function ($scope, $timeout, websiteService) {
 
   var disableClick = false;
 
