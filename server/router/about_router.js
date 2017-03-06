@@ -21,80 +21,134 @@ var About = require('../models/about_model');
 function setupRoutes(fileManager) {
 
   router.get('/', function (req, res) {
-    About.findOne({}, function (error, doc) {
+    var name = req.query.name;
+    var query = {};
+
+    if (name) {
+      query.name = name;
+    }
+
+    About.find(query, function (error, docs) {
       if (error) {
         errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      } else if (doc) {
-        var result = {
-          details: doc.details
-        };
+      } else if (docs && ((name && docs.length) || !name)) {
+        var images = [];
+        var results = [];
+        docs.forEach(function (doc) {
+          results.push({
+            id: doc._id,
+            name: doc.name,
+            description: doc.description,
+            icon: 'downloads/' + doc.icon
+          });
+          images = images.concat(doc.icon);
+        });
 
-        res.status(200).json(result);
+        fileManager.get(images).then(function () {
+          res.status(200).json(results);
+        }, function () {
+          errorHandler.sendStatus(res, errorHandler.status.DOWNLOAD_FAILED);
+        });
       } else {
         errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
       }
     });
   });
 
-  router.post('/', passport.authenticate('jwt', {
+  router.post('/', fileManager.multer.single('icon'), passport.authenticate('jwt', {
     session: false
   }), function (req, res) {
-    var details = req.body.details;
+    var name = req.body.name;
+    var description = req.body.description;
+    var icon = req.file;
 
-    About.findOne({}, function (error, doc) {
-      if (error) {
-        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      } else if (doc) {
-        errorHandler.sendStatus(res, errorHandler.status.ALREADY_EXISTS, {
-          fields: 'about'
+    if (name && description && icon) {
+      fileManager.save([icon]).then(function () {
+        var newAbout = new About({
+          name: name,
+          description: description,
+          icon: icon.filename
         });
-      } else {
-        if (details) {
-          var newAbout = new About({
-            details: details
-          });
 
-          newAbout.save(function (error) {
-            if (error) {
-              errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-            } else {
-              res.status(201).json({
-                message: 'Cool! I learned more about you! :D'
-              });
-            }
-          });
-        } else {
-          errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
-            fields: 'details'
-          });
-        }
+        fileManager.clearCache();
+        newAbout.save(function (error) {
+          if (error) {
+            errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+          } else {
+            res.status(201).json({
+              message: 'Cool! I learned more about you!'
+            });
+          }
+        });
+      }, function () {
+        fileManager.clearCache();
+        errorHandler.sendStatus(res, errorHandler.status.UPLOAD_FAILED);
+      });
+    } else {
+      var missingFields = [];
+
+      if (!name) {
+        missingFields.push('name');
       }
-    });
+      if (!description) {
+        missingFields.push('description');
+      }
+      if (!icon) {
+        missingFields.push('icon');
+      }
+
+      fileManager.clearCache();
+      errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+        fields: missingFields
+      });
+    }
   });
 
-  router.put('/', passport.authenticate('jwt', {
+  router.put('/', fileManager.multer.single('icon'), passport.authenticate('jwt', {
     session: false
   }), function (req, res) {
-    var details = req.body.details;
+    var id = req.body.id;
+    var name = req.body.name;
+    var description = req.body.description;
+    var icon = req.body.icon;
     var update = {};
 
-    if (details) {
-      update.details = details;
+    if (id) {
+      fileManager.save(icon ? [icon.filename] : []).then(function () {
+        fileManager.clearCache();
 
-      About.findOneAndUpdate({}, update, function (error, doc) {
-        if (error) {
-          errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-        } else if (doc) {
-          res.status(200).json({
-            message: 'Okay. People change. I hope it\'s a good change...'
-          });
-        } else {
-          errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
-        }
+        About.findById(id, function (error, doc) {
+          if (error) {
+            errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+          } else if (doc) {
+            fileManager.delete(icon ? [doc.icon] : []).then(function () {
+              if (name) {
+                doc.name = name;
+              }
+              if (description) {
+                doc.description = description;
+              }
+              if (icon) {
+                doc.icon = icon.filename;
+              }
+              doc.save();
+              res.status(200).json({
+                message: 'Okay. People change. I hope it\'s a good change...'
+              });
+            }, function () {
+              errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+            });
+          } else {
+            errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+          }
+        });
+      }, function () {
+        fileManager.clearCache();
+        errorHandler.sendStatus(res, errorHandler.status.UPLOAD_FAILED);
       });
     } else {
       errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
-        fields: 'details'
+        fields: 'id'
       });
     }
   });
@@ -102,15 +156,35 @@ function setupRoutes(fileManager) {
   router.delete('/', passport.authenticate('jwt', {
     session: false
   }), function (req, res) {
-    About.findOneAndRemove({}, function (error) {
-      if (error) {
-        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      } else {
-        res.status(200).json({
-          message: 'Do you not want me to know you!? T^T'
-        });
-      }
-    });
+    var id = req.body.id;
+
+    if (id) {
+      About.findById(id, function (error, doc) {
+        if (error) {
+          errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+        } else if (doc) {
+          fileManager.delete([doc.icon]).then(function () {
+            About.findByIdAndRemove(id, function (error) {
+              if (error) {
+                errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+              } else {
+                res.status(200).json({
+                  message: 'Do you not want me to know you!? T^T'
+                });
+              }
+            });
+          }, function () {
+            errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+          });
+        } else {
+          errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+        }
+      });
+    } else {
+      errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
+        fields: 'id'
+      });
+    }
   });
 
 }

@@ -9,7 +9,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var aboutSchema = new Schema({
-  details: {
+  name: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  icon: {
     type: String,
     required: true
   }
