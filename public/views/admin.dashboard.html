@@ -41,7 +41,7 @@
           </div>
           <ul class="top-list animate-if" ng-if="projects && projects.length">
             <li ng-repeat="project in projects | limitTo: 3 | orderBy:'-views'">
-              <span class="num-bullet yellow">{{ $index + 1 }}</span>{{ project.name }}
+              <span class="num-bullet blue">{{ $index + 1 }}</span>{{ project.name }}
             </li>
           </ul>
 

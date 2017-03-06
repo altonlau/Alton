@@ -18,7 +18,7 @@
           </div>
 
           <div class="project-name">
-            <input class="form-control form-theme yellow" placeholder="Project Name" ng-disabled="!project.edit" ng-model="project.name">
+            <input class="form-control form-theme blue" placeholder="Project Name" ng-disabled="!project.edit" ng-model="project.name">
           </div>
           <div class="project-description">
             <textarea ng-model="project.description" placeholder="Project description" ng-if="project.edit" ng-keydown="checkTextHeight(true, $event)" ng-keyup="checkTextHeight(false, $event)"></textarea>
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="project-skills">
-            <button class="btn btn-theme yellow animate-if ng-class: { 'ml-2': $index > 0, 'active': project.edit && project.skills.indexOf(skill.id) >= 0 }" data-toggle="button" aria-pressed="false" autocomplete="off" ng-disabled="!project.edit" ng-if="project.edit || (!project.edit && project.skills.indexOf(skill.id) >= 0)"
+            <button class="btn btn-theme blue animate-if ng-class: { 'ml-2': $index > 0, 'active': project.edit && project.skills.indexOf(skill.id) >= 0 }" data-toggle="button" aria-pressed="false" autocomplete="off" ng-disabled="!project.edit" ng-if="project.edit || (!project.edit && project.skills.indexOf(skill.id) >= 0)"
                 ng-repeat="skill in skills">{{ skill.name }}</button>
           </div>
           <div class="project-views" ng-if="project && !project.edit">

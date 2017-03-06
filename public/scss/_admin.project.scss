@@ -1,7 +1,7 @@
 @import 'partials/content_card';
 
 .loading {
-  color: $yellow-color;
+  color: $blue-color;
   left: 50%;
   position: absolute;
   top: 50%;
@@ -68,7 +68,7 @@
   }
 
   .project-name {
-    border-bottom: 2px solid $yellow-color;
+    border-bottom: 2px solid $blue-color;
     margin-bottom: $margin-small;
 
     input {

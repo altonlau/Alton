@@ -17,10 +17,10 @@
 
   <div ng-if="isLoggedIn">
     <ul class="menu">
-      <li class="btn btn-theme blue circular large" ui-sref="admin.dashboard"><i class="fa fa-tachometer fa-2x"></i></li>
-      <li class="btn btn-theme yellow circular large" ui-sref="admin.project"><i class="fa fa-book fa-2x"></i></li>
+      <li class="btn btn-theme red circular large" ui-sref="admin.dashboard"><i class="fa fa-tachometer fa-2x"></i></li>
+      <li class="btn btn-theme blue circular large" ui-sref="admin.project"><i class="fa fa-book fa-2x"></i></li>
       <li class="btn btn-theme green circular large" ui-sref="admin.skill"><i class="fa fa-wrench fa-2x"></i></li>
-      <li class="btn btn-theme red circular large" ui-sref="admin.profile"><i class="fa fa-user fa-2x"></i></li>
+      <li class="btn btn-theme yellow circular large" ui-sref="admin.profile"><i class="fa fa-user fa-2x"></i></li>
     </ul>
     <div ui-view></div>
     <button class="mx-auto mb-2 btn btn-theme red circular logout" ng-click="logout()"><i class="fa fa-power-off"></i></button>
