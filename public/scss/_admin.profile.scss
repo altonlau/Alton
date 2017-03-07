@@ -93,19 +93,19 @@ label {
         & + label {
           transition: opacity 0.2s;
 
+          div {
+            border: 2px dashed $grey-color;
+            color: blue;
+            cursor: pointer;
+            display: inline-block;
+            height: 48px;
+            width: 48px;
+          }
+
           img {
+            cursor: pointer;
             height: 100%;
             width: 100%;
-          }
-        }
-
-        &:not(:disabled) {
-          & + label {
-            cursor: pointer;
-          }
-
-          &:hover + label {
-            opacity: 0.8;
           }
         }
       }
@@ -114,6 +114,7 @@ label {
     .about-name {
       border-bottom: 2px solid $yellow-color;
       display: inline-block;
+      vertical-align: top;
       width: 70%;
 
       input {

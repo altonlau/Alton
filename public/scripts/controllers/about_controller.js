@@ -18,6 +18,11 @@ angular.module('altonApp').controller('AboutController', function ($scope, $stat
     }, 200);
   };
 
+  $scope.viewAbout = function (index, about) {
+    $scope.viewing.index = index;
+    $scope.viewing.about = about;
+  };
+
   function setup() {
     websiteService.maintenance().then(function (response) {
       if (response) {

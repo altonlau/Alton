@@ -39,7 +39,10 @@
           <div class="about-title">
             <div class="about-icon">
               <input id="file-{{ $index }}" type="file" onchange="angular.element(this).scope().fileSelected(this)" accept="image/*" ng-disabled="!about.edit">
-              <label for="file-{{ $index }}"><img ng-src="{{ about.newIcon || about.icon }}" alt="{{ about.name }}"></label>
+              <label for="file-{{ $index }}">
+                <div ng-if="!about.newIcon && !about.icon"></div>
+                <img ng-src="{{ about.newIcon || about.icon }}" ng-if="about.newIcon || about.icon" alt="{{ about.name }}">
+              </label>
             </div>
             <div class="about-name">
               <input class="form-control form-theme yellow" placeholder="About Name" ng-disabled="!about.edit" ng-model="about.name">
