@@ -55,7 +55,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
     var defer = $q.defer();
 
     if (hasEndpoint(this.endpoints.POST, endpoint)) {
-      if (endpoint === this.endpoints.POST.PROJECT) {
+      if ([this.endpoints.POST.PROJECT, this.endpoints.POST.ABOUT].indexOf(endpoint) >= 0) {
         return performRequest(data, endpoint, 'POST', undefined, token);
       } else {
         return performRequest(data, endpoint, 'POST', 'application/json', token);
@@ -69,7 +69,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
     var defer = $q.defer();
 
     if (hasEndpoint(this.endpoints.PUT, endpoint)) {
-      if (endpoint === this.endpoints.PUT.PROJECT) {
+      if ([this.endpoints.PUT.PROJECT, this.endpoints.PUT.ABOUT].indexOf(endpoint) >= 0) {
         return performRequest(data, endpoint, 'PUT', undefined, token);
       } else {
         return performRequest(data, endpoint, 'PUT', 'application/json', token);

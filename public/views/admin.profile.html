@@ -19,4 +19,42 @@
     </form>
   </div>
 
+  <div class="container-fluid">
+    <span class="loading animate-if" ng-if="!abouts"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+
+    <div class="row mb-4">
+
+      <div class="col-xs-12 col-sm-6 new-about-box" ng-if="!abouts || !abouts.length || abouts[0].id">
+        <button class="btn btn-theme" ng-click="newAboutClicked()">+</button>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 animate-if" ng-if="abouts && abouts.length" ng-repeat="about in abouts">
+        <div class="content-card">
+          <button class="btn btn-clear float-right btn-menu" ng-click="about.edit ? saveAbout($event, about) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': about.edit, 'fa-ellipsis-v': !about.edit }"></i></button>
+          <div class="card-menu">
+            <button class="btn btn-theme circular white small mr-1" ng-click="toggleEdit(about)"><i class="fa fa-pencil"></i></button>
+            <button class="btn btn-theme circular red small ml-1" ng-click="deleteAbout(about)"><i class="fa fa-trash"></i></button>
+          </div>
+
+          <div class="about-title">
+            <div class="about-icon">
+              <input id="file-{{ $index }}" type="file" onchange="angular.element(this).scope().fileSelected(this)" accept="image/*" ng-disabled="!about.edit">
+              <label for="file-{{ $index }}"><img ng-src="{{ about.newIcon || about.icon }}" alt="{{ about.name }}"></label>
+            </div>
+            <div class="about-name">
+              <input class="form-control form-theme yellow" placeholder="About Name" ng-disabled="!about.edit" ng-model="about.name">
+            </div>
+          </div>
+          <div class="about-description">
+            <textarea ng-model="about.description" placeholder="About description" ng-if="about.edit" ng-keydown="checkTextHeight(true, $event)" ng-keyup="checkTextHeight(false, $event)"></textarea>
+            <div ng-if="!about.edit" ng-bind-html="about.marked"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="no-abouts animate-if" ng-if="abouts && !abouts.length">Click + to add about</div>
+
 </div>

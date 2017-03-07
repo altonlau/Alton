@@ -110,11 +110,10 @@ function setupRoutes(fileManager) {
     var id = req.body.id;
     var name = req.body.name;
     var description = req.body.description;
-    var icon = req.body.icon;
-    var update = {};
+    var icon = req.file;
 
     if (id) {
-      fileManager.save(icon ? [icon.filename] : []).then(function () {
+      fileManager.save(icon ? [icon] : []).then(function () {
         fileManager.clearCache();
 
         About.findById(id, function (error, doc) {
