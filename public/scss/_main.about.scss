@@ -1,0 +1,38 @@
+.container.about {
+  align-items: center;
+  display: flex;
+  height: 80%;
+  max-width: 800px;
+
+  .content-card {
+    height: 80%;
+    width: 100%;
+  }
+}
+
+.container.about-selector {
+  display: flex;
+  height: 10%;
+  justify-content: center;
+
+  button {
+    height: 100%;
+    opacity: 0.8;
+    padding: 0;
+    width: 20%;
+
+    &.active {
+      opacity: 1;
+    }
+
+    img {
+      height: 100%;
+      object-fit: contain;
+      width: 100%;
+    }
+  }
+}
+
+.container {
+  // border: 1px dashed blue;
+}

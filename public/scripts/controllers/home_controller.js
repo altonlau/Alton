@@ -5,15 +5,10 @@
  * Description: Home controller
  */
 
-angular.module('altonApp').controller('HomeController', function ($scope, aboutFactory, projectFactory, stateTransitionService, websiteService) {
+angular.module('altonApp').controller('HomeController', function ($scope, stateTransitionService, websiteService) {
 
-  var aboutLoaded = 0;
-  var projectLoaded = 0;
-  var statsLoaded = 0;
-  var loadTimeout = 10;
   var disableClick = false;
 
-  $scope.loaded = false;
   $scope.maintenance = null;
 
   $scope.buttonHovered = function (event, over) {
@@ -44,54 +39,22 @@ angular.module('altonApp').controller('HomeController', function ($scope, aboutF
     }
   };
 
-  function loadImages() {
-    if (aboutLoaded === loadTimeout && projectLoaded === loadTimeout) {
-      loaded();
-      return;
-    }
-
-    if (aboutLoaded !== loadTimeout) {
-      aboutFactory.load().then(function () {
-        aboutLoaded = loadTimeout;
-        loaded();
-      }, function () {
-        aboutLoaded++;
-        loadImages();
-      });
-    }
-
-    if (projectLoaded !== loadTimeout) {
-      projectFactory.load().then(function () {
-        projectLoaded = loadTimeout;
-        loaded();
-      }, function () {
-        projectLoaded++;
-        loadImages();
-      });
-    }
-  }
-
-  function loadWebsiteStats() {
+  function loadWebsite() {
     websiteService.maintenance().then(function (response) {
       $scope.maintenance = response;
-      statsLoaded = loadTimeout;
-      loaded();
+
+      if (!$scope.maintenance) {
+        websiteService.load().then({}, function () {
+          // TODO: Whoops page.
+        });
+      }
     }, function () {
       $scope.maintenance = true;
-      statsLoaded = loadTimeout;
-      loaded();
     });
   }
 
-  function loaded() {
-    if (aboutLoaded === loadTimeout && projectLoaded === loadTimeout && statsLoaded === loadTimeout) {
-      $scope.loaded = true
-    }
-  }
-
   function setup() {
-    loadImages();
-    loadWebsiteStats();
+    loadWebsite();
   }
 
   setup();

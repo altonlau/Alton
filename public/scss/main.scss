@@ -4,6 +4,7 @@
 @import 'modules/sizes';
 @import 'modules/shadows';
 @import 'partials/animate_if';
+@import 'partials/content_card';
 @import 'partials/button';
 
 body {
@@ -26,8 +27,22 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.back-btn {
+  left: $margin-small;
+  position: absolute;
+  top: $margin-small;
+  @include shadow-hoverable(0);
+}
+
 .home-view {
   @import 'main.home';
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-view {
+  @import 'main.about';
   height: 100vh;
   overflow: hidden;
   position: relative;

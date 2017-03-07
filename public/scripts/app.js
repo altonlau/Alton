@@ -54,4 +54,6 @@ angular.module('altonApp', [
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
   };
+
+  $rootScope.websiteLoaded = false;
 });

@@ -1,0 +1,12 @@
+<span class="loading animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+
+<div class="about-view animate-if" ng-if="abouts && abouts.length">
+  <button class="btn btn-theme circular large back-btn" ng-click="moveToHomePage()"><i class="fa fa-arrow-left fa-2x"></i></button>
+  <div class="container about">
+    <div class="content-card" ng-bind-html="viewing.about.description"></div>
+  </div>
+
+  <div class="container about-selector">
+    <button class="btn btn-clear" ng-class="{ active: viewing.index === $index }" ng-repeat="about in abouts"><img ng-src="{{ about.icon }}" alt="about.name"></button>
+  </div>
+</div>

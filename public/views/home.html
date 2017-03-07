@@ -1,8 +1,8 @@
 <div class="d-flex align-items-center justify-content-center maintenance" ng-if="maintenance">Under Construction</div>
 
-<span class="loading animate-if" ng-if="!loaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+<span class="loading animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
-<div class="home-view animate-if" ng-if="loaded && maintenance !== null && !maintenance">
+<div class="home-view animate-if" ng-if="websiteLoaded && maintenance !== null && !maintenance">
   <button class="btn btn-clear profile-button" ng-click="moveToAboutPage($event)"><img src="assets/profile.png" alt="Alton Lau"></button>
 
   <div class="buttons">
