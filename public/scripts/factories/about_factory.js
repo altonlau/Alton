@@ -5,7 +5,7 @@
  * Description: About model
  */
 
-angular.module('altonApp').factory('aboutFactory', function ($q, accountService, apiService) {
+angular.module('altonApp').factory('aboutFactory', function ($q, imagePreloader, accountService, apiService) {
 
   var abouts = [];
 
@@ -21,10 +21,17 @@ angular.module('altonApp').factory('aboutFactory', function ($q, accountService,
 
     abouts = [];
     apiService.get(null, apiService.endpoints.GET.ABOUT).then(function (response) {
+      var images = [];
       response.data.forEach(function (data) {
         abouts.push(new About(data.id, data.name, data.description, data.icon));
+        images.push(data.icon);
       });
-      defer.resolve();
+
+      imagePreloader.preload(images).then(function() {
+        defer.resolve();
+      }, function() {
+        defer.resolve();
+      });
     }, function (response) {
       defer.reject(response.data.message);
     });

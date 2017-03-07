@@ -18,6 +18,14 @@ body {
   text-align: center;
 }
 
+.loading {
+  color: $dark-grey-1-color;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .home-view {
   @import 'main.home';
   height: 100vh;

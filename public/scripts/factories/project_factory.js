@@ -5,7 +5,7 @@
  * Description: Project model
  */
 
-angular.module('altonApp').factory('projectFactory', function ($q, accountService, apiService) {
+angular.module('altonApp').factory('projectFactory', function ($q, imagePreloader, accountService, apiService) {
 
   var projects = [];
 
@@ -23,10 +23,17 @@ angular.module('altonApp').factory('projectFactory', function ($q, accountServic
 
     projects = [];
     apiService.get(null, apiService.endpoints.GET.PROJECT).then(function (response) {
+      var images = [];
       response.data.forEach(function (data) {
         projects.push(new Project(data.id, data.name, data.description, data.images, data.skills, data.views));
+        images = images.concat(data.images);
       });
-      defer.resolve();
+
+      imagePreloader.preload(images).then(function () {
+        defer.resolve();
+      }, function () {
+        defer.resolve();
+      });
     }, function (response) {
       defer.reject(response.data.message);
     });

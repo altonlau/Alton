@@ -2,18 +2,18 @@
   &.ng-enter {
     opacity: 0;
     transition: opacity 1s;
-  }
 
-  &.ng-enter-active {
-    opacity: 1;
+    &.ng-enter-active {
+      opacity: 1;
+    }
   }
 
   &.ng-leave {
     opacity: 1;
-    transition: opacity 0.2;
-  }
+    transition: opacity 0.2s;
 
-  &.ng-leave-active {
-    opacity: 0;
+    &.ng-leave-active {
+      opacity: 0;
+    }
   }
 }
