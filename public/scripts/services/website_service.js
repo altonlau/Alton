@@ -5,7 +5,7 @@
  * Description: API URL and endpoints service
  */
 
-angular.module('altonApp').service('websiteService', function ($cookies, $q, $rootScope, aboutFactory, projectFactory, accountService, apiService) {
+angular.module('altonApp').service('websiteService', function ($cookies, $q, $rootScope, aboutFactory, projectFactory, skillFactory, accountService, apiService) {
 
   this.maintenance = function (value) {
     var defer = $q.defer();
@@ -33,8 +33,10 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
   this.load = function () {
     var defer = $q.defer();
     var aboutLoaded = false;
+    var skillLoaded = false;
     var projectLoaded = false;
     var aboutCount = 10;
+    var skillCount = 10;
     var projectCount = 10;
 
     if ($rootScope.websiteLoaded) {
@@ -59,6 +61,21 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
         });
       }
 
+      if (!skillLoaded && skillCount) {
+        skillFactory.load().then(function () {
+          skillLoaded = true;
+          loaded();
+        }, function () {
+          skillCount--;
+
+          if (!skillCount) {
+            loaded();
+          } else {
+            loadObjects();
+          }
+        });
+      }
+
       if (!projectLoaded && projectCount) {
         projectFactory.load().then(function () {
           projectLoaded = true;
@@ -76,10 +93,10 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
     }
 
     function loaded() {
-      if (aboutLoaded && projectLoaded) {
+      if (aboutLoaded && skillLoaded && projectLoaded) {
         $rootScope.websiteLoaded = true;
         defer.resolve();
-      } else if (!aboutCount && !projectCount) {
+      } else if (!aboutCount && !skillCount && !projectCount) {
         defer.reject();
       }
     }

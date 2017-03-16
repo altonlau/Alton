@@ -1,0 +1,65 @@
+.view-skill-container {
+  background: $light-grey-1-color;
+  border-radius: 2px;
+  color: $dark-text-secondary-color;
+  height: 200px;
+  margin-bottom: $margin-medium;
+  padding: $padding-small;
+
+  &.grow-if {
+    &.ng-enter {
+      height: 0;
+      opacity: 0;
+      transition: all 0.5s;
+
+      &.ng-enter-active {
+        height: 200px;
+        opacity: 1;
+      }
+    }
+
+    &.ng-leave {
+      height: 200px;
+      opacity: 1;
+      transition: all 0.2s;
+
+      &.ng-leave-active {
+        height: 0;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.skill {
+  background: $light-grey-1-color;
+  border-radius: 2px;
+  color: $dark-text-secondary-color;
+  cursor: pointer;
+  height: 48px;
+  margin: $margin-small;
+  position: relative;
+  overflow: hidden;
+
+  .name {
+    left: $margin-medium;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  .level-bar {
+    background: $blue-color;
+    height: 100%;
+    transition: width 1s cubic-bezier(0.175, 0.885, 0.320, 1.275);
+    width: 0;
+  }
+
+  .level {
+    position: absolute;
+    right: $margin-small;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  @include shadow-hoverable(0);
+}

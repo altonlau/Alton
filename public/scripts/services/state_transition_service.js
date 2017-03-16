@@ -32,7 +32,7 @@ angular.module('altonApp').service('stateTransitionService', function ($state) {
       'height': '400vh',
       'width': '400vh'
     }, 'slow', function () {
-      // TODO: Move to page with 'state' variable
+      $state.go(state);
     });
   };
 

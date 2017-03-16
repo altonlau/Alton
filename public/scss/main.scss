@@ -20,11 +20,12 @@ body {
 }
 
 .loading {
+  align-items: center;
   color: $dark-grey-1-color;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  width: 100vw;
 }
 
 .back-btn {
@@ -42,8 +43,29 @@ body {
 }
 
 .about-view {
-  @import 'main.about';
   height: 100vh;
   overflow: hidden;
-  position: relative;
+
+  .about-container {
+    @import 'main.about';
+    height: 100%;
+    position: relative;
+  }
+}
+
+.skill-view {
+  background: $green-color;
+  min-height: 100vh;
+
+  .loading {
+    background: $green-color;
+    color: $white-color;
+  }
+
+  .skill-container {
+    @import 'main.skill';
+    padding-bottom: $padding-large;
+    padding-top: $padding-2xlarge;
+    position: relative;
+  }
 }

@@ -1,0 +1,19 @@
+<div class="skill-view">
+  <span class="loading green animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+  <button class="btn btn-theme circular large back-btn animate-if" ng-click="moveToHomePage()" ng-if="skills && skills.length"><i class="fa fa-arrow-left fa-2x"></i></button>
+
+  <div class="container skill-container animate-if" ng-if="skills && skills.length">
+    <div class="view-skill-container grow-if" ng-if="viewSkill">
+      <button class="btn btn-theme btn-clear float-right" ng-click="toggleSkill(viewSkill)"><i class="fa fa-times"></i></button>
+      <h2>{{ viewSkill.name }}</h2>
+      <hr>
+      <h5>Proficiency: {{ viewSkill.level * 100 }}%</h5> Learned this language 10 years ago. Improved skill level with this language through several work places.
+    </div>
+    <div class="skill" ng-repeat="skill in skills" ng-click="toggleSkill(skill)">
+      <div class="name">{{ skill.name }}</div>
+      <div class="level-bar" ng-style="skill.levelStyle"></div>
+      <div class="level">{{ skill.level * 100 }}%</div>
+    </div>
+  </div>
+
+</div>

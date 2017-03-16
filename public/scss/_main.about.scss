@@ -1,4 +1,4 @@
-.container.about {
+.about {
   align-items: center;
   display: flex;
   height: 70%;
@@ -15,7 +15,7 @@
   }
 }
 
-.container.about-selector {
+.about-selector {
   display: flex;
   height: 10%;
   justify-content: center;
@@ -41,8 +41,4 @@
       }
     }
   }
-}
-
-.container {
-  // border: 1px dashed blue;
 }
