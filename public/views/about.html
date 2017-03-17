@@ -1,6 +1,8 @@
 <div class="about-view">
+  <div class="back-btn animate-if" ng-if="abouts && abouts.length">
+    <button class="btn btn-theme circular large" ng-click="moveToHomePage()"><i class="fa fa-arrow-left fa-2x"></i></button>
+  </div>
   <span class="loading animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
-  <button class="btn btn-theme circular large back-btn" ng-click="moveToHomePage()"><i class="fa fa-arrow-left fa-2x"></i></button>
 
   <div class="about-container animate-if" ng-if="abouts && abouts.length">
     <div class="container about">

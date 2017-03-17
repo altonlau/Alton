@@ -2,16 +2,11 @@
   align-items: center;
   display: flex;
   height: 70%;
-  margin-top: $margin-xlarge;
   max-width: 800px;
 
   .content-card {
-    height: 80%;
+    height: 95%;
     width: 100%;
-
-    @include respond-to ('large') {
-      height: 95%;
-    }
   }
 }
 
