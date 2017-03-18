@@ -11,6 +11,7 @@ var router = express.Router();
 
 var errorHandler = require('./error_handler');
 var Website = require('../models/website_model');
+var WebsiteViews = require('../models/website_views_model');
 
 // Website API ===================================================================
 // GET /api/website/maintenance
@@ -39,17 +40,11 @@ function setupRoutes(fileManager) {
   router.get('/views', passport.authenticate('jwt', {
     session: false
   }), function (req, res) {
-    var name = 'views';
-
-    Website.findOne({
-      name: name
-    }, function (error, doc) {
+    WebsiteViews.find({}, function (error, docs) {
       if (error) {
         errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      } else if (doc) {
-        res.status(200).json(doc.value);
       } else {
-        res.status(200).json(0);
+        res.status(200).json(docs);
       }
     });
   });
@@ -91,33 +86,14 @@ function setupRoutes(fileManager) {
   });
 
   router.post('/viewed', function (req, res) {
-    var name = 'views';
+    var newView = new WebsiteViews();
 
-    Website.findOne({
-      name: name
-    }, function (error, doc) {
+    newView.save(function (error) {
       if (error) {
         errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-      } else if (doc) {
-        doc.value++;
-        doc.save();
+      } else {
         res.status(200).json({
           message: 'Wow! One more new view for you!'
-        });
-      } else {
-        var newWebsite = new Website({
-          name: name,
-          value: 1
-        });
-
-        newWebsite.save(function (error) {
-          if (error) {
-            errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-          } else {
-            res.status(200).json({
-              message: 'Wow! One more new view for you!'
-            });
-          }
         });
       }
     });

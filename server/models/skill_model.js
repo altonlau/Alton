@@ -21,10 +21,6 @@ var skillSchema = new Schema({
   description: {
     type: String,
     required: true
-  },
-  views: {
-    type: Number,
-    default: 0
   }
 });
 

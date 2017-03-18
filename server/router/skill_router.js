@@ -11,9 +11,11 @@ var router = express.Router();
 
 var errorHandler = require('./error_handler');
 var Skill = require('../models/skill_model');
+var SkillViews = require('../models/skill_views_model');
 
 // Skill API ===================================================================
 // GET /api/skill
+// GET /api/skill/views
 // POST /api/skill
 // PUT /api/skill
 // DELETE /api/skill
@@ -39,13 +41,24 @@ function setupRoutes(fileManager) {
             id: doc._id,
             name: doc.name,
             level: doc.level,
-            description: doc.description,
-            views: doc.views
+            description: doc.description
           });
         });
         res.status(200).json(results);
       } else {
         errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+      }
+    });
+  });
+
+  router.get('/views', passport.authenticate('jwt', {
+    session: false
+  }), function (req, res) {
+    SkillViews.find({}, function (error, docs) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else {
+        res.status(200).json(docs);
       }
     });
   });
@@ -170,17 +183,17 @@ function setupRoutes(fileManager) {
     var id = req.body.id;
 
     if (id) {
-      Skill.findById(id, function(error, doc) {
+      var newView = new SkillViews({
+        skillId: id
+      });
+
+      newView.save(function (error) {
         if (error) {
           errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-        } else if (doc) {
-          doc.views++;
-          doc.save();
+        } else {
           res.status(200).json({
             message: 'Awesome! One more view for your skill!'
           });
-        } else {
-          errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
         }
       });
     } else {

@@ -11,10 +11,12 @@ var router = express.Router();
 
 var errorHandler = require('./error_handler');
 var Project = require('../models/project_model');
+var ProjectViews = require('../models/project_views_model');
 var Skill = require('../models/skill_model');
 
 // About API ===================================================================
 // GET /api/project
+// GET /api/project/views
 // POST /api/project
 // PUT /api/project
 // DELETE /api/project
@@ -44,8 +46,7 @@ function setupRoutes(fileManager) {
             images: doc.images.map(function (image) {
               return 'downloads/' + image;
             }),
-            skills: doc.skills,
-            views: doc.views
+            skills: doc.skills
           });
           images = images.concat(doc.images);
         });
@@ -57,6 +58,18 @@ function setupRoutes(fileManager) {
         });
       } else {
         errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
+      }
+    });
+  });
+
+  router.get('/views', passport.authenticate('jwt', {
+    session: false
+  }), function (req, res) {
+    ProjectViews.find({}, function (error, docs) {
+      if (error) {
+        errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
+      } else {
+        res.status(200).json(docs);
       }
     });
   });
@@ -285,17 +298,17 @@ function setupRoutes(fileManager) {
     var id = req.body.id;
 
     if (id) {
-      Project.findById(id, function(error, doc) {
+      var newView = new ProjectViews({
+        projectId: id
+      });
+
+      newView.save(function (error) {
         if (error) {
           errorHandler.sendStatus(res, errorHandler.status.UNKNOWN);
-        } else if (doc) {
-          doc.views++;
-          doc.save();
+        } else {
           res.status(200).json({
             message: 'Awesome! One more view for your project!'
           });
-        } else {
-          errorHandler.sendStatus(res, errorHandler.status.NOT_FOUND);
         }
       });
     } else {
