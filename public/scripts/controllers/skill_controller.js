@@ -23,6 +23,7 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
       $scope.viewSkill = null;
     } else {
       $scope.viewSkill = skill;
+      $scope.viewSkill.description = marked(skill.description);
       $('html, body').animate({
         scrollTop: 0
       });

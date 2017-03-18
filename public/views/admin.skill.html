@@ -1,4 +1,4 @@
-<div class="skill-view">
+<div class="admin-skill-view">
 
   <span class="loading animate-if" ng-if="!skills"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
@@ -23,6 +23,10 @@
           <div class="skill-level">
             <div class="ball" ng-if="!skill.edit">{{ skill.level }}</div>
             <skill-slider value="skill.level" max="1" step="0.1" ng-if="skill.edit"></skill-slider>
+          </div>
+          <div class="skill-description">
+            <textarea ng-model="skill.description" placeholder="Skill description" ng-if="skill.edit" autogrow></textarea>
+            <div ng-if="!skill.edit" ng-bind-html="skill.marked"></div>
           </div>
           <div class="skill-views" ng-if="skill && !skill.edit">
             <i class="fa fa-eye"></i> {{ skill.views }}

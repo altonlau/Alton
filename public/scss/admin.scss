@@ -56,25 +56,25 @@
     }
   }
 
-  .dashboard-view {
+  .admin-dashboard-view {
     @import 'admin.dashboard';
     padding-left: $margin-small;
     padding-right: $margin-small;
   }
 
-  .project-view {
+  .admin-project-view {
     @import 'admin.project';
     padding-left: $margin-small;
     padding-right: $margin-small;
   }
 
-  .skill-view {
+  .admin-skill-view {
     @import 'admin.skill';
     padding-left: $margin-small;
     padding-right: $margin-small;
   }
 
-  .profile-view {
+  .admin-profile-view {
     @import 'admin.profile';
     padding-left: $margin-small;
     padding-right: $margin-small;

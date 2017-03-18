@@ -37,13 +37,6 @@ angular.module('altonApp').controller('AdminProjectController', function ($q, $s
 
   // Project Editing Handlers
 
-  $scope.checkTextHeight = function (before, event) {
-    var textArea = $(event.currentTarget);
-    var rows = textArea.val().split('\n');
-
-    textArea.attr('rows', Math.max(2, rows.length + (event.keyCode === 13 && before ? 1 : 0)));
-  };
-
   $scope.filesSelected = function (element) {
     var index = parseInt(element.id.replace('file-', ''));
     $scope.projects[index].newImages = element.files;

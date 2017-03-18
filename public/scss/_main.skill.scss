@@ -2,7 +2,7 @@
   background: $light-grey-1-color;
   border-radius: 2px;
   color: $dark-text-secondary-color;
-  height: 200px;
+  height: 240px;
   margin-bottom: $margin-medium;
   padding: $padding-small;
 
@@ -13,13 +13,17 @@
       transition: all 0.5s;
 
       &.ng-enter-active {
-        height: 200px;
+        height: 240px;
         opacity: 1;
+
+        @include respond-to ('small') {
+          height: 280px;
+        }
       }
     }
 
     &.ng-leave {
-      height: 200px;
+      height: 240px;
       opacity: 1;
       transition: all 0.2s;
 
@@ -27,7 +31,20 @@
         height: 0;
         opacity: 0;
       }
+
+      @include respond-to ('small') {
+        height: 280px;
+      }
     }
+  }
+
+  .description {
+    height: 66.67%;
+    overflow: scroll;
+  }
+
+  @include respond-to ('small') {
+    height: 280px;
   }
 }
 

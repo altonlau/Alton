@@ -1,4 +1,4 @@
-<div class="project-view">
+<div class="admin-project-view">
 
   <span class="loading animate-if" ng-if="!projects"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
@@ -21,7 +21,7 @@
             <input class="form-control form-theme blue" placeholder="Project Name" ng-disabled="!project.edit" ng-model="project.name">
           </div>
           <div class="project-description">
-            <textarea ng-model="project.description" placeholder="Project description" ng-if="project.edit" ng-keydown="checkTextHeight(true, $event)" ng-keyup="checkTextHeight(false, $event)"></textarea>
+            <textarea ng-model="project.description" placeholder="Project description" ng-if="project.edit" autogrow></textarea>
             <div ng-if="!project.edit" ng-bind-html="project.marked"></div>
           </div>
           <div class="project-images">

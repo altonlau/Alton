@@ -101,4 +101,14 @@
       width: 48px;
     }
   }
+
+  .skill-description {
+    textarea {
+      border: none;
+      outline: none;
+      padding: 0;
+      resize: none;
+      width: 100%;
+    }
+  }
 }

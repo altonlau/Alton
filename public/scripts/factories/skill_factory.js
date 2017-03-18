@@ -9,10 +9,11 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
 
   var skills = [];
 
-  var Skill = function (id, name, level, views) {
+  var Skill = function (id, name, level, description, views) {
     this.id = id;
     this.name = name;
     this.level = level;
+    this.description = description;
     this.views = views;
   };
 
@@ -22,7 +23,7 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     skills = [];
     apiService.get(null, apiService.endpoints.GET.SKILL).then(function (response) {
       response.data.forEach(function (data) {
-        skills.push(new Skill(data.id, data.name, data.level, data.views));
+        skills.push(new Skill(data.id, data.name, data.level, data.description, data.views));
       });
       defer.resolve();
     }, function (response) {
@@ -39,7 +40,8 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
       apiService.put({
         id: skill.id,
         name: skill.name,
-        level: skill.level
+        level: skill.level,
+        description: skill.description
       }, apiService.endpoints.PUT.SKILL, accountService.getToken()).then(function (response) {
         defer.resolve(response.data.message);
       }, function (response) {
@@ -48,7 +50,8 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     } else {
       apiService.post({
         name: skill.name,
-        level: skill.level
+        level: skill.level,
+        description: skill.description
       }, apiService.endpoints.POST.SKILL, accountService.getToken()).then(function (response) {
         defer.resolve(response.data.message);
       }, function (response) {

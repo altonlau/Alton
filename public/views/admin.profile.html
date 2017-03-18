@@ -1,4 +1,4 @@
-<div class="profile-view">
+<div class="admin-profile-view">
 
   <div class="container">
     <form ng-submit="saveProfile()">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="about-description">
-            <textarea ng-model="about.description" placeholder="About description" ng-if="about.edit" ng-keydown="checkTextHeight(true, $event)" ng-keyup="checkTextHeight(false, $event)"></textarea>
+            <textarea ng-model="about.description" placeholder="About description" ng-if="about.edit" autogrow></textarea>
             <div ng-if="!about.edit" ng-bind-html="about.marked"></div>
           </div>
         </div>

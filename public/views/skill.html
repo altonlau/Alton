@@ -9,7 +9,10 @@
       <button class="btn btn-theme btn-clear float-right" ng-click="toggleSkill(viewSkill)"><i class="fa fa-times"></i></button>
       <h2>{{ viewSkill.name }}</h2>
       <hr>
-      <h5>Proficiency: {{ viewSkill.level * 100 }}%</h5> Learned this language 10 years ago. Improved skill level with this language through several work places.
+      <div class="description">
+        <h5>Proficiency: {{ viewSkill.level * 100 }}%</h5>
+        <div ng-bind-html="viewSkill.description"></div>
+      </div>
     </div>
     <div class="skill" ng-repeat="skill in skills" ng-click="toggleSkill(skill)">
       <div class="name">{{ skill.name }}</div>
@@ -17,5 +20,4 @@
       <div class="level">{{ skill.level * 100 }}%</div>
     </div>
   </div>
-
 </div>

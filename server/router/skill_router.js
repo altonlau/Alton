@@ -39,6 +39,7 @@ function setupRoutes(fileManager) {
             id: doc._id,
             name: doc.name,
             level: doc.level,
+            description: doc.description,
             views: doc.views
           });
         });
@@ -54,12 +55,14 @@ function setupRoutes(fileManager) {
   }), function (req, res) {
     var name = req.body.name;
     var level = req.body.level;
+    var description = req.body.description;
 
-    if (name && level) {
+    if (name && level && description) {
       if (level >= 0 && level <= 1) {
         var newSkill = new Skill({
           name: name,
-          level: level
+          level: level,
+          description: description
         });
 
         newSkill.save(function (error) {
@@ -89,6 +92,9 @@ function setupRoutes(fileManager) {
       if (!level) {
         missingFields.push('level');
       }
+      if (!description) {
+        missingFields.push('description');
+      }
 
       errorHandler.sendStatus(res, errorHandler.status.MISSING_PARAMETERS, {
         fields: missingFields
@@ -102,6 +108,7 @@ function setupRoutes(fileManager) {
     var id = req.body.id;
     var name = req.body.name;
     var level = req.body.level;
+    var description = req.body.description;
     var update = {};
 
     if (id) {
@@ -110,6 +117,9 @@ function setupRoutes(fileManager) {
       }
       if (level) {
         update.level = level;
+      }
+      if (description) {
+        update.description = description;
       }
 
       Skill.findByIdAndUpdate(id, update, function (error, doc) {

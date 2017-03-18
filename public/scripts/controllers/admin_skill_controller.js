@@ -78,7 +78,10 @@ angular.module('altonApp').controller('AdminSkillController', function ($q, $sco
 
   function loadSkills() {
     skillFactory.load().then(function () {
-      $scope.skills = skillFactory.getAll();
+      $scope.skills = skillFactory.getAll().map(function (skill) {
+        skill.marked = marked(skill.description);
+        return skill;
+      });
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
