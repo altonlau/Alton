@@ -30,7 +30,7 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
     return defer.promise;
   };
 
-  this.load = function () {
+  this.load = function (force) {
     var defer = $q.defer();
     var aboutLoaded = false;
     var skillLoaded = false;
@@ -39,9 +39,10 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
     var skillCount = 10;
     var projectCount = 10;
 
-    if ($rootScope.websiteLoaded) {
+    if ($rootScope.websiteLoaded && !force) {
       defer.resolve();
     } else {
+      $rootScope.websiteLoaded = false;
       loadObjects();
     }
 
@@ -97,7 +98,7 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
         $rootScope.websiteLoaded = true;
         defer.resolve();
       } else if (!aboutCount && !skillCount && !projectCount) {
-        defer.reject();
+        defer.reject('Unable to load website.');
       }
     }
 

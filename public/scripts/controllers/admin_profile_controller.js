@@ -5,7 +5,7 @@
  * Description: Admin profile controller
  */
 
-angular.module('altonApp').controller('AdminProfileController', function ($sce, $scope, aboutFactory, accountService, systemMessageService) {
+angular.module('altonApp').controller('AdminProfileController', function ($sce, $scope, aboutFactory, accountService, websiteService, systemMessageService) {
 
   $scope.abouts = null;
   $scope.profile = null;
@@ -55,7 +55,7 @@ angular.module('altonApp').controller('AdminProfileController', function ($sce, 
 
     aboutFactory.delete(about).then(function (response) {
       systemMessageService.showSuccessMessage(response);
-      loadAbouts();
+      loadWebsite(true);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -65,7 +65,7 @@ angular.module('altonApp').controller('AdminProfileController', function ($sce, 
     aboutFactory.save(about).then(function (response) {
       about.edit = false;
       systemMessageService.showSuccessMessage(response);
-      loadAbouts();
+      loadWebsite(true);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -80,8 +80,8 @@ angular.module('altonApp').controller('AdminProfileController', function ($sce, 
     });
   };
 
-  function loadAbouts() {
-    aboutFactory.load().then(function () {
+  function loadWebsite(force) {
+    websiteService.load(force).then(function () {
       $scope.abouts = aboutFactory.getAll().map(function (about) {
         about.marked = marked(about.description);
         return about;
@@ -96,7 +96,7 @@ angular.module('altonApp').controller('AdminProfileController', function ($sce, 
   }
 
   function setup() {
-    loadAbouts();
+    loadWebsite();
     loadProfile();
   }
 

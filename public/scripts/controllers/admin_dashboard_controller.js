@@ -37,7 +37,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     });
     return -views.length;
   };
-  
+
   $scope.updateDevMode = function () {
     websiteService.devMode($scope.stats.devMode);
   };
@@ -58,29 +58,13 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     $timeout(setTime, 1000);
   }
 
-  function loadProjects() {
-    projectFactory.views().then(function (response) {
-      $scope.stats.projectViews = response;
+  function loadWebsite() {
+    websiteService.load().then(function() {
+      $scope.stats.projectViews = projectFactory.views();
+      $scope.stats.skillViews = skillFactory.views();
 
-      projectFactory.load().then(function () {
-        $scope.projects = projectFactory.getAll();
-      }, function (response) {
-        systemMessageService.showErrorMessage(response);
-      });
-    }, function (response) {
-      systemMessageService.showErrorMessage(response);
-    });
-  }
-
-  function loadSkills() {
-    skillFactory.views().then(function (response) {
-      $scope.stats.skillViews = response;
-
-      skillFactory.load().then(function () {
-        $scope.skills = skillFactory.getAll();
-      }, function (response) {
-        systemMessageService.showErrorMessage(response);
-      });
+      $scope.projects = projectFactory.getAll();
+      $scope.skills = skillFactory.getAll();
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -106,8 +90,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
 
   function setup() {
     setTime();
-    loadProjects();
-    loadSkills();
+    loadWebsite();
     loadUser();
     loadWebsiteStats();
   }

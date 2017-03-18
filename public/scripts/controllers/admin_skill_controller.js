@@ -5,10 +5,10 @@
  * Description: Admin skill controller
  */
 
-angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, projectFactory, skillFactory, systemMessageService) {
+angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, skillFactory, websiteService, systemMessageService) {
 
   $scope.skills = null;
-  
+
   $scope.toggleMenu = function (event) {
     event.stopPropagation();
 
@@ -51,7 +51,7 @@ angular.module('altonApp').controller('AdminSkillController', function ($q, $sco
     $q.all(promises).then(function (responses) {
       skillFactory.delete(skill).then(function (response) {
         systemMessageService.showSuccessMessage(response);
-        loadSkills();
+        loadWebsite(true);
       }, function (response) {
         systemMessageService.showErrorMessage(response);
       });
@@ -64,30 +64,20 @@ angular.module('altonApp').controller('AdminSkillController', function ($q, $sco
     skillFactory.save(skill).then(function (response) {
       skill.edit = false;
       systemMessageService.showSuccessMessage(response);
-      loadSkills();
+      loadWebsite(true);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
   };
 
-  function loadProjects() {
-    projectFactory.load().then({}, function (response) {
-      systemMessageService.showErrorMessage(response);
-    });
-  }
-
-  function loadSkills() {
-    skillFactory.views().then(function (response) {
-      skillFactory.load().then(function () {
-        $scope.skills = skillFactory.getAll().map(function (skill) {
-          skill.views = response.filter(function (view) {
-            return view.skillId === skill.id;
-          }).length;
-          skill.marked = marked(skill.description);
-          return skill;
-        });
-      }, function (response) {
-        systemMessageService.showErrorMessage(response);
+  function loadWebsite(force) {
+    websiteService.load(force).then(function () {
+      $scope.skills = skillFactory.getAll().map(function (skill) {
+        skill.views = skillFactory.views().filter(function (view) {
+          return view.skillId === skill.id;
+        }).length;
+        skill.marked = marked(skill.description);
+        return skill;
       });
     }, function (response) {
       systemMessageService.showErrorMessage(response);
@@ -95,8 +85,7 @@ angular.module('altonApp').controller('AdminSkillController', function ($q, $sco
   }
 
   function setup() {
-    loadProjects();
-    loadSkills();
+    loadWebsite();
   }
 
   $(document).on('click', function (event) {

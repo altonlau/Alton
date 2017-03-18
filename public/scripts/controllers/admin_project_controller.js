@@ -5,7 +5,7 @@
  * Description: Admin project controller
  */
 
-angular.module('altonApp').controller('AdminProjectController', function ($q, $scope, $timeout, projectFactory, skillFactory, systemMessageService) {
+angular.module('altonApp').controller('AdminProjectController', function ($q, $scope, $timeout, projectFactory, skillFactory, websiteService, systemMessageService) {
 
   $scope.projects = null;
   $scope.skills = null;
@@ -53,7 +53,7 @@ angular.module('altonApp').controller('AdminProjectController', function ($q, $s
 
     projectFactory.delete(project).then(function (response) {
       systemMessageService.showSuccessMessage(response);
-      loadProjects();
+      loadWebsite(true);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -74,30 +74,21 @@ angular.module('altonApp').controller('AdminProjectController', function ($q, $s
     projectFactory.save(project).then(function (response) {
       project.edit = false;
       systemMessageService.showSuccessMessage(response);
-      loadProjects();
+      loadWebsite(true);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
   };
 
-  function loadProjects() {
-    projectFactory.views().then(function (response) {
-      projectFactory.load().then(function () {
-        $scope.projects = projectFactory.getAll().map(function (project) {
-          project.views = response.filter(function (view) {
-            return view.projectId === project.id;
-          }).length;
-          project.marked = marked(project.description);
-          return project;
-        });
-      }, function (response) {
-        systemMessageService.showErrorMessage(response);
+  function loadWebsite(force) {
+    websiteService.load(force).then(function () {
+      $scope.projects = projectFactory.getAll().map(function (project) {
+        project.views = projectFactory.views().filter(function (view) {
+          return view.projectId === project.id;
+        }).length;
+        project.marked = marked(project.description);
+        return project;
       });
-    });
-  }
-
-  function loadSkills() {
-    skillFactory.load().then(function () {
       $scope.skills = skillFactory.getAll();
     }, function (response) {
       systemMessageService.showErrorMessage(response);
@@ -105,8 +96,7 @@ angular.module('altonApp').controller('AdminProjectController', function ($q, $s
   }
 
   function setup() {
-    loadProjects();
-    loadSkills();
+    loadWebsite();
   }
 
   $(document).on('click', function (event) {

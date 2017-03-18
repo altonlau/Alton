@@ -8,6 +8,7 @@
 angular.module('altonApp').factory('projectFactory', function ($q, imagePreloader, accountService, apiService) {
 
   var projects = [];
+  var projectViews = [];
   var viewedProjects = [];
 
   var Project = function (id, name, description, images, skills) {
@@ -17,6 +18,22 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     this.images = images;
     this.skills = skills;
   };
+
+  function load() {
+    var defer = $q.defer();
+
+    loadProjects().then(function () {
+      loadViews().then(function () {
+        defer.resolve();
+      }, function () {
+        defer.reject();
+      });
+    }, function (response) {
+      defer.reject(response);
+    });
+
+    return defer.promise;
+  }
 
   function loadProjects() {
     var defer = $q.defer();
@@ -37,6 +54,23 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     }, function (response) {
       defer.reject(response.data.message);
     });
+
+    return defer.promise;
+  }
+
+  function loadViews() {
+    var defer = $q.defer();
+
+    if (accountService.getToken()) {
+      apiService.get(null, apiService.endpoints.GET.PROJECT_VIEWS, accountService.getToken()).then(function (response) {
+        projectViews = response.data;
+        defer.resolve();
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    } else {
+      defer.resolve();
+    }
 
     return defer.promise;
   }
@@ -109,27 +143,17 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     }
   }
 
-  function views() {
-    var defer = $q.defer();
-
-    apiService.get(null, apiService.endpoints.GET.PROJECT_VIEWS, accountService.getToken()).then(function (response) {
-      defer.resolve(response.data);
-    }, function (response) {
-      defer.reject(response.data.message);
-    })
-
-    return defer.promise;
-  }
-
   return {
     getAll: function () {
       return projects;
     },
-    load: loadProjects,
+    load: load,
     save: saveProject,
     delete: deleteProject,
     viewed: viewedProject,
-    views: views
+    views: function() {
+      return projectViews;
+    }
   };
 
 });

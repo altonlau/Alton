@@ -8,6 +8,7 @@
 angular.module('altonApp').factory('skillFactory', function ($q, accountService, apiService) {
 
   var skills = [];
+  var skillViews = [];
 
   var Skill = function (id, name, level, description) {
     this.id = id;
@@ -15,6 +16,22 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     this.level = level;
     this.description = description;
   };
+
+  function load() {
+    var defer = $q.defer();
+
+    loadSkills().then(function () {
+      loadViews().then(function () {
+        defer.resolve();
+      }, function () {
+        defer.reject();
+      });
+    }, function (response) {
+      defer.reject(response);
+    });
+
+    return defer.promise;
+  }
 
   function loadSkills() {
     var defer = $q.defer();
@@ -28,6 +45,23 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     }, function (response) {
       defer.reject(response.data.message);
     });
+
+    return defer.promise;
+  }
+
+  function loadViews() {
+    var defer = $q.defer();
+
+    if (accountService.getToken()) {
+      apiService.get(null, apiService.endpoints.GET.SKILL_VIEWS, accountService.getToken()).then(function (response) {
+        skillViews = response.data;
+        defer.resolve();
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    } else {
+      defer.resolve();
+    }
 
     return defer.promise;
   }
@@ -87,27 +121,17 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     }
   }
 
-  function views() {
-    var defer = $q.defer();
-
-    apiService.get(null, apiService.endpoints.GET.SKILL_VIEWS, accountService.getToken()).then(function (response) {
-      defer.resolve(response.data);
-    }, function (response) {
-      defer.reject(response.data.message);
-    })
-
-    return defer.promise;
-  }
-
   return {
     getAll: function () {
       return skills;
     },
-    load: loadSkills,
+    load: load,
     save: saveSkill,
     delete: deleteSkill,
     viewed: viewedSkill,
-    views: views
+    views: function () {
+      return skillViews;
+    }
   };
 
 });
