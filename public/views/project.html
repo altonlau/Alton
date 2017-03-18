@@ -1,0 +1,9 @@
+<div class="project-view">
+  <div class="back-btn animate-if" ng-if="projects && projects.length">
+    <button class="btn btn-theme circular large" ng-click="moveToHomePage()"><i class="fa fa-arrow-left fa-2x"></i></button>
+  </div>
+  <span class="loading animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
+
+  <div class="project-container animate-if" ng-if="projects && projects.length">
+  </div>
+</div>

@@ -23,6 +23,10 @@ angular.module('altonApp', [
     url: '/about',
     controller: 'AboutController',
     templateUrl: 'views/about.html'
+  }).state('project', {
+    url: '/project',
+    controller: 'ProjectController',
+    templateUrl: 'views/project.html'
   }).state('skill', {
     url: '/skill',
     controller: 'SkillController',

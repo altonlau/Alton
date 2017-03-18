@@ -53,6 +53,21 @@ body {
   }
 }
 
+.project-view {
+  background: $blue-color;
+  min-height: 100vh;
+
+  .loading {
+    background: $blue-color;
+    color: $white-color;
+  }
+
+  .project-container {
+    @import 'main.project';
+    position: relative;
+  }
+}
+
 .skill-view {
   background: $green-color;
   min-height: 100vh;
