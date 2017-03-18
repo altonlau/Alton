@@ -8,8 +8,6 @@
 angular.module('altonApp').controller('AdminDashboardController', function ($scope, $timeout, projectFactory, skillFactory, accountService, systemMessageService, websiteService) {
 
   var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var projectLoaded = false;
-  var skillLoaded = false;
 
   $scope.calendar = {
     month: months[0],
@@ -20,18 +18,34 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   $scope.stats = {
     devMode: null,
     maintenance: null,
-    views: null
+    projectViews: null,
+    skillViews: null,
+    websiteViews: null
   };
   $scope.user = null;
 
-  $scope.updateDevMode = function() {
+  $scope.projectViews = function (project) {
+    var views = $scope.stats.projectViews.filter(function (view) {
+      return view.projectId === project.id;
+    });
+    return -views.length;
+  };
+
+  $scope.skillViews = function (skill) {
+    var views = $scope.stats.skillViews.filter(function (view) {
+      return view.skillId === skill.id;
+    });
+    return -views.length;
+  };
+  
+  $scope.updateDevMode = function () {
     websiteService.devMode($scope.stats.devMode);
   };
 
-  $scope.updateMaintenance = function() {
+  $scope.updateMaintenance = function () {
     websiteService.maintenance($scope.stats.maintenance).then(function (response) {
       systemMessageService.showSuccessMessage(response);
-    }, function(response) {
+    }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
   };
@@ -45,18 +59,28 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   }
 
   function loadProjects() {
-    projectFactory.load().then(function () {
-      projectLoaded = true;
-      $scope.projects = projectFactory.getAll();
+    projectFactory.views().then(function (response) {
+      $scope.stats.projectViews = response;
+
+      projectFactory.load().then(function () {
+        $scope.projects = projectFactory.getAll();
+      }, function (response) {
+        systemMessageService.showErrorMessage(response);
+      });
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
   }
 
   function loadSkills() {
-    skillFactory.load().then(function () {
-      skillLoaded = true;
-      $scope.skills = skillFactory.getAll();
+    skillFactory.views().then(function (response) {
+      $scope.stats.skillViews = response;
+
+      skillFactory.load().then(function () {
+        $scope.skills = skillFactory.getAll();
+      }, function (response) {
+        systemMessageService.showErrorMessage(response);
+      });
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -74,7 +98,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     });
 
     websiteService.views().then(function (response) {
-      $scope.stats.views = response;
+      $scope.stats.websiteViews = response;
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });

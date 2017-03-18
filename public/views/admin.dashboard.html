@@ -40,7 +40,7 @@
             No Projects
           </div>
           <ul class="top-list animate-if" ng-if="projects && projects.length">
-            <li ng-repeat="project in projects | limitTo: 3 | orderBy:'-views'">
+            <li ng-repeat="project in projects | limitTo: 3 | orderBy:projectViews">
               <span class="num-bullet blue">{{ $index + 1 }}</span>{{ project.name }}
             </li>
           </ul>
@@ -59,7 +59,7 @@
             No Skills
           </div>
           <ul class="top-list animate-if" ng-if="skills && skills.length">
-            <li ng-repeat="skill in skills | limitTo: 3 | orderBy:'-views'">
+            <li ng-repeat="skill in skills | limitTo: 3 | orderBy:skillViews">
               <span class="num-bullet green">{{ $index + 1 }}</span>{{ skill.name }}
             </li>
           </ul>
@@ -72,7 +72,7 @@
         <div class="content-card">
 
           <div class="center website-views">
-            {{ stats.views }}
+            {{ stats.websiteViews.length }}
           </div>
 
         </div>

@@ -8,7 +8,7 @@
 angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, projectFactory, skillFactory, systemMessageService) {
 
   $scope.skills = null;
-
+  
   $scope.toggleMenu = function (event) {
     event.stopPropagation();
 
@@ -77,10 +77,17 @@ angular.module('altonApp').controller('AdminSkillController', function ($q, $sco
   }
 
   function loadSkills() {
-    skillFactory.load().then(function () {
-      $scope.skills = skillFactory.getAll().map(function (skill) {
-        skill.marked = marked(skill.description);
-        return skill;
+    skillFactory.views().then(function (response) {
+      skillFactory.load().then(function () {
+        $scope.skills = skillFactory.getAll().map(function (skill) {
+          skill.views = response.filter(function (view) {
+            return view.skillId === skill.id;
+          }).length;
+          skill.marked = marked(skill.description);
+          return skill;
+        });
+      }, function (response) {
+        systemMessageService.showErrorMessage(response);
       });
     }, function (response) {
       systemMessageService.showErrorMessage(response);

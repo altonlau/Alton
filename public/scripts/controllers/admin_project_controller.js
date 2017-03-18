@@ -81,13 +81,18 @@ angular.module('altonApp').controller('AdminProjectController', function ($q, $s
   };
 
   function loadProjects() {
-    projectFactory.load().then(function () {
-      $scope.projects = projectFactory.getAll().map(function (project) {
-        project.marked = marked(project.description);
-        return project;
+    projectFactory.views().then(function (response) {
+      projectFactory.load().then(function () {
+        $scope.projects = projectFactory.getAll().map(function (project) {
+          project.views = response.filter(function (view) {
+            return view.projectId === project.id;
+          }).length;
+          project.marked = marked(project.description);
+          return project;
+        });
+      }, function (response) {
+        systemMessageService.showErrorMessage(response);
       });
-    }, function (response) {
-      systemMessageService.showErrorMessage(response);
     });
   }
 

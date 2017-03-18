@@ -5,11 +5,11 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div class="col-xs-12 col-sm-6 col-md-3 new-skill-box" ng-if="!skills || !skills.length || skills[0].id">
+      <div class="col-sm-6 new-skill-box" ng-if="!skills || !skills.length || skills[0].id">
         <button class="btn btn-theme" ng-click="newSkillClicked()">+</button>
       </div>
 
-      <div class="col-xs-12 col-sm-6 col-md-3 animate-if" ng-if="skills && skills.length" ng-repeat="skill in skills">
+      <div class="col-sm-6 animate-if" ng-if="skills && skills.length" ng-repeat="skill in skills">
         <div class="content-card">
           <button class="btn btn-clear float-right btn-menu" ng-click="skill.edit ? saveSkill(skill) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': skill.edit, 'fa-ellipsis-v': !skill.edit }"></i></button>
           <div class="card-menu">

@@ -9,12 +9,11 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
 
   var skills = [];
 
-  var Skill = function (id, name, level, description, views) {
+  var Skill = function (id, name, level, description) {
     this.id = id;
     this.name = name;
     this.level = level;
     this.description = description;
-    this.views = views;
   };
 
   function loadSkills() {
@@ -23,7 +22,7 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     skills = [];
     apiService.get(null, apiService.endpoints.GET.SKILL).then(function (response) {
       response.data.forEach(function (data) {
-        skills.push(new Skill(data.id, data.name, data.level, data.description, data.views));
+        skills.push(new Skill(data.id, data.name, data.level, data.description));
       });
       defer.resolve();
     }, function (response) {
@@ -76,13 +75,39 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     return defer.promise;
   }
 
+  function viewedSkill(id) {
+    if (viewedSkills.indexOf(id) < 0) {
+      viewedSkills.push(id);
+
+      apiService.post({
+        id: id
+      }, apiService.endpoints.POST.SKILL_VIEWED).then({}, function () {
+        viewedSkills.splice(viewedSkills.indexOf(id), 1);
+      });
+    }
+  }
+
+  function views() {
+    var defer = $q.defer();
+
+    apiService.get(null, apiService.endpoints.GET.SKILL_VIEWS, accountService.getToken()).then(function (response) {
+      defer.resolve(response.data);
+    }, function (response) {
+      defer.reject(response.data.message);
+    })
+
+    return defer.promise;
+  }
+
   return {
     getAll: function () {
       return skills;
     },
     load: loadSkills,
     save: saveSkill,
-    delete: deleteSkill
+    delete: deleteSkill,
+    viewed: viewedSkill,
+    views: views
   };
 
 });

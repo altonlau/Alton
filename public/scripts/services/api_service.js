@@ -13,7 +13,9 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
     GET: {
       ABOUT: '/api/about',
       PROJECT: '/api/project',
+      PROJECT_VIEWS: '/api/project/views',
       SKILL: '/api/skill',
+      SKILL_VIEWS: '/api/skill/views',
       USER: '/api/user',
       WEBSITE_MAINTENANCE: '/api/website/maintenance',
       WEBSITE_VIEWS: '/api/website/views'

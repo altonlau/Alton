@@ -10,13 +10,12 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
   var projects = [];
   var viewedProjects = [];
 
-  var Project = function (id, name, description, images, skills, views) {
+  var Project = function (id, name, description, images, skills) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.images = images;
     this.skills = skills;
-    this.views = views;
   };
 
   function loadProjects() {
@@ -26,7 +25,7 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     apiService.get(null, apiService.endpoints.GET.PROJECT).then(function (response) {
       var images = [];
       response.data.forEach(function (data) {
-        projects.push(new Project(data.id, data.name, data.description, data.images, data.skills, data.views));
+        projects.push(new Project(data.id, data.name, data.description, data.images, data.skills));
         images = images.concat(data.images);
       });
 
@@ -101,13 +100,25 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
   function viewedProject(id) {
     if (viewedProjects.indexOf(id) < 0) {
       viewedProjects.push(id);
-      
+
       apiService.post({
         id: id
       }, apiService.endpoints.POST.PROJECT_VIEWED).then({}, function () {
         viewedProjects.splice(viewedProjects.indexOf(id), 1);
       });
     }
+  }
+
+  function views() {
+    var defer = $q.defer();
+
+    apiService.get(null, apiService.endpoints.GET.PROJECT_VIEWS, accountService.getToken()).then(function (response) {
+      defer.resolve(response.data);
+    }, function (response) {
+      defer.reject(response.data.message);
+    })
+
+    return defer.promise;
   }
 
   return {
@@ -117,7 +128,8 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     load: loadProjects,
     save: saveProject,
     delete: deleteProject,
-    viewed: viewedProject
+    viewed: viewedProject,
+    views: views
   };
 
 });

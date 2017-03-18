@@ -24,11 +24,11 @@
 
     <div class="row mb-4">
 
-      <div class="col-xs-12 col-sm-6 new-about-box" ng-if="!abouts || !abouts.length || abouts[0].id">
+      <div class="col-sm-6 new-about-box" ng-if="!abouts || !abouts.length || abouts[0].id">
         <button class="btn btn-theme" ng-click="newAboutClicked()">+</button>
       </div>
 
-      <div class="col-xs-12 col-sm-6 animate-if" ng-if="abouts && abouts.length" ng-repeat="about in abouts">
+      <div class="col-sm-6 animate-if" ng-if="abouts && abouts.length" ng-repeat="about in abouts">
         <div class="content-card">
           <button class="btn btn-clear float-right btn-menu" ng-click="about.edit ? saveAbout($event, about) : toggleMenu($event)"><i class="fa ng-class: { 'fa-floppy-o': about.edit, 'fa-ellipsis-v': !about.edit }"></i></button>
           <div class="card-menu">
