@@ -5,5 +5,54 @@
   <span class="loading animate-if" ng-if="!websiteLoaded"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
   <div class="project-container animate-if" ng-if="projects && projects.length">
+    <div class="container selector">
+      <div class="row">
+        <!-- TODO: Pagination -->
+        <div class="col-6 col-sm-4 col-md-3 project-item" ng-repeat="project in projects">
+          <button class="btn btn-theme white" ng-click="viewProject(project)">
+            <img ng-src="{{ project.images[0] }}" alt="{{ project.name }}" ng-if="project.images.length">
+            <span ng-if="!project.images.length">{{ project.name }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="{{ project.id }}" class="project" ng-repeat="project in projects">
+      <div class="container-fluid">
+        <div class="row name">
+          {{ project.name }}
+        </div>
+        <div class="row skill">
+          <div class="skill-item" ng-repeat="skill in skills" ng-if="project.skills.indexOf(skill.id) >= 0">
+            {{ skill.name }}
+          </div>
+        </div>
+        <div class="row description">
+          <div class="col-12 col-md-6 text-container">
+            <div ng-bind-html="project.description"></div>
+          </div>
+          <div class="col-12 col-md-6 carousel-container">
+            <div id="indicators-{{ $index }}" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators" ng-if="project.images && project.images.length > 1">
+                <li ng-class="{ active: $index == 0 }" data-target="#indicators-{{ $index }}" data-slide-to="#index" ng-repeat="image in project.images"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="carousel-item" ng-class="{ active: $index == 0 }" ng-repeat="image in project.images">
+                  <img class="d-block img-fluid" ng-src="{{ image }}" alt="{{ project.name }}-{{ $index }}">
+                </div>
+              </div>
+              <a class="carousel-control-prev" href="#indicators-{{ $index }}" role="button" data-slide="prev" ng-click="$event.preventDefault()" ng-if="project.images && project.images.length > 1">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#indicators-{{ $index }}" role="button" data-slide="next" ng-click="$event.preventDefault()" ng-if="project.images && project.images.length > 1">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

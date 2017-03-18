@@ -1,0 +1,125 @@
+.selector {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+
+  .row {
+    width: 100%;
+
+    .project-item {
+      padding: $padding-small;
+
+      button {
+        border: none;
+        display: block;
+        height: 120px;
+        margin: 0 auto;
+        padding: 0;
+        width: 120px;
+
+        img {
+          height: 90%;
+          object-fit: cover;
+          width: 90%;
+        }
+        @include shadow-hoverable(0);
+
+        @include respond-to ('medium') {
+          height: 140px;
+          width: 140px;
+        }
+
+        @include respond-to ('large') {
+          height: 200px;
+          width: 200px;
+        }
+      }
+    }
+  }
+}
+
+.project {
+  height: 100vh;
+  width: 100%;
+
+  .container-fluid {
+    height: 100%;
+
+    .row {
+      display: flex;
+      height: 10%;
+
+      &.name {
+        align-items: center;
+        font-size: $font-regular;
+        font-weight: $light;
+        padding-left: $padding-small;
+
+        @include respond-to ('small') {
+          font-size: $font-large;
+        }
+      }
+
+      &.skill {
+        align-items: center;
+
+        .skill-item {
+          background: $light-grey-1-color;
+          border-radius: 2px;
+          padding: $padding-small;
+          margin-left: $margin-small;
+        }
+      }
+
+      &.description {
+        height: 80%;
+        justify-content: center;
+
+        .text-container {
+          height: 50%;
+          padding: $padding-medium $padding-small;
+
+          @include respond-to ('medium') {
+            height: 100%;
+          }
+        }
+
+        .carousel-container {
+          align-items: center;
+          display: flex;
+          height: 50%;
+
+          .carousel {
+            height: 90%;
+
+            .carousel-inner {
+              height: 100%;
+              width: 100%;
+
+              .carousel-item {
+                height: 100%;
+                width: 100%;
+
+                img {
+                  height: 100%;
+                  object-fit: contain;
+                  width: 100%;
+                }
+              }
+            }
+          }
+
+          @include respond-to ('medium') {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+@for $i from 1 through length($colors) {
+  .project:nth-child(#{length($colors)}n+#{$i+1}) {
+    background: nth($colors, $i);
+  }
+}
