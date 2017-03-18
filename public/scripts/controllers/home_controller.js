@@ -44,6 +44,11 @@ angular.module('altonApp').controller('HomeController', function ($scope, stateT
       $scope.maintenance = response;
 
       if (!$scope.maintenance) {
+        websiteService.enableStats().then(function (response) {
+          if (response) {
+            websiteService.viewed();
+          }
+        }, {});
         websiteService.load().then({}, function () {
           // TODO: Whoops page.
         });

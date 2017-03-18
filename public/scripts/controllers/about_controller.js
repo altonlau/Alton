@@ -37,6 +37,12 @@ angular.module('altonApp').controller('AboutController', function ($scope, $stat
             index: 0,
             about: $scope.abouts[0]
           };
+
+          websiteService.enableStats().then(function (response) {
+            if (response) {
+              websiteService.viewed();
+            }
+          }, {});
         }, function () {
           // TODO: Whoops page.
         });

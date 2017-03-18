@@ -7,6 +7,8 @@
 
 angular.module('altonApp').controller('SkillController', function ($scope, $state, $timeout, skillFactory, websiteService) {
 
+  var enableStats = null;
+
   $scope.skills = null;
   $scope.viewSkill = null;
 
@@ -27,6 +29,10 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
       $('html, body').animate({
         scrollTop: 0
       });
+
+      if (enableStats) {
+        skillFactory.viewed(skill.id);
+      }
     }
   };
 
@@ -46,6 +52,13 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
               }, 500 * (index + 1));
             });
           }, 200);
+
+          websiteService.enableStats().then(function (response) {
+            enableStats = response;
+            if (response) {
+              websiteService.viewed();
+            }
+          }, {});
         }, function () {
           // TODO: Whoops page.
         });

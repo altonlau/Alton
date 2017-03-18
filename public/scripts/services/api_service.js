@@ -18,6 +18,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
       SKILL_VIEWS: '/api/skill/views',
       USER: '/api/user',
       WEBSITE_MAINTENANCE: '/api/website/maintenance',
+      WEBSITE_STATS: '/api/website/enableStats',
       WEBSITE_VIEWS: '/api/website/views'
     },
     POST: {
@@ -29,6 +30,7 @@ angular.module('altonApp').service('apiService', function ($http, $location, $q)
       PROJECT_VIEWED: '/api/project/viewed',
       SKILL_VIEWED: '/api/skill/viewed',
       WEBSITE_MAINTENANCE: '/api/website/maintenance',
+      WEBSITE_STATS: '/api/website/enableStats',
       WEBSITE_VIEWED: '/api/website/viewed'
     },
     PUT: {

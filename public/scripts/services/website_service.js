@@ -7,6 +7,8 @@
 
 angular.module('altonApp').service('websiteService', function ($cookies, $q, $rootScope, aboutFactory, projectFactory, skillFactory, accountService, apiService) {
 
+  var cookieView = 'website';
+
   this.maintenance = function (value) {
     var defer = $q.defer();
 
@@ -21,6 +23,29 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
         value: value
       };
       apiService.post(data, apiService.endpoints.POST.WEBSITE_MAINTENANCE, accountService.getToken()).then(function (response) {
+        defer.resolve(response.data.message);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    }
+
+    return defer.promise;
+  };
+
+  this.enableStats = function (value) {
+    var defer = $q.defer();
+
+    if (value === undefined) {
+      apiService.get(null, apiService.endpoints.GET.WEBSITE_STATS).then(function (response) {
+        defer.resolve(response.data);
+      }, function (response) {
+        defer.reject(response.data.message);
+      });
+    } else {
+      var data = {
+        value: value
+      };
+      apiService.post(data, apiService.endpoints.POST.WEBSITE_STATS, accountService.getToken()).then(function (response) {
         defer.resolve(response.data.message);
       }, function (response) {
         defer.reject(response.data.message);
@@ -106,7 +131,10 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
   };
 
   this.viewed = function () {
-    apiService.post(null, apiService.endpoints.POST.WEBSITE_VIEWED);
+    if (!$cookies.get(cookieView) === undefined || !JSON.parse($cookies.get(cookieView))) {
+      $cookies.put(cookieView, JSON.stringify(true))
+      apiService.post(null, apiService.endpoints.POST.WEBSITE_VIEWED);
+    }
   };
 
   this.views = function () {

@@ -8,7 +8,7 @@
 angular.module('altonApp').factory('skillFactory', function ($q, accountService, apiService) {
 
   var skills = [];
-  var skillViews = [];
+  var viewedSkills = [];
 
   var Skill = function (id, name, level, description) {
     this.id = id;

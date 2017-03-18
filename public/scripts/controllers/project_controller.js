@@ -7,6 +7,7 @@
 
 angular.module('altonApp').controller('ProjectController', function ($scope, $state, $timeout, projectFactory, skillFactory, websiteService) {
 
+  var enableStats = null;
   var viewing = null;
   var minimumVisiblePercentage = 0.6;
 
@@ -44,35 +45,37 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
   }
 
   function startStatistics() {
-    var windowHeight = $(window).height();
-    var windowOffsetTop = $(window).scrollTop();
-    var project = null;
+    if (enableStats) {
+      var windowHeight = $(window).height();
+      var windowOffsetTop = $(window).scrollTop();
+      var project = null;
 
-    $('.project').each(function (index, element) {
-      var percentageVisible = Math.max(0, (windowOffsetTop + windowHeight - $(element).offset().top) / windowHeight);
+      $('.project').each(function (index, element) {
+        var percentageVisible = Math.max(0, (windowOffsetTop + windowHeight - $(element).offset().top) / windowHeight);
 
-      if (percentageVisible > minimumVisiblePercentage) {
-        project = $scope.projects[index];
+        if (percentageVisible > minimumVisiblePercentage) {
+          project = $scope.projects[index];
+        }
+      });
+
+      if (project) {
+        if (viewing && project.id === viewing.project) {
+          viewing.count++;
+        } else {
+          viewing = {
+            count: 1,
+            project: project.id
+          };
+        }
+
+        // Viewed for at least 3 seconds
+        if (viewing.count >= 3) {
+          projectFactory.viewed(viewing.project);
+        }
       }
-    });
 
-    if (project) {
-      if (viewing && project.id === viewing.project) {
-        viewing.count++;
-      } else {
-        viewing = {
-          count: 1,
-          project: project.id
-        };
-      }
-
-      // Viewed for at least 3 seconds
-      if (viewing.count >= 3) {
-        projectFactory.viewed(viewing.project);
-      }
+      $timeout(startStatistics, 1000);
     }
-
-    $timeout(startStatistics, 1000);
   }
 
   function setup() {
@@ -90,7 +93,13 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
 
           $scope.skills = skillFactory.getAll();
 
-          startStatistics();
+          websiteService.enableStats().then(function (response) {
+            enableStats = response;
+            if (response) {
+              websiteService.viewed();
+              startStatistics();
+            }
+          }, {});
         }, function () {
           // TODO: Whoops page.
         });
@@ -99,6 +108,10 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
       $scope.moveToHomePage();
     });
   }
+
+  $scope.$on('$stateChangeStart', function () {
+    enableStats = false;
+  });
 
   $(window).resize(function () {
     if ($scope.projects) {
