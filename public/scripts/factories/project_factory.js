@@ -8,6 +8,7 @@
 angular.module('altonApp').factory('projectFactory', function ($q, imagePreloader, accountService, apiService) {
 
   var projects = [];
+  var viewedProjects = [];
 
   var Project = function (id, name, description, images, skills, views) {
     this.id = id;
@@ -97,13 +98,26 @@ angular.module('altonApp').factory('projectFactory', function ($q, imagePreloade
     return defer.promise;
   }
 
+  function viewedProject(id) {
+    if (viewedProjects.indexOf(id) < 0) {
+      viewedProjects.push(id);
+      
+      apiService.post({
+        id: id
+      }, apiService.endpoints.POST.PROJECT_VIEWED).then({}, function () {
+        viewedProjects.splice(viewedProjects.indexOf(id), 1);
+      });
+    }
+  }
+
   return {
     getAll: function () {
       return projects;
     },
     load: loadProjects,
     save: saveProject,
-    delete: deleteProject
+    delete: deleteProject,
+    viewed: viewedProject
   };
 
 });

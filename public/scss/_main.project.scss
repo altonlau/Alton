@@ -15,13 +15,20 @@
         display: block;
         height: 120px;
         margin: 0 auto;
-        padding: 0;
+        padding: $margin-xsmall;
         width: 120px;
 
         img {
-          height: 90%;
+          border-radius: 2px;
+          height: 100%;
           object-fit: cover;
-          width: 90%;
+          width: 100%;
+        }
+
+        div {
+          white-space: pre-wrap;
+          width: 100%;
+          word-wrap: break-word;
         }
         @include shadow-hoverable(0);
 
@@ -35,6 +42,21 @@
           width: 200px;
         }
       }
+    }
+  }
+
+  .controls {
+    bottom: $margin-medium;
+    position: absolute;
+
+    button {
+      display: inline-block;
+      margin: $margin-small;
+
+      &:disabled {
+        cursor: default;
+      }
+      @include shadow-hoverable(1);
     }
   }
 }
