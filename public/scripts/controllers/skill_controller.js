@@ -5,7 +5,7 @@
  * Description: Skill controller
  */
 
-angular.module('altonApp').controller('SkillController', function ($scope, $state, $timeout, skillFactory, websiteService) {
+angular.module('altonApp').controller('SkillController', function ($scope, $timeout, skillFactory, stateTransitionService, websiteService) {
 
   var enableStats = null;
 
@@ -16,8 +16,12 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
     $scope.skills = null;
 
     $timeout(function () {
-      $state.go('home');
+      stateTransitionService.transition('home');
     }, 200);
+  };
+
+  $scope.moveTo404Page = function () {
+    stateTransitionService.transition('404');
   };
 
   $scope.toggleSkill = function (skill) {
@@ -39,7 +43,7 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
   function setup() {
     websiteService.maintenance().then(function (response) {
       if (response) {
-        $state.go('home');
+        stateTransitionService.transition('home');
       } else {
         websiteService.load().then(function () {
           $timeout(function () {
@@ -60,7 +64,7 @@ angular.module('altonApp').controller('SkillController', function ($scope, $stat
             }
           }, {});
         }, function () {
-          // TODO: Whoops page.
+          $scope.moveTo404Page();
         });
       }
     }, function () {

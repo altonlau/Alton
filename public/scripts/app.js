@@ -13,12 +13,15 @@ angular.module('altonApp', [
   'ui.router'
 ]).config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.hashPrefix('');
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/404');
 
   $stateProvider.state('home', {
     url: '/',
     controller: 'HomeController',
     templateUrl: 'views/home.html'
+  }).state('404', {
+    url: '/404',
+    templateUrl: 'views/404.html'
   }).state('about', {
     url: '/about',
     controller: 'AboutController',

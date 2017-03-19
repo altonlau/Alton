@@ -42,7 +42,7 @@
                   <img class="d-block img-fluid" ng-src="{{ image }}" alt="{{ project.name }}-{{ $index }}">
                 </div>
               </div>
-              <a class="carousel-control-prev" href="#carousel-{{ project.id }" role="button" data-slide="prev" ng-click="$event.preventDefault()" ng-if="project.images && project.images.length > 1">
+              <a class="carousel-control-prev" href="#carousel-{{ project.id }}" role="button" data-slide="prev" ng-click="$event.preventDefault()" ng-if="project.images && project.images.length > 1">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
               </a>
@@ -57,6 +57,7 @@
           </div>
         </div>
       </div>
+      <button class="btn btn-theme circular small top-btn" ng-click="scrollToTop()"><i class="fa fa-arrow-up"></i></button>
     </div>
   </div>
 </div>

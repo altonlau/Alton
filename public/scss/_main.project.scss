@@ -63,6 +63,7 @@
 
 .project {
   height: 100vh;
+  position: relative;
   width: 100%;
 
   .container-fluid {
@@ -137,6 +138,18 @@
           }
         }
       }
+    }
+  }
+
+  .top-btn {
+    bottom: $margin-small;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%);
+
+    @include respond-to('medium') {
+      left: $margin-small;
+      transform: none;
     }
   }
 }

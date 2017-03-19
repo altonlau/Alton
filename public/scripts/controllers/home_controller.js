@@ -39,6 +39,10 @@ angular.module('altonApp').controller('HomeController', function ($scope, stateT
     }
   };
 
+  $scope.moveTo404Page = function () {
+    stateTransitionService.transition('404');
+  };
+
   function loadWebsite() {
     websiteService.maintenance().then(function (response) {
       $scope.maintenance = response;
@@ -50,7 +54,7 @@ angular.module('altonApp').controller('HomeController', function ($scope, stateT
           }
         }, {});
         websiteService.load().then({}, function () {
-          // TODO: Whoops page.
+          $scope.moveTo404Page();
         });
       }
     }, function () {

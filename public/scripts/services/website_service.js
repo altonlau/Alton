@@ -131,8 +131,8 @@ angular.module('altonApp').service('websiteService', function ($cookies, $q, $ro
   };
 
   this.viewed = function () {
-    if (!$cookies.get(cookieView) === undefined || !JSON.parse($cookies.get(cookieView))) {
-      $cookies.put(cookieView, JSON.stringify(true))
+    if ($cookies.get(cookieView) !== undefined || !JSON.parse($cookies.get(cookieView))) {
+      $cookies.put(cookieView, JSON.stringify(true));
       apiService.post(null, apiService.endpoints.POST.WEBSITE_VIEWED);
     }
   };

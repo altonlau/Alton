@@ -44,4 +44,8 @@ angular.module('altonApp').service('stateTransitionService', function ($state) {
     });
   };
 
+  this.transition = function (state) {
+    $state.go(state);
+  };
+
 });

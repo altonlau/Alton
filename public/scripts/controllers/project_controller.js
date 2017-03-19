@@ -5,7 +5,7 @@
  * Description: Project controller
  */
 
-angular.module('altonApp').controller('ProjectController', function ($scope, $state, $timeout, projectFactory, skillFactory, websiteService) {
+angular.module('altonApp').controller('ProjectController', function ($scope, $timeout, projectFactory, skillFactory, stateTransitionService, websiteService) {
 
   var enableStats = null;
   var viewing = null;
@@ -22,8 +22,12 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
     $scope.projects = null;
 
     $timeout(function () {
-      $state.go('home');
+      stateTransitionService.transition('home');
     }, 200);
+  };
+
+  $scope.moveTo404Page = function () {
+    stateTransitionService.transition('404');
   };
 
   $scope.changePage = function (next) {
@@ -33,6 +37,12 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
   $scope.viewProject = function (project) {
     $('html, body').animate({
       scrollTop: $('#' + project.id).offset().top
+    });
+  };
+
+  $scope.scrollToTop = function () {
+    $('html, body').animate({
+      scrollTop: 0
     });
   };
 
@@ -81,7 +91,7 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
   function setup() {
     websiteService.maintenance().then(function (response) {
       if (response) {
-        $state.go('home');
+        stateTransitionService.transition('home');
       } else {
         websiteService.load().then(function () {
           $scope.projects = projectFactory.getAll().map(function (project) {
@@ -101,7 +111,7 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $st
             }
           }, {});
         }, function () {
-          // TODO: Whoops page.
+          $scope.moveTo404Page();
         });
       }
     }, function () {

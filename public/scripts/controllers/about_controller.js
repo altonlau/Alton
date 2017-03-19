@@ -5,7 +5,7 @@
  * Description: About controller
  */
 
-angular.module('altonApp').controller('AboutController', function ($scope, $state, $timeout, aboutFactory, websiteService) {
+angular.module('altonApp').controller('AboutController', function ($scope, $timeout, aboutFactory, stateTransitionService, websiteService) {
 
   $scope.abouts = null;
   $scope.viewing = null;
@@ -14,8 +14,12 @@ angular.module('altonApp').controller('AboutController', function ($scope, $stat
     $scope.abouts = null;
 
     $timeout(function () {
-      $state.go('home');
+      stateTransitionService.transition('home');
     }, 200);
+  };
+
+  $scope.moveTo404Page = function () {
+    stateTransitionService.transition('404');
   };
 
   $scope.viewAbout = function (index, about) {
@@ -26,7 +30,7 @@ angular.module('altonApp').controller('AboutController', function ($scope, $stat
   function setup() {
     websiteService.maintenance().then(function (response) {
       if (response) {
-        $state.go('home');
+        stateTransitionService.transition('home');
       } else {
         websiteService.load().then(function () {
           $scope.abouts = aboutFactory.getAll().map(function (about) {
@@ -44,7 +48,7 @@ angular.module('altonApp').controller('AboutController', function ($scope, $stat
             }
           }, {});
         }, function () {
-          // TODO: Whoops page.
+          $scope.moveTo404Page();
         });
       }
     }, function () {
