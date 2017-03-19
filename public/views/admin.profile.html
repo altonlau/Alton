@@ -22,7 +22,7 @@
   <div class="container-fluid">
     <span class="loading animate-if" ng-if="!abouts"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
-    <div class="row mb-4">
+    <div class="row justify-content-center" ng-class="{ 'mb-4': abouts && abouts.length }">
 
       <div class="col-sm-6 new-about-box" ng-if="!abouts || !abouts.length || abouts[0].id">
         <button class="btn btn-theme" ng-click="newAboutClicked()">+</button>

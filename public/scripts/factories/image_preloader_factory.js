@@ -51,8 +51,13 @@ angular.module('altonApp').factory('imagePreloader', function ($rootScope, $q) {
         return (this.promise);
       }
       this.state = this.states.LOADING;
-      for (var i = 0; i < this.imageCount; i++) {
-        this.loadImageLocation(this.imageLocations[i]);
+
+      if (this.imageCount) {
+        for (var i = 0; i < this.imageCount; i++) {
+          this.loadImageLocation(this.imageLocations[i]);
+        }
+      } else {
+        this.deferred.resolve();
       }
       // Return the deferred promise for the load event.
       return (this.promise);
