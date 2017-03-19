@@ -85,6 +85,21 @@
   }
 }
 
+.charts {
+  margin-bottom: $margin-large;
+
+  .card-title {
+    font-weight: $light;
+    margin-bottom: 0;
+  }
+
+  .content-card {
+    @include respond-to ('small') {
+      padding: $padding-medium;
+    }
+  }
+}
+
 .settings {
   margin-bottom: $margin-large;
 

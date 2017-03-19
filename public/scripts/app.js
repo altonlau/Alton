@@ -6,6 +6,7 @@
  */
 
 angular.module('altonApp', [
+  'chart.js',
   'ngAnimate',
   'ngCookies',
   'ngSanitize',
@@ -13,7 +14,7 @@ angular.module('altonApp', [
   'ui.router'
 ]).config(function ($locationProvider, $stateProvider, $urlRouterProvider) {
   $locationProvider.hashPrefix('');
-  $urlRouterProvider.otherwise('/404');
+  $urlRouterProvider.otherwise('/');
 
   $stateProvider.state('home', {
     url: '/',

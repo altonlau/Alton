@@ -68,7 +68,7 @@
       </div>
 
       <div class="col-xs-12 col-sm-6 col-md-3">
-        <span class="card-title">  Website Views</span>
+        <span class="card-title">Website Views</span>
         <div class="content-card">
 
           <div class="center website-views">
@@ -82,6 +82,55 @@
   </div>
   <!-- End Main Dashboard -->
 
+  <!-- Statistics -->
+  <div class="container-fluid charts">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card-title">Project Views</div>
+        <div class="content-card">
+          <div class="dropdown float-right">
+            <button class="btn btn-theme blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentProjectInterval }}</button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" ng-click="buildProjectChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+            </div>
+          </div>
+
+          <canvas id="line" class="chart chart-line" chart-data="projectChart.data" chart-labels="projectChart.labels" chart-colors="['#5696D4']"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-title">Skill Views</div>
+        <div class="content-card">
+          <div class="dropdown float-right">
+            <button class="btn btn-theme green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentSkillInterval }}</button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" ng-click="buildSkillChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+            </div>
+          </div>
+
+          <canvas id="line" class="chart chart-line" chart-data="skillChart.data" chart-labels="skillChart.labels" chart-colors="['#7BCAA5']"></canvas>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card-title">Website Views</div>
+        <div class="content-card">
+          <div class="dropdown float-right">
+            <button class="btn btn-theme red dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentWebsiteInterval }}</button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" ng-click="buildWebsiteChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+            </div>
+          </div>
+
+          <canvas id="line" class="chart chart-line" chart-data="websiteChart.data" chart-labels="websiteChart.labels" chart-colors="['#EB7565']"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Statistics -->
+
+  <!-- Settings -->
   <div class="container-fluid settings">
     <div class="content-card">
 
@@ -100,5 +149,6 @@
 
     </div>
   </div>
+  <!-- End Settings -->
 
 </div>
