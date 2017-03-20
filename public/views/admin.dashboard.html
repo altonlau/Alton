@@ -91,7 +91,7 @@
           <div class="dropdown float-right">
             <button class="btn btn-theme blue dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentProjectInterval }}</button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" ng-click="buildProjectChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+              <a class="dropdown-item" ng-click="buildChart(projectChart, interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
             </div>
           </div>
 
@@ -105,7 +105,7 @@
           <div class="dropdown float-right">
             <button class="btn btn-theme green dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentSkillInterval }}</button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" ng-click="buildSkillChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+              <a class="dropdown-item" ng-click="buildChart(skillChart, interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
             </div>
           </div>
 
@@ -119,7 +119,7 @@
           <div class="dropdown float-right">
             <button class="btn btn-theme red dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ currentWebsiteInterval }}</button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" ng-click="buildWebsiteChart(interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
+              <a class="dropdown-item" ng-click="buildChart(websiteChart, interval, $event)" ng-repeat="interval in chartIntervals">{{ interval }}</a>
             </div>
           </div>
 

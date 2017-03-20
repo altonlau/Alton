@@ -28,9 +28,9 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
   $scope.currentProjectInterval = 'Hourly';
   $scope.currentSkillInterval = 'Hourly';
   $scope.currentWebsiteInterval = 'Hourly';
-  $scope.projectChart = null;
-  $scope.skillChart = null;
-  $scope.websiteChart = null;
+  $scope.projectChart = 0;
+  $scope.skillChart = 1;
+  $scope.websiteChart = 2;
 
   $scope.projectViews = function (project) {
     var views = $scope.stats.projectViews.filter(function (view) {
@@ -62,200 +62,114 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     });
   };
 
-  $scope.buildProjectChart = function (interval ,event) {
-    $scope.currentProjectInterval = interval
+  $scope.buildChart = function (chart, interval, event) {
     if (event) {
       event.preventDefault();
     }
 
+    var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var now = new Date();
+    var date;
+    var views;
     var x = [];
     var y = [];
+    var i = 0;
 
-    if ($scope.currentProjectInterval === $scope.chartIntervals[0]) {
+    if (chart === $scope.projectChart) {
+      stats = $scope.stats.projectViews;
+      $scope.currentProjectInterval = interval;
+    } else if (chart === $scope.skillChart) {
+      stats = $scope.stats.skillViews;
+      $scope.currentSkillInterval = interval;
+    } else {
+      stats = $scope.stats.websiteViews;
+      $scope.currentWebsiteInterval = interval;
+    }
+
+    if (interval === $scope.chartIntervals[0]) {
       // Get the last 12 hours
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
+      for (i = 0; i < 12; i++) {
+        date = new Date(now.toString());
         date.setHours(date.getHours() - 11 + i);
-
-        var views = $scope.stats.projectViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getHours() === viewDate.getHours() &&
-            date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
+        views = filterHours(stats, date).length;
         x.push(date.getHours());
         y.push(views);
       }
-    } else if ($scope.currentProjectInterval === $scope.chartIntervals[1]) {
+    } else if (interval === $scope.chartIntervals[1]) {
       // Get the last 7 days
-      var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      for (var i = 0; i < 7; i++) {
-        var date = new Date(now.toString());
+      for (i = 0; i < 7; i++) {
+        date = new Date(now.toString());
         date.setDate(date.getDate() - 6 + i);
-
-        var views = $scope.stats.projectViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
+        views = filterDays(stats, date).length;
         x.push(days[date.getDay()]);
         y.push(views);
       }
     } else {
       // Get the last 12 months
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
+      for (i = 0; i < 12; i++) {
+        date = new Date(now.toString());
         date.setMonth(date.getMonth() - 11 + i);
-
-        var views = $scope.stats.projectViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
+        views = filterMonths(stats, date);
         x.push(months[date.getMonth()]);
         y.push(views);
       }
     }
 
-    $scope.projectChart = {
-      labels: x,
-      data: [y]
-    };
-  };
-
-  $scope.buildSkillChart = function (interval ,event) {
-    $scope.currentSkillInterval = interval
-    if (event) {
-      event.preventDefault();
-    }
-
-    var now = new Date();
-    var x = [];
-    var y = [];
-
-    if ($scope.currentSkillInterval === $scope.chartIntervals[0]) {
-      // Get the last 12 hours
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
-        date.setHours(date.getHours() - 11 + i);
-
-        var views = $scope.stats.skillViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getHours() === viewDate.getHours() &&
-            date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(date.getHours());
-        y.push(views);
-      }
-    } else if ($scope.currentSkillInterval === $scope.chartIntervals[1]) {
-      // Get the last 7 days
-      var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      for (var i = 0; i < 7; i++) {
-        var date = new Date(now.toString());
-        date.setDate(date.getDate() - 6 + i);
-
-        var views = $scope.stats.skillViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(days[date.getDay()]);
-        y.push(views);
-      }
+    if (chart === $scope.projectChart) {
+      $scope.projectChart = {
+        labels: x,
+        data: [y]
+      };
+    } else if (chart === $scope.skillChart) {
+      $scope.skillChart = {
+        labels: x,
+        data: [y]
+      };
     } else {
-      // Get the last 12 months
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
-        date.setMonth(date.getMonth() - 11 + i);
-
-        var views = $scope.stats.skillViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(months[date.getMonth()]);
-        y.push(views);
-      }
+      $scope.websiteChart = {
+        labels: x,
+        data: [y]
+      };
     }
-
-    $scope.skillChart = {
-      labels: x,
-      data: [y]
-    };
   };
 
-  $scope.buildWebsiteChart = function (interval ,event) {
-    $scope.currentWebsiteInterval = interval
-    if (event) {
-      event.preventDefault();
+  function filterHours(views, date) {
+    if (views) {
+      return views.filter(function (view) {
+        var viewDate = new Date(view.date);
+        return date.getHours() === viewDate.getHours() &&
+          date.getDate() === viewDate.getDate() &&
+          date.getMonth() === viewDate.getMonth() &&
+          date.getYear() === viewDate.getYear();
+      });
     }
 
-    var now = new Date();
-    var x = [];
-    var y = [];
+    return [];
+  }
 
-    if ($scope.currentWebsiteInterval === $scope.chartIntervals[0]) {
-      // Get the last 12 hours
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
-        date.setHours(date.getHours() - 11 + i);
-
-        var views = $scope.stats.websiteViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getHours() === viewDate.getHours() &&
-            date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(date.getHours());
-        y.push(views);
-      }
-    } else if ($scope.currentWebsiteInterval === $scope.chartIntervals[1]) {
-      // Get the last 7 days
-      var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      for (var i = 0; i < 7; i++) {
-        var date = new Date(now.toString());
-        date.setDate(date.getDate() - 6 + i);
-
-        var views = $scope.stats.websiteViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getDate() === viewDate.getDate() &&
-            date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(days[date.getDay()]);
-        y.push(views);
-      }
-    } else {
-      // Get the last 12 months
-      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      for (var i = 0; i < 12; i++) {
-        var date = new Date(now.toString());
-        date.setMonth(date.getMonth() - 11 + i);
-
-        var views = $scope.stats.websiteViews.filter(function (view) {
-          var viewDate = new Date(view.date);
-          return date.getMonth() === viewDate.getMonth() &&
-            date.getYear() === viewDate.getYear();
-        }).length;
-        x.push(months[date.getMonth()]);
-        y.push(views);
-      }
+  function filterDays(views, date) {
+    if (views) {
+      return views.filter(function (view) {
+        var viewDate = new Date(view.date);
+        return date.getDate() === viewDate.getDate() &&
+          date.getMonth() === viewDate.getMonth() &&
+          date.getYear() === viewDate.getYear();
+      });
     }
+    return [];
+  }
 
-    $scope.websiteChart = {
-      labels: x,
-      data: [y]
-    };
-  };
+  function filterMonths(views, date) {
+    if (views) {
+      return views.filter(function (view) {
+        var viewDate = new Date(view.date);
+        return date.getMonth() === viewDate.getMonth() &&
+          date.getYear() === viewDate.getYear();
+      });
+    }
+    return [];
+  }
 
   function setTime() {
     var date = new Date();
@@ -273,8 +187,8 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
       $scope.projects = projectFactory.getAll();
       $scope.skills = skillFactory.getAll();
 
-      $scope.buildProjectChart($scope.currentProjectInterval);
-      $scope.buildSkillChart($scope.currentSkillInterval);
+      $scope.buildChart($scope.projectChart, $scope.currentProjectInterval);
+      $scope.buildChart($scope.skillChart, $scope.currentSkillInterval);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
@@ -294,7 +208,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
     websiteService.views().then(function (response) {
       $scope.stats.websiteViews = response;
 
-      $scope.buildWebsiteChart($scope.currentWebsiteInterval);
+      $scope.buildChart($scope.websiteChart, $scope.currentWebsiteInterval);
     }, function (response) {
       systemMessageService.showErrorMessage(response);
     });
