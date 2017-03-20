@@ -14,16 +14,16 @@ body {
 }
 
 .maintenance {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  justify-content: center;
-  text-align: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 
   img {
+    display: block;
     height: 90%;
-    margin: $margin-large;
+    margin: $margin-large auto;
     max-height: 372px;
     max-width: 422px;
     object-fit: contain;
@@ -31,11 +31,15 @@ body {
   }
 
   .title {
+    display: block;
     font-size: $font-large;
+    text-align: center;
   }
 
-  .description {
+  .details {
+    display: block;
     font-weight: $light;
+    text-align: center;
   }
 }
 
