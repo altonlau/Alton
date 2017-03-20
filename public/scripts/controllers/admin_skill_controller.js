@@ -5,7 +5,7 @@
  * Description: Admin skill controller
  */
 
-angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, skillFactory, websiteService, systemMessageService) {
+angular.module('altonApp').controller('AdminSkillController', function ($q, $scope, $timeout, projectFactory, skillFactory, websiteService, systemMessageService) {
 
   $scope.skills = null;
 
