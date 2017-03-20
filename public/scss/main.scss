@@ -14,9 +14,29 @@ body {
 }
 
 .maintenance {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
-  font-size: $font-xlarge;
+  justify-content: center;
   text-align: center;
+
+  img {
+    height: 90%;
+    margin: $margin-large;
+    max-height: 372px;
+    max-width: 422px;
+    object-fit: contain;
+    width: 90%;
+  }
+
+  .title {
+    font-size: $font-large;
+  }
+
+  .description {
+    font-weight: $light;
+  }
 }
 
 .loading {
