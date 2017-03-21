@@ -113,7 +113,7 @@ gulp.task('build-views:dist', function () {
 
 // Image minify task ===========================================================
 gulp.task('build-images:dist', function () {
-  return gulp.src('public/assets/**/*.+(png|jpg|jpeg|gif|svg)')
+  return gulp.src('public/assets/**/*.+(png|jpg|jpeg|gif|svg|ico)')
     .pipe(cache(imagemin()))
     .pipe(gulp.dest('dist/assets'));
 });
