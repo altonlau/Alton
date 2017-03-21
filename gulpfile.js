@@ -102,6 +102,12 @@ gulp.task('clean:dist', function () {
   del.sync('dist');
 });
 
+// Copy favicon task ===========================================================
+gulp.task('build-favicon:dist', function () {
+  return gulp.src('public/favicon.ico')
+    .pipe(gulp.dest('dist'));
+});
+
 // HTML minify task ============================================================
 gulp.task('build-views:dist', function () {
   return gulp.src('public/views/**/*.html')
@@ -113,7 +119,7 @@ gulp.task('build-views:dist', function () {
 
 // Image minify task ===========================================================
 gulp.task('build-images:dist', function () {
-  return gulp.src('public/assets/**/*.+(png|jpg|jpeg|gif|svg|ico)')
+  return gulp.src('public/assets/**/*.+(png|jpg|jpeg|gif|svg)')
     .pipe(cache(imagemin()))
     .pipe(gulp.dest('dist/assets'));
 });
@@ -124,7 +130,7 @@ gulp.task('build-fonts:dist', function () {
     .pipe(gulp.dest('dist/fonts'))
 });
 
-// Javascript minify task ======================================================
+// Build all public task =======================================================
 gulp.task('build:dist', function () {
   return gulp.src('public/*.html')
     .pipe(useref())
@@ -152,5 +158,5 @@ gulp.task('browser', ['default'], function (done) {
 });
 
 gulp.task('build', function (done) {
-  runSequence('clean:dist', 'build-sass:public', 'inject:public', ['build:dist', 'build-views:dist', 'build-images:dist', 'build-fonts:dist'], done);
+  runSequence('clean:dist', 'build-sass:public', 'inject:public', ['build:dist', 'build-favicon:dist', 'build-views:dist', 'build-images:dist', 'build-fonts:dist'], done);
 })

@@ -19,7 +19,7 @@ function init(express) {
   db = require('./config/db');
   fileManager = require('./file_manager');
   router = require('./router/router');
-  port = process.env.PORT || 3000;
+  port = 3000;
 
   setupConfiguration();
   setupDatabase();
