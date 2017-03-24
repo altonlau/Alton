@@ -1,17 +1,51 @@
-.profile-button {
-  @include shadow-hoverable(1);
-  border-radius: 128px;
-  height: 256px;
+.alton {
   left: 50%;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 256px;
 
-  img {
-    height: 100%;
-    width: 100%;
+  .speech-bubble {
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: -64px;
+    transform: translate(-50%);
+
+    @include respond-to('small') {
+      top: -96px;
+    }
   }
+
+  .profile-button {
+    @include shadow-hoverable(1);
+    border-radius: 128px;
+    height: 256px;
+    width: 256px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .links {
+    margin-top: $margin-small;
+    text-align: center;
+
+    a {
+      @include shadow-hoverable(0);
+    }
+
+    a:not(:first-child) {
+      margin-left: $margin-medium;
+    }
+  }
+}
+
+.stop-talking {
+  bottom: $margin-small;
+  position: absolute;
+  left: $margin-small;
 }
 
 .buttons {
@@ -37,10 +71,11 @@
     transition: opacity 0.2s;
   }
 
-  @include respond-to('small') {
+  @include respond-to ('small') {
     flex-direction: row;
 
-    button, .button-title {
+    .button-title,
+    button {
       display: inline-block;
     }
   }

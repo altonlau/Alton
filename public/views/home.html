@@ -7,7 +7,19 @@
 <span class="loading animate-if" ng-if="!websiteLoaded && maintenance !== null && !maintenance"><i class="fa fa-refresh fa-spin fa-4x fa-fw"></i></span>
 
 <div class="home-view animate-if" ng-if="websiteLoaded && maintenance !== null && !maintenance">
-  <button class="btn btn-clear profile-button" ng-click="moveToAboutPage($event)"><img src="assets/profile.png" alt="Alton Lau"></button>
+  <div class="alton">
+    <div class="speech-bubble animate-if" ng-if="speech">
+      {{ speech.text }}
+    </div>
+    <button class="btn btn-clear profile-button" ng-click="moveToAboutPage($event)"><img src="assets/profile.png" alt="Alton Lau"></button>
+    <div class="links">
+      <a class="btn btn-theme circular red" href="https://github.com/altonlau" target="_blank"><i class="fa fa-github-alt"></i></a>
+      <a class="btn btn-theme circular yellow" href="https://www.linkedin.com/in/altonlau" target="_blank"><i class="fa fa-linkedin"></i></a>
+      <a class="btn btn-theme circular purple" href="mailto:alton_lau@hotmail.ca" target="_top"><i class="fa fa-envelope"></i></a>
+    </div>
+  </div>
+
+  <button class="btn btn-theme circular small red stop-talking" ng-click="toggleMute()"><i class="fa" ng-class="{ 'fa-microphone-slash': mute, 'fa-microphone': !mute}"></i></button>
 
   <div class="buttons">
     <div>

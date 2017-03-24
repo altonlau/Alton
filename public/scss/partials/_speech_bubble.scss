@@ -1,0 +1,36 @@
+@import 'modules/colors';
+@import 'modules/sizes';
+@import 'modules/shadows';
+
+.speech-bubble {
+  border-radius: 2px;
+  background: $white-color;
+  font-weight: $light;
+  height: 64px;
+  line-height: 48px;
+  position: relative;
+  padding: $padding-small;
+  width: 296px;
+  @include shadow(1);
+
+  @include respond-to ('small') {
+    font-size: $font-regular;
+    width: 400px;
+  }
+}
+
+.speech-bubble:after {
+  content: '';
+  border-color: transparent $white-color $white-color transparent;
+  border-style: solid;
+  border-width: $margin-medium;
+  bottom: -$margin-medium;
+  box-shadow: rgba(0, 0, 0, 0.24) 2px 2px 2px;
+  left: (296px / 2) - $margin-medium;
+  position: absolute;
+  transform: rotate(45deg);
+
+  @include respond-to ('small') {
+    left: (400px / 2) - $margin-medium;
+  }
+}

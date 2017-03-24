@@ -30,5 +30,12 @@
     max-height: 448px;
     overflow: scroll;
     width: 100%;
+
+    .title {
+      border-bottom: 1px solid $grey-color;
+      font-size: $font-large;
+      font-weight: $light;
+      margin-bottom: $margin-small;
+    }
   }
 }
