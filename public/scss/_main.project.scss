@@ -106,6 +106,7 @@
 
           @include respond-to ('medium') {
             height: 100%;
+            padding-left: $padding-xlarge;
           }
         }
 

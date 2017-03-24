@@ -31,10 +31,12 @@
   }
 
   .logout {
+    display: block;
+    margin: 0 auto $margin-small;
     @include shadow-hoverable(0);
 
     @include respond-to ('small') {
-      position: absolute;
+      position: absolute !important;
       right: $margin-small;
       top: $margin-small;
     }

@@ -130,7 +130,7 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     delete: deleteSkill,
     viewed: viewedSkill,
     views: function () {
-      return skillViews;
+      return viewedSkills;
     }
   };
 

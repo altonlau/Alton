@@ -205,6 +205,12 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
       systemMessageService.showErrorMessage(response);
     });
 
+    websiteService.enableStats().then(function (response) {
+      $scope.stats.enableStats = response;
+    }, function (response) {
+      systemMessageService.showErrorMessage(response);
+    });
+
     websiteService.views().then(function (response) {
       $scope.stats.websiteViews = response;
 
