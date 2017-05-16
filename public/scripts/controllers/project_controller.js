@@ -35,13 +35,13 @@ angular.module('altonApp').controller('ProjectController', function ($scope, $ti
   };
 
   $scope.viewProject = function (project) {
-    $('html, body').animate({
+    $('html, body').stop().animate({
       scrollTop: $('#' + project.id).offset().top
     });
   };
 
   $scope.scrollToTop = function () {
-    $('html, body').animate({
+    $('html, body').stop().animate({
       scrollTop: 0
     });
   };

@@ -5,122 +5,58 @@
  * Description: Preloads images for future use
  */
 
-angular.module('altonApp').factory('imagePreloader', function ($rootScope, $q) {
-  function Preloader(imageLocations) {
-    this.imageLocations = imageLocations;
-    this.imageCount = this.imageLocations.length;
-    this.loadCount = 0;
-    this.errorCount = 0;
-    this.states = {
-      PENDING: 1,
-      LOADING: 2,
-      RESOLVED: 3,
-      REJECTED: 4
-    };
-    this.state = this.states.PENDING;
-    this.deferred = $q.defer();
-    this.promise = this.deferred.promise;
+angular.module('altonApp').factory('imagePreloader', function ($q, $timeout) {
+  var body = document.getElementsByTagName('body')[0];
+
+  function renderImage(imgPath) {
+    return $q(function (resolve) {
+      // Create an image element
+      var element = document.createElement('img');
+      var timeoutId;
+
+      // Assign properties to the element making it tiny and invisible to the viewer
+      element.src = imgPath;
+      element.height = "1";
+      element.width = "1";
+      element.style.opacity = 0;
+
+      // Begin a timeout.  If image has failed to load, resolve anyway and remove element
+      timeoutId = $timeout(function () {
+        body.removeChild(element);
+        element.removeEventListener('load', processLoadEvent);
+        resolve();
+      }, 1750);
+
+      element.addEventListener('load', processLoadEvent);
+
+      // Wait for the image to load and then remove it
+      // Cancel the timeout event
+      function processLoadEvent() {
+        body.removeChild(element);
+        $timeout.cancel(timeoutId);
+        resolve();
+      }
+
+      // Add the image element to the DOM
+      body.appendChild(element);
+    });
   }
 
-  // STATIC METHODS
-  Preloader.preload = function (imageLocations) {
-    var preloader = new Preloader(imageLocations);
-    return (preloader.load());
-  };
-
-  // INSTANCE METHODS
-  Preloader.prototype = {
-    constructor: Preloader,
-    // PUBLIC METHODS
-    // Determine if the preloader has started loading images yet.
-    isInitiated: function isInitiated() {
-      return (this.state !== this.states.PENDING);
-    },
-    // Determine if the preloader has failed to load all of the images.
-    isRejected: function isRejected() {
-      return (this.state === this.states.REJECTED);
-    },
-    // Determine if the preloader has successfully loaded all of the images.
-    isResolved: function isResolved() {
-      return (this.state === this.states.RESOLVED);
-    },
-    // Initiate the preload of the images. Returns a promise.
-    load: function load() {
-      // If the images are already loading, return the existing promise.
-      if (this.isInitiated()) {
-        return (this.promise);
-      }
-      this.state = this.states.LOADING;
-
-      if (this.imageCount) {
-        for (var i = 0; i < this.imageCount; i++) {
-          this.loadImageLocation(this.imageLocations[i]);
-        }
-      } else {
-        this.deferred.resolve();
-      }
-      // Return the deferred promise for the load event.
-      return (this.promise);
-    },
-    // PRIVATE METHODS
-    // Handle the load-failure of the given image location.
-    handleImageError: function handleImageError(imageLocation) {
-      this.errorCount++;
-      // If the preload action has already failed, ignore further action.
-      if (this.isRejected()) {
-        return;
-      }
-      this.state = this.states.REJECTED;
-      this.deferred.reject(imageLocation);
-    },
-    // Handle the load-success of the given image location.
-    handleImageLoad: function handleImageLoad(imageLocation) {
-      this.loadCount++;
-      // If the preload action has already failed, ignore further action.
-      if (this.isRejected()) {
-        return;
-      }
-
-      this.deferred.notify({
-        percent: Math.ceil(this.loadCount / this.imageCount * 100),
-        imageLocation: imageLocation
-      });
-
-      // If all of the images have loaded, we can resolve the deferred
-      // value that we returned to the calling context.
-      if (this.loadCount === this.imageCount) {
-        this.state = this.states.RESOLVED;
-        this.deferred.resolve(this.imageLocations);
-      }
-    },
-
-    // I load the given image location and then wire the load / error
-    // events back into the preloader instance.
-    // --
-    // NOTE: The load/error events trigger a $digest.
-    loadImageLocation: function loadImageLocation(imageLocation) {
-      var preloader = this;
-      var image = angular.element(new Image()).bind('load', function (event) {
-        // Since the load event is asynchronous, we have to
-        // tell AngularJS that something changed.
-        $rootScope.$apply(function () {
-          preloader.handleImageLoad(event.target.src);
-          // Clean up object reference to help with the
-          // garbage collection in the closure.
-          preloader = image = event = null;
-        });
-      }).bind('error', function (event) {
-        // Since the load event is asynchronous, we have to
-        // tell AngularJS that something changed.
-        $rootScope.$apply(function () {
-          preloader.handleImageError(event.target.src);
-          // Clean up object reference to help with the
-          // garbage collection in the closure.
-          preloader = image = event = null;
-        });
-      }).attr('src', imageLocation);
+  /**
+   * Take array of images and force them to be loaded/cached by the browser
+   * @param {array} images
+   */
+  function preload(images) {
+    if (!images || images.length === 0) {
+      return $q.when();
     }
+
+    return $q.all(images.map(function (image) {
+      return renderImage(image);
+    }));
+  }
+
+  return {
+    preload: preload
   };
-  // Return the factory instance.
-  return (Preloader);
 });

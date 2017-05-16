@@ -8,6 +8,7 @@
 angular.module('altonApp').factory('skillFactory', function ($q, accountService, apiService) {
 
   var skills = [];
+  var skillViews = [];
   var viewedSkills = [];
 
   var Skill = function (id, name, level, description) {
@@ -130,7 +131,7 @@ angular.module('altonApp').factory('skillFactory', function ($q, accountService,
     delete: deleteSkill,
     viewed: viewedSkill,
     views: function () {
-      return viewedSkills;
+      return skillViews;
     }
   };
 

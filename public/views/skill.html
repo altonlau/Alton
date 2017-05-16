@@ -14,10 +14,13 @@
         <div ng-bind-html="viewSkill.description"></div>
       </div>
     </div>
-    <div class="skill" ng-repeat="skill in skills" ng-click="toggleSkill(skill)">
-      <div class="name">{{ skill.name }}</div>
+    <div class="skill" ng-repeat="skill in skills">
+      <div class="skill-content">
+        <button class="btn btn-theme view-more" ng-click="toggleSkill(skill)">View</button>
+        <div class="name">{{ skill.name }}</div>
+        <div class="level">{{ skill.level * 100 }}%</div>
+      </div>
       <div class="level-bar" ng-style="skill.levelStyle"></div>
-      <div class="level">{{ skill.level * 100 }}%</div>
     </div>
   </div>
 </div>

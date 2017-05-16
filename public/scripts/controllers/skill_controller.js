@@ -30,7 +30,7 @@ angular.module('altonApp').controller('SkillController', function ($scope, $time
     } else {
       $scope.viewSkill = skill;
       $scope.viewSkill.description = marked(skill.description);
-      $('html, body').animate({
+      $('html, body').stop().animate({
         scrollTop: 0
       });
 

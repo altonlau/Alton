@@ -27,7 +27,7 @@ angular.module('altonApp').service('stateTransitionService', function ($state) {
     fill.insertBefore(element);
     parent.css('z-index', 1);
 
-    fill.animate({
+    fill.stop().animate({
       'border-radius': '200vh',
       'height': '400vh',
       'width': '400vh'

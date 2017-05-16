@@ -52,17 +52,42 @@
   background: $light-grey-1-color;
   border-radius: 2px;
   color: $dark-text-secondary-color;
-  cursor: pointer;
   height: 48px;
   margin: $margin-small;
   position: relative;
   overflow: hidden;
 
-  .name {
+  .skill-content {
+    // border: 1px dashed blue;
     left: $margin-medium;
     position: absolute;
+    right: $margin-medium;
     top: 50%;
     transform: translate(0, -50%);
+
+    .name {
+      display: inline-block;
+      vertical-align: middle;
+      width: 96px;
+    }
+
+    .view-more {
+      border: 1px solid $grey-color;
+      display: inline-block;
+      font-size: $font-xsmall;
+      height: 16px;
+      margin-right: $margin-small;
+      padding: 0;
+      vertical-align: middle;
+      width: 40px;
+    }
+
+    .level {
+      position: absolute;
+      right: $margin-small;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
   }
 
   .level-bar {
@@ -71,12 +96,4 @@
     transition: width 1s cubic-bezier(0.175, 0.885, 0.320, 1.275);
     width: 0;
   }
-
-  .level {
-    position: absolute;
-    right: $margin-small;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-  @include shadow-hoverable(0);
 }
