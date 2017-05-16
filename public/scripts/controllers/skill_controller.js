@@ -53,7 +53,7 @@ angular.module('altonApp').controller('SkillController', function ($scope, $time
                 skill.levelStyle = {
                   'width': skill.level * 100 + '%'
                 };
-              }, 500 * (index + 1));
+              }, 100 * (index + 1));
             });
           }, 200);
 

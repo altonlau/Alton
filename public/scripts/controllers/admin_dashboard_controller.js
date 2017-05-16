@@ -110,7 +110,7 @@ angular.module('altonApp').controller('AdminDashboardController', function ($sco
       for (i = 0; i < 12; i++) {
         date = new Date(now.toString());
         date.setMonth(date.getMonth() - 11 + i);
-        views = filterMonths(stats, date);
+        views = filterMonths(stats, date).length;
         x.push(months[date.getMonth()]);
         y.push(views);
       }
